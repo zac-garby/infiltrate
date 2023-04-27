@@ -3,20 +3,14 @@ package uk.co.zacgarby.infiltrate;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.components.*;
-import uk.co.zacgarby.infiltrate.systems.AnimationSystem;
-import uk.co.zacgarby.infiltrate.systems.InputSystem;
-import uk.co.zacgarby.infiltrate.systems.PhysicsSystem;
-import uk.co.zacgarby.infiltrate.systems.RenderSystem;
+import uk.co.zacgarby.infiltrate.systems.*;
 
 public class GameScreen implements Screen {
     private final Game game;
-    private final OrthographicCamera camera;
     private final Texture img;
     private final Engine engine;
 
@@ -26,7 +20,7 @@ public class GameScreen implements Screen {
         // the amount of "pixels" in the x-axis of the screen
         float scale = 180f;
 
-        camera = new OrthographicCamera(
+        OrthographicCamera camera = new OrthographicCamera(
                 scale,
                 scale * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
 
@@ -37,6 +31,7 @@ public class GameScreen implements Screen {
         engine.addSystem(new InputSystem());
         engine.addSystem(new PhysicsSystem());
         engine.addSystem(new AnimationSystem(0.1f));
+        engine.addSystem(new CameraFollowSystem());
 
         Entity entity = new Entity();
         entity.add(new TextureComponent(img, 180f, 180f));
@@ -50,6 +45,7 @@ public class GameScreen implements Screen {
         entity2.add(new PositionComponent(0, 0));
         entity2.add(new MovementComponent());
         entity2.add(new MovementControlsComponent(25f));
+        entity2.add(new CameraFollowComponent(camera));
         engine.addEntity(entity2);
     }
 

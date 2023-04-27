@@ -1,8 +1,6 @@
 package uk.co.zacgarby.infiltrate.systems;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -33,8 +31,8 @@ public class RenderSystem extends IteratingSystem {
 
             batch.draw(
                     texture.texture,
-                    Math.round(position.position.x) - texture.width / 2f,
-                    Math.round(position.position.y) - texture.height / 2f,
+                    Math.round(position.position.x - texture.width / 2f),
+                    Math.round(position.position.y - texture.height / 2f),
                     texture.width / 2f, texture.height / 2f,
                     texture.width, texture.height,
                     1f, 1f, 0f,
@@ -44,8 +42,8 @@ public class RenderSystem extends IteratingSystem {
         } else {
             batch.draw(
                     texture.texture,
-                    Math.round(position.position.x) - texture.width / 2f,
-                    Math.round(position.position.y) - texture.height / 2f,
+                    Math.round(position.position.x - texture.width / 2f),
+                    Math.round(position.position.y - texture.height / 2f),
                     texture.width / 2f, texture.height / 2f,
                     texture.width, texture.height,
                     1f, 1f, 0f,
