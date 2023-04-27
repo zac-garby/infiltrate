@@ -33,20 +33,20 @@ public class GameScreen implements Screen {
         engine.addSystem(new AnimationSystem(0.1f));
         engine.addSystem(new CameraFollowSystem());
 
-        Entity entity = new Entity();
-        entity.add(new TextureComponent(img, 180f, 180f));
-        entity.add(new PositionComponent(0, 0));
-        engine.addEntity(entity);
+        Entity world = new Entity();
+        world.add(new TextureComponent(img, 180f, 180f));
+        world.add(new PositionComponent(0, 0));
+        engine.addEntity(world);
 
-        Entity entity2 = new Entity();
-        entity2.add(new TextureComponent(new Texture("agent.png"), 9f, 11f));
-        entity2.add(new TextureSliceComponent(0, 0, 9, 11));
-        entity2.add(new AnimationComponent(1).set(1, 2));
-        entity2.add(new PositionComponent(0, 0));
-        entity2.add(new MovementComponent());
-        entity2.add(new MovementControlsComponent(25f));
-        entity2.add(new CameraFollowComponent(camera));
-        engine.addEntity(entity2);
+        Entity player = new Entity();
+        player.add(new TextureComponent(new Texture("agent.png"), 9f, 11f));
+        player.add(new TextureSliceComponent(0, 0, 9, 11));
+        player.add(new AnimationComponent(1).set(1, 2));
+        player.add(new PositionComponent(0, 0));
+        player.add(new MovementComponent());
+        player.add(new MovementControlsComponent(25f));
+        player.add(new CameraFollowComponent(camera));
+        engine.addEntity(player);
     }
 
     @Override
