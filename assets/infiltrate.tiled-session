@@ -1,0 +1,49 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "tileset.tsx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "exportAsImage.drawObjectLabels": false,
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "map.tmx": {
+            "scale": 1.3402,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 603.2681689300105,
+                "y": 361.14012833905383
+            }
+        },
+        "tileset.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 5.5
+        }
+    },
+    "last.exportedFilePath": "/Users/zacgarby/code/java/infiltrate/assets",
+    "last.imagePath": "/Users/zacgarby/code/java/infiltrate/assets",
+    "map.height": 40,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 12,
+    "map.tileWidth": 12,
+    "map.width": 80,
+    "openFiles": [
+        "map.tmx",
+        "tileset.tsx"
+    ],
+    "project": "infiltrate.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "map.tmx",
+        "tileset.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 12,
+        "width": 12
+    }
+}
