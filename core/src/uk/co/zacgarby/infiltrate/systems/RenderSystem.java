@@ -31,9 +31,9 @@ public class RenderSystem extends IteratingSystem {
 
             batch.draw(
                     texture.texture,
-                    Math.round(position.position.x - texture.width / 2f),
-                    Math.round(position.position.y - texture.height / 2f),
-                    texture.width / 2f, texture.height / 2f,
+                    Math.round(position.position.x - texture.originX),
+                    Math.round(position.position.y - texture.originY),
+                    texture.originX, texture.originY,
                     texture.width, texture.height,
                     1f, 1f, 0f,
                     slice.sliceX * slice.sliceWidth, slice.sliceY * slice.sliceHeight,
@@ -42,9 +42,9 @@ public class RenderSystem extends IteratingSystem {
         } else {
             batch.draw(
                     texture.texture,
-                    Math.round(position.position.x - texture.width / 2f),
-                    Math.round(position.position.y - texture.height / 2f),
-                    texture.width / 2f, texture.height / 2f,
+                    Math.round(position.position.x - texture.originX),
+                    Math.round(position.position.y - texture.originY),
+                    texture.originX, texture.originY,
                     texture.width, texture.height,
                     1f, 1f, 0f,
                     0, 0,

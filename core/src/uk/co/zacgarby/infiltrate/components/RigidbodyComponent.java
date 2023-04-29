@@ -19,7 +19,8 @@ public class RigidbodyComponent implements Component {
         this.yOffset = yOffset;
 
         bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
     }
 
     public RigidbodyComponent(float radius, float xOffset, float yOffset) {
@@ -37,7 +38,8 @@ public class RigidbodyComponent implements Component {
         this.yOffset = yOffset;
 
         bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
     }
 
     public RigidbodyComponent(float radius) {

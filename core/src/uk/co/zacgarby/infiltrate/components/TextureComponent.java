@@ -9,11 +9,18 @@ public class TextureComponent implements Component {
 
     public Texture texture;
     public float width, height;
+    public float originX, originY;
 
     public TextureComponent(Texture texture, float width, float height) {
+        this(texture, width, height, width / 2, height / 2);
+    }
+
+    public TextureComponent(Texture texture, float width, float height, float originX, float originY) {
         this.texture = texture;
         this.width = width;
         this.height = height;
+        this.originX = originX;
+        this.originY = originY;
     }
 
     public TextureComponent(Texture texture, float width) {

@@ -29,10 +29,12 @@ public class GameScreen implements Screen {
                 scale,
                 scale * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
 
+        Texture mapTexture = new Texture("map.png");
+
         Entity world = new Entity();
-        world.add(new TextureComponent(new Texture("map.png")));
+        world.add(new TextureComponent(mapTexture, mapTexture.getWidth(), mapTexture.getHeight(), 0, 0));
         world.add(new PositionComponent(0, 0));
-        world.add(new PhysicsWorldComponent());
+        world.add(new PhysicsWorldComponent("map.json"));
 
         engine = new Engine();
         engine.addSystem(new RenderSystem(game.batch, camera));
@@ -47,10 +49,10 @@ public class GameScreen implements Screen {
         player.add(new TextureComponent(new Texture("agent.png"), 9f, 11f));
         player.add(new TextureSliceComponent(0, 0, 9, 11));
         player.add(new AnimationComponent(1).set(1, 2));
-        player.add(new PositionComponent(0, 0));
+        player.add(new PositionComponent(540, 300));
         player.add(new MovementComponent());
-        player.add(new RigidbodyComponent(3.0f, 0f, -4f));
-        player.add(new MovementControlsComponent(25f));
+        player.add(new RigidbodyComponent(2f, 0f, -3.5f));
+        player.add(new MovementControlsComponent(80f));
         player.add(new CameraFollowComponent(camera));
         engine.addEntity(player);
 
@@ -66,7 +68,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float dt) {
         engine.update(dt);
-        box2DDebugRenderer.render(worldForDebug, camera.combined);
+//        box2DDebugRenderer.render(worldForDebug, camera.combined);
     }
 
     @Override
