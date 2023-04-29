@@ -19,4 +19,8 @@ public class TextureComponent implements Component {
     public TextureComponent(Texture texture, float width) {
         this(texture, width, width * (float) texture.getHeight() / (float) texture.getWidth());
     }
+
+    public TextureComponent(Texture texture) {
+        this(texture, texture.getWidth(), texture.getHeight());
+    }
 }
