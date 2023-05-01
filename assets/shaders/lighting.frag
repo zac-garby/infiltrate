@@ -7,6 +7,8 @@
 
 float stepSize = 0.00005;
 float torchAngle = 0.6981317; // 40 degrees
+float torchDistance = 0.5;
+float distanceFalloff = 0.2;
 
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
@@ -20,6 +22,11 @@ uniform sampler2D u_mask;
 
 void main() {
     u_texture;
+
+    if (max(abs(uv.x), abs(uv.y)) > 0.8) {
+        gl_FragColor = vec4(0, 0, 0, 1.0);
+        return;
+    }
 
     vec2 diff = vec2(u_cam_x, 1.0 - u_cam_y) - mask_uv;
     float len_uv = length(uv);
@@ -46,8 +53,8 @@ void main() {
     }
 
     // maximum torch range
-    if (len_uv > 0.75) {
-        float f = max(1.0 - (len_uv - 0.75) / 0.05, 0.0);
+    if (len_uv > torchDistance) {
+        float f = max(1.0 - (len_uv - torchDistance) / distanceFalloff, 0.0);
         gl_FragColor.rgb *= f;
     }
 

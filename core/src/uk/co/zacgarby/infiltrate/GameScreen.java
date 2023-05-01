@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -52,6 +55,7 @@ public class GameScreen implements Screen {
         engine = new Engine();
 
         Entity world = new Entity();
+        world.add(new MapComponent(map));
         world.add(new PositionComponent(0, 0));
         world.add(new PhysicsWorldComponent(map));
 
@@ -68,8 +72,8 @@ public class GameScreen implements Screen {
         player.add(new PlayerComponent());
         player.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
         player.add(new TextureSliceComponent(0, 0, 9, 11));
-        player.add(new AnimationComponent(1).set(1, 2));
-        player.add(new PositionComponent(540, 300));
+        player.add(new AnimationComponent(2).set(1, 2));
+        player.add(new PositionComponent(280, 340));
         player.add(new MovementComponent());
         player.add(new RigidbodyComponent(2f, 0f, -3.5f));
         player.add(new MovementControlsComponent(200f));
@@ -78,6 +82,7 @@ public class GameScreen implements Screen {
 
         Entity task = new Entity();
         task.add(new InteractionComponent(36.0f, 12.0f));
+        task.add(new TaskComponent("find the secret docs."));
         task.add(new TextureComponent(new Texture("img/highlight.png"), 36f, 12f));
         task.add(new TextureSliceComponent(0, 0, 1, 1));
         task.add(new AnimationComponent(4).set(0, 0));

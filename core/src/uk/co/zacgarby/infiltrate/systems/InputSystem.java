@@ -1,5 +1,6 @@
 package uk.co.zacgarby.infiltrate.systems;
 
+import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -69,7 +70,15 @@ public class InputSystem extends IteratingSystem {
 
             if (interactables.size() > 0) {
                 Entity interactable = interactables.first();
-                getEngine().removeEntity(interactable);
+                doInteraction(interactable);
+            }
+        }
+    }
+
+    public void doInteraction(Entity entity) {
+        for (Component c : entity.getComponents()) {
+            if (c instanceof InteractionComponent.Interaction) {
+                ((InteractionComponent.Interaction) c).doInteraction(getEngine(), entity);
             }
         }
     }

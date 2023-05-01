@@ -10,4 +10,5 @@ public abstract class Families {
     public static final Family animated = Family.all(AnimationComponent.class, TextureSliceComponent.class).get();
     public static final Family cameraFollow = Family.all(CameraFollowComponent.class, PositionComponent.class).get();
     public static final Family interaction = Family.all(InteractionComponent.class).get();
+    public static final Family map = Family.all(MapComponent.class).get();
 }
