@@ -5,7 +5,7 @@
     #define LOWP
 #endif
 
-float stepSize = 0.0005;
+float stepSize = 0.00005;
 float torchAngle = 0.6981317; // 40 degrees
 
 varying LOWP vec4 v_color;
@@ -32,7 +32,7 @@ void main() {
         vec2 p = mask_uv + delta * float(i);
         vec4 c = texture2D(u_mask, p);
         if (c.w > 0.0) {
-            m -= 0.058;
+            m -= 0.0058;
         }
     }
 
