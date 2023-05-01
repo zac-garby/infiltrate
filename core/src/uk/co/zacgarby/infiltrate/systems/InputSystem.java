@@ -3,12 +3,11 @@ package uk.co.zacgarby.infiltrate.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import uk.co.zacgarby.infiltrate.components.AnimationComponent;
-import uk.co.zacgarby.infiltrate.components.Families;
-import uk.co.zacgarby.infiltrate.components.MovementComponent;
-import uk.co.zacgarby.infiltrate.components.MovementControlsComponent;
+import uk.co.zacgarby.infiltrate.components.*;
 
 public class InputSystem extends IteratingSystem {
     public InputSystem() {
@@ -24,6 +23,7 @@ public class InputSystem extends IteratingSystem {
 
         Vector2 move = new Vector2();
 
+        // calculate movement direction
         if (Gdx.input.isKeyPressed(controls.keyUp)) {
             move.y += 1f;
         }
@@ -40,8 +40,15 @@ public class InputSystem extends IteratingSystem {
             move.x += 1f;
         }
 
+        // set player velocity
         movement.velocity = move.nor().scl(controls.speed);
 
+        // update torch direction
+        if (move.len2() > 0.1) {
+            controls.heading.interpolate(move.cpy(), 4.5f * deltaTime, Interpolation.circleIn).nor();
+        }
+
+        // do movement animations
         if (move.x < 0) {
             animation.set(controls.leftAnimation);
         } else if (move.x > 0) {
@@ -52,6 +59,18 @@ public class InputSystem extends IteratingSystem {
             animation.set(controls.upAnimation);
         } else {
             animation.set(controls.stillAnimation);
+        }
+
+        // do interactions
+        if (Gdx.input.isKeyJustPressed(controls.keyInteract)) {
+            ImmutableArray<Entity> interactables = getEngine().getEntitiesFor(
+                    Family.all(InteractableComponent.class).get()
+            );
+
+            if (interactables.size() > 0) {
+                Entity interactable = interactables.first();
+                getEngine().removeEntity(interactable);
+            }
         }
     }
 }

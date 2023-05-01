@@ -6,6 +6,7 @@
 #endif
 
 float stepSize = 0.0005;
+float torchAngle = 0.6981317; // 40 degrees
 
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
@@ -31,7 +32,7 @@ void main() {
         vec2 p = mask_uv + delta * float(i);
         vec4 c = texture2D(u_mask, p);
         if (c.w > 0.0) {
-            m -= 0.0575;
+            m -= 0.058;
         }
     }
 
@@ -41,7 +42,7 @@ void main() {
     gl_FragColor = v_color * texture2D(u_texture, v_texCoords);
 
     if (m < 1.0) {
-        gl_FragColor.rgb *= m;
+        gl_FragColor.rgb *= min(sqrt(sqrt(m)), 1.0);
     }
 
     // maximum torch range
@@ -55,14 +56,14 @@ void main() {
     float d2 = dot(u_heading, normalize(uv));
     float a = acos(d);
     if (d2 < 0.0) {
-        a = length(uv - u_heading * 0.01);
-        float f = min(max(1.0 - (a - 0.055) / 0.02, 0.0), 1.0);
+        a = length(uv - u_heading * 0.02);
+        float f = min(max(1.0 - (a - 0.095) / 0.02, 0.0), 1.0);
         gl_FragColor.rgb *= f;
-    } else if (d < 0.0 || a > 0.5) {
-        float f = min(max(1.0 - (a - 0.5) / 0.12, 0.0), 1.0);
+    } else if (d < 0.0 || a > torchAngle) {
+        float f = min(max(1.0 - (a - torchAngle) / 0.12, 0.0), 1.0);
         gl_FragColor.rgb *= f;
     }
 
     // darkest colour possible = purple
-    gl_FragColor.rgb = max(0.7 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
+    gl_FragColor.rgb = max(0.85 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
 }

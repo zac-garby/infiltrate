@@ -14,13 +14,25 @@
             "scale": 1.3402,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 603.2681689300105,
-                "y": 361.14012833905383
+                "x": 602.5220116400537,
+                "y": 246.97806297567524
+            }
+        },
+        "map12.tmx": {
+            "scale": 5.9482,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 543.2735953733903,
+                "y": 211.15631619649645
             }
         },
         "tileset.tsx": {
             "scaleInDock": 1.5,
-            "scaleInEditor": 5.5
+            "scaleInEditor": 7.85
+        },
+        "tileset12.tsx": {
+            "scaleInDock": 3.9715,
+            "scaleInEditor": 7.85
         }
     },
     "last.exportedFilePath": "/Users/zacgarby/code/java/infiltrate/assets",
@@ -38,6 +50,8 @@
     "project": "infiltrate.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "tileset12.tsx",
+        "map12.tmx",
         "map.tmx",
         "tileset.tsx"
     ],

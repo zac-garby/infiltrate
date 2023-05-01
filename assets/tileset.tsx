@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.1" name="tileset12" tilewidth="12" tileheight="12" tilecount="17" columns="17">
- <image source="img/tileset.png" width="204" height="12"/>
+<tileset version="1.10" tiledversion="1.10.1" name="Infiltration Game" tilewidth="16" tileheight="16" tilecount="10" columns="10">
+ <image source="tileset.png" width="160" height="16"/>
  <tile id="0">
   <properties>
    <property name="collides" type="bool" value="false"/>
@@ -49,41 +49,6 @@
  <tile id="9">
   <properties>
    <property name="collides" type="bool" value="false"/>
-  </properties>
- </tile>
- <tile id="10">
-  <properties>
-   <property name="collides" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="11">
-  <properties>
-   <property name="collides" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="12">
-  <properties>
-   <property name="collides" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="13">
-  <properties>
-   <property name="collides" type="bool" value="false"/>
-  </properties>
- </tile>
- <tile id="14">
-  <properties>
-   <property name="collides" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="15">
-  <properties>
-   <property name="collides" type="bool" value="true"/>
-  </properties>
- </tile>
- <tile id="16">
-  <properties>
-   <property name="collides" type="bool" value="true"/>
   </properties>
  </tile>
 </tileset>

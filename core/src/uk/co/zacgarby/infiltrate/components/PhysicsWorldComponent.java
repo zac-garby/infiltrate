@@ -30,7 +30,15 @@ public class PhysicsWorldComponent implements Component {
 
         for (int y = 0; y < layer.getHeight(); y++) {
             for (int x = 0; x < layer.getWidth(); x++) {
-                if ((boolean) layer.getCell(x, y).getTile().getProperties().get("collides")) {
+                boolean collides;
+
+                try {
+                    collides = (boolean) layer.getCell(x, y).getTile().getProperties().get("collides");
+                } catch (Exception e) {
+                    collides = false;
+                }
+
+                if (collides) {
                     BodyDef bodyDef = new BodyDef();
                     bodyDef.position.set(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2);
 

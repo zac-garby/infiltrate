@@ -50,31 +50,41 @@ public class GameScreen implements Screen {
         TiledMap map = new TmxMapLoader().load("map12.tmx");
         Texture mapMask = makeMapMask(map, new Pixmap(Gdx.files.internal("img/tileset-mask.png")));
 
+        engine = new Engine();
+
         Entity world = new Entity();
         world.add(new TextureComponent(mapTexture, mapTexture.getWidth(), mapTexture.getHeight(), 0, 0));
         world.add(new PositionComponent(0, 0));
         world.add(new PhysicsWorldComponent(map));
 
-        engine = new Engine();
         engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, mapMask));
         engine.addSystem(new InputSystem());
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new AnimationSystem(0.1f));
         engine.addSystem(new CameraFollowSystem());
+        engine.addSystem(new InteractionSystem());
 
         engine.addEntity(world);
 
         Entity player = new Entity();
+        player.add(new PlayerComponent());
         player.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
         player.add(new TextureSliceComponent(0, 0, 9, 11));
         player.add(new AnimationComponent(1).set(1, 2));
         player.add(new PositionComponent(540, 300));
-//        player.add(new PositionComponent(0, 0));
         player.add(new MovementComponent());
         player.add(new RigidbodyComponent(2f, 0f, -3.5f));
         player.add(new MovementControlsComponent(200f));
         player.add(new CameraFollowComponent(camera));
         engine.addEntity(player);
+
+        Entity task = new Entity();
+        task.add(new InteractionComponent(36.0f, 12.0f));
+        task.add(new TextureComponent(new Texture("img/highlight.png"), 36f, 12f));
+        task.add(new TextureSliceComponent(0, 0, 1, 1));
+        task.add(new AnimationComponent(4).set(0, 0));
+        task.add(new PositionComponent(38 * 12 + 6, 25 * 12 + 6));
+        engine.addEntity(task);
 
         box2DDebugRenderer = new Box2DDebugRenderer();
         worldForDebug = PhysicsWorldComponent.mapper.get(world).world;
