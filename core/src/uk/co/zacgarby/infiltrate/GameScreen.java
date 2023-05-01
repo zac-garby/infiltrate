@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import uk.co.zacgarby.infiltrate.components.*;
@@ -41,8 +42,6 @@ public class GameScreen implements Screen {
             throw new RuntimeException("non-integer viewport height");
         }
 
-        Texture mapTexture = new Texture("img/map.png");
-
         ShaderProgram lightingShader = new ShaderProgram(
                 Gdx.files.internal("shaders/lighting.vert"),
                 Gdx.files.internal("shaders/lighting.frag"));
@@ -53,11 +52,10 @@ public class GameScreen implements Screen {
         engine = new Engine();
 
         Entity world = new Entity();
-        world.add(new TextureComponent(mapTexture, mapTexture.getWidth(), mapTexture.getHeight(), 0, 0));
         world.add(new PositionComponent(0, 0));
         world.add(new PhysicsWorldComponent(map));
 
-        engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, mapMask));
+        engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, map, mapMask));
         engine.addSystem(new InputSystem());
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new AnimationSystem(0.1f));

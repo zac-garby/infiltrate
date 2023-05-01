@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -27,8 +29,9 @@ public class RenderSystem extends IteratingSystem {
     private final TextureRegion destFBORegion, wallsFBORegion;
     private final Matrix4 idMatrix;
     private final Texture mapMask;
+    private final OrthogonalTiledMapRenderer mapRenderer;
 
-    public RenderSystem(SpriteBatch batch, OrthographicCamera camera, ShaderProgram shader, Texture mapMask) {
+    public RenderSystem(SpriteBatch batch, OrthographicCamera camera, ShaderProgram shader, TiledMap map, Texture mapMask) {
         super(Families.renderable);
         this.batch = batch;
         this.camera = camera;
@@ -52,6 +55,8 @@ public class RenderSystem extends IteratingSystem {
         idCamera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
         idCamera.update();
         idMatrix = idCamera.combined;
+
+        mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
     }
 
     @Override
@@ -113,6 +118,10 @@ public class RenderSystem extends IteratingSystem {
         batch.setShader(shader);
 
         destFBO.begin();
+
+        mapRenderer.setView(camera);
+        mapRenderer.render();
+
         batch.begin();
 
         // give the shader the map mask, for lighting purposes
