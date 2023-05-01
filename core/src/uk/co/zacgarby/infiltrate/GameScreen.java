@@ -5,11 +5,17 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import uk.co.zacgarby.infiltrate.components.*;
 import uk.co.zacgarby.infiltrate.systems.*;
+
+import static uk.co.zacgarby.infiltrate.Map.makeMapMask;
 
 public class GameScreen implements Screen {
     private final Game game;
@@ -23,21 +29,34 @@ public class GameScreen implements Screen {
         this.game = game;
 
         // the amount of "pixels" in the x-axis of the screen
-        float scale = 180f;
+        float scale = 200f;
 
         camera = new OrthographicCamera(
                 scale,
                 scale * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
 
-        Texture mapTexture = new Texture("map.png");
+        if (Math.floor(camera.viewportWidth) != camera.viewportWidth) {
+            throw new RuntimeException("non-integer viewport width");
+        } else if (Math.floor(camera.viewportHeight) != camera.viewportHeight) {
+            throw new RuntimeException("non-integer viewport height");
+        }
+
+        Texture mapTexture = new Texture("img/map.png");
+
+        ShaderProgram lightingShader = new ShaderProgram(
+                Gdx.files.internal("shaders/lighting.vert"),
+                Gdx.files.internal("shaders/lighting.frag"));
+
+        TiledMap map = new TmxMapLoader().load("map12.tmx");
+        Texture mapMask = makeMapMask(map, new Pixmap(Gdx.files.internal("img/tileset-mask.png")));
 
         Entity world = new Entity();
         world.add(new TextureComponent(mapTexture, mapTexture.getWidth(), mapTexture.getHeight(), 0, 0));
         world.add(new PositionComponent(0, 0));
-        world.add(new PhysicsWorldComponent("map.json"));
+        world.add(new PhysicsWorldComponent(map));
 
         engine = new Engine();
-        engine.addSystem(new RenderSystem(game.batch, camera));
+        engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, mapMask));
         engine.addSystem(new InputSystem());
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new AnimationSystem(0.1f));
@@ -46,13 +65,14 @@ public class GameScreen implements Screen {
         engine.addEntity(world);
 
         Entity player = new Entity();
-        player.add(new TextureComponent(new Texture("agent.png"), 9f, 11f));
+        player.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
         player.add(new TextureSliceComponent(0, 0, 9, 11));
         player.add(new AnimationComponent(1).set(1, 2));
         player.add(new PositionComponent(540, 300));
+//        player.add(new PositionComponent(0, 0));
         player.add(new MovementComponent());
         player.add(new RigidbodyComponent(2f, 0f, -3.5f));
-        player.add(new MovementControlsComponent(80f));
+        player.add(new MovementControlsComponent(200f));
         player.add(new CameraFollowComponent(camera));
         engine.addEntity(player);
 

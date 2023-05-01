@@ -54,7 +54,7 @@ public class PhysicsSystem extends EntitySystem implements EntityListener {
             }
         }
 
-        world.world.step(1 / 60f, 6, 2);
+        world.world.step(dt, 6, 2);
 
         for (Entity e : entities) {
             RigidbodyComponent rb = RigidbodyComponent.mapper.get(e);

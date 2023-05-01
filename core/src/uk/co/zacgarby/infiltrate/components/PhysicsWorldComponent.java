@@ -17,17 +17,14 @@ import java.util.ArrayList;
 public class PhysicsWorldComponent implements Component {
     public static final ComponentMapper<PhysicsWorldComponent> mapper = ComponentMapper.getFor(PhysicsWorldComponent.class);
 
-    public World world;
-    public ArrayList<Body> tileBodies = new ArrayList<>();
+    public final World world;
+    public final ArrayList<Body> tileBodies = new ArrayList<>();
     public float tileSize;
 
-    public PhysicsWorldComponent(String path) {
+    public PhysicsWorldComponent(TiledMap map) {
         world = new World(new Vector2(0, 0), true);
 
-        TiledMap map = new TmxMapLoader().load("map.tmx");
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
-
-        System.out.println(layer.getWidth() + " x " + layer.getHeight());
 
         tileSize = layer.getTileWidth();
 
@@ -36,12 +33,11 @@ public class PhysicsWorldComponent implements Component {
                 if ((boolean) layer.getCell(x, y).getTile().getProperties().get("collides")) {
                     BodyDef bodyDef = new BodyDef();
                     bodyDef.position.set(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2);
-                    System.out.println(bodyDef.position);
 
                     Body body = world.createBody(bodyDef);
 
                     PolygonShape shape = new PolygonShape();
-                    shape.setAsBox(8f, 8f);
+                    shape.setAsBox(tileSize / 2, tileSize / 2);
                     body.createFixture(shape, 0f);
                     shape.dispose();
 

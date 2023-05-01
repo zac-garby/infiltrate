@@ -8,7 +8,7 @@ import uk.co.zacgarby.infiltrate.components.PositionComponent;
 
 public class CameraFollowSystem extends IteratingSystem {
     public CameraFollowSystem() {
-        super(Families.cameraFollow);
+        super(Families.cameraFollow, 1300);
     }
 
     @Override
@@ -16,6 +16,6 @@ public class CameraFollowSystem extends IteratingSystem {
         CameraFollowComponent follow = CameraFollowComponent.mapper.get(entity);
         PositionComponent position = PositionComponent.mapper.get(entity);
 
-        follow.camera.position.set(position.position.x, position.position.y, 0);
+        follow.camera.position.set(Math.round(position.position.x), Math.round(position.position.y), 0);
     }
 }
