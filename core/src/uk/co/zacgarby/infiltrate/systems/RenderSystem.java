@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.components.Families;
 import uk.co.zacgarby.infiltrate.components.PositionComponent;
@@ -125,6 +127,10 @@ public class RenderSystem extends IteratingSystem {
         shader.setUniformf("u_cam_y", camera.position.y / mapMask.getHeight());
         shader.setUniformf("u_width", mapMask.getWidth());
         shader.setUniformf("u_height", mapMask.getHeight());
+
+        // heading vector for mouse position
+        Vector3 mouse = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).sub(camera.position).nor();
+        shader.setUniformf("u_heading", new Vector2(mouse.x, mouse.y));
 
         // render the renderables
         super.update(dt);

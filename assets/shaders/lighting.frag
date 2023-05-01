@@ -13,6 +13,7 @@ varying vec2 uv, mask_uv;
 
 uniform float u_cam_x, u_cam_y;
 uniform float u_width, u_height;
+uniform vec2 u_heading;
 uniform sampler2D u_texture;
 uniform sampler2D u_mask;
 
@@ -43,10 +44,25 @@ void main() {
         gl_FragColor.rgb *= m;
     }
 
+    // maximum torch range
     if (len_uv > 0.75) {
         float f = max(1.0 - (len_uv - 0.75) / 0.05, 0.0);
         gl_FragColor.rgb *= f;
     }
 
-    gl_FragColor.rgb = max(0.5 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
+    // torch directionality
+    float d = dot(u_heading, normalize(uv + u_heading * 0.11));
+    float d2 = dot(u_heading, normalize(uv));
+    float a = acos(d);
+    if (d2 < 0.0) {
+        a = length(uv - u_heading * 0.01);
+        float f = min(max(1.0 - (a - 0.055) / 0.02, 0.0), 1.0);
+        gl_FragColor.rgb *= f;
+    } else if (d < 0.0 || a > 0.5) {
+        float f = min(max(1.0 - (a - 0.5) / 0.12, 0.0), 1.0);
+        gl_FragColor.rgb *= f;
+    }
+
+    // darkest colour possible = purple
+    gl_FragColor.rgb = max(0.7 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
 }
