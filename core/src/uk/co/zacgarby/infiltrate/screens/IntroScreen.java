@@ -93,7 +93,7 @@ public class IntroScreen implements Screen, DialogueSystem.DialogueCallback {
                 "        darn. ignore that too",
                 "\\",
                 "\\",
-                "             [ press any key to begin ]"
+                "              [ press space to begin ]"
         ), this));
     }
 

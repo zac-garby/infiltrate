@@ -10,11 +10,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.physics.box2d.Filter;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
 import uk.co.zacgarby.infiltrate.components.physical.*;
 import uk.co.zacgarby.infiltrate.systems.*;
+
+import java.util.List;
+import java.util.Queue;
 
 import static uk.co.zacgarby.infiltrate.etc.Map.makeMapMask;
 
@@ -23,7 +27,9 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
     private final Engine engine;
     private final int levelNum;
 
-    public GameScreen(Game game, int levelNum) {
+    private Entity player;
+
+    public GameScreen(Game game, int levelNum, List<Queue<MovementRecorderComponent.Record>> recordings) {
         this.levelNum = levelNum;
         this.game = game;
 
@@ -42,6 +48,9 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         TiledMap map = new TmxMapLoader().load("map12.tmx");
         Texture mapMask = makeMapMask(map, new Pixmap(Gdx.files.internal("img/tileset-mask.png")));
 
+        Filter playerFilter = new Filter();
+        playerFilter.groupIndex = -1; // don't collide with other players
+
         engine = new Engine();
 
         Entity world = new Entity();
@@ -54,32 +63,46 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         gameState.add(new GameStateComponent());
         engine.addEntity(gameState);
 
-        Entity player = new Entity();
+        player = new Entity();
         player.add(new PlayerComponent());
         player.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
         player.add(new TextureSliceComponent(0, 0, 9, 11));
         player.add(new AnimationComponent(2).set(1, 2));
         player.add(new PositionComponent(280, 340));
         player.add(new MovementComponent());
-        player.add(new MovementRecorder());
-        player.add(new RigidbodyComponent(2f, 0f, -3.5f));
+        player.add(new MovementRecorderComponent());
+        player.add(new RigidbodyComponent(2f, 0f, -3.5f)
+                .setFilter(playerFilter));
         player.add(new MovementControlsComponent(130f));
         player.add(new CameraFollowComponent(camera));
         engine.addEntity(player);
 
-        Entity task = new Entity();
-        task.add(new InteractionComponent(12.0f, 12.0f));
-        task.add(new TaskComponent("find the secret docs.", 0));
-        task.add(new TextureComponent(new Texture("img/highlight.png"), 12f, 12f));
-        task.add(new TextureSliceComponent(0, 0, 1, 1));
-        task.add(new AnimationComponent(4).set(0, 0));
-        task.add(new PositionComponent(38 * 12 + 6, 25 * 12 + 6));
-        task.add(new HiddenComponent());
-        engine.addEntity(task);
+        for (Queue<MovementRecorderComponent.Record> records : recordings) {
+            Entity oldPlayer = new Entity();
+            oldPlayer.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
+            oldPlayer.add(new TextureSliceComponent(0, 0, 9, 11));
+            oldPlayer.add(new AnimationComponent(2).set(0, 0));
+            oldPlayer.add(new PositionComponent(280, 340));
+            oldPlayer.add(new MovementPlaybackComponent(records));
+            engine.addEntity(oldPlayer);
+        }
+
+//        Entity task = new Entity();
+//        task.add(new InteractionComponent(12.0f, 12.0f));
+//        task.add(new TaskComponent("find the secret docs.", 0, new String[]{
+//                "well done, agent.",
+//                "you've found the docs."
+//        }));
+//        task.add(new TextureComponent(new Texture("img/highlight.png"), 12f, 12f));
+//        task.add(new TextureSliceComponent(0, 0, 1, 1));
+//        task.add(new AnimationComponent(4).set(0, 0));
+//        task.add(new PositionComponent(38 * 12 + 6, 25 * 12 + 6));
+//        task.add(new HiddenComponent());
+//        engine.addEntity(task);
 
         Entity task2 = new Entity();
         task2.add(new InteractionComponent(12.0f, 12.0f));
-        task2.add(new TaskComponent("escape.", 1));
+        task2.add(new TaskComponent("escape.", 1, null));
         task2.add(new TextureComponent(new Texture("img/highlight.png"), 12f, 12f));
         task2.add(new TextureSliceComponent(0, 0, 1, 1));
         task2.add(new AnimationComponent(4).set(0, 0));
@@ -111,6 +134,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         engine.addSystem(new GPSSystem(map));
         engine.addSystem(new TaskSystem(this));
         engine.addSystem(new MovementRecordingSystem(0.1f));
+        engine.addSystem(new MovementPlaybackSystem());
     }
 
     @Override
@@ -125,12 +149,15 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
 
     @Override
     public void onAllTasksComplete() {
+        game.addRecording(MovementRecorderComponent.mapper.get(player).records);
         game.setScreen(game.screenForLevel(levelNum + 1));
     }
 
     @Override
     public void onTaskComplete(TaskComponent task) {
-
+        if (task.cutscene != null) {
+            game.setScreen(new CutsceneScreen(game, this, task.cutscene));
+        }
     }
 
     @Override

@@ -36,10 +36,9 @@ public class PhysicsSystem extends EntitySystem implements EntityListener {
     @Override
     public void update(float dt) {
         for (Entity e : entities) {
-            if (MovementComponent.mapper.has(e) && MovementControlsComponent.mapper.has(e)) {
+            if (MovementComponent.mapper.has(e)) {
                 MovementComponent movement = MovementComponent.mapper.get(e);
                 RigidbodyComponent rb = RigidbodyComponent.mapper.get(e);
-                PositionComponent position = PositionComponent.mapper.get(e);
 
                 if (movement.velocity.x > 0 && rb.body.getLinearVelocity().x > -Math.abs(movement.velocity.x)) {
                     rb.body.applyLinearImpulse(new Vector2(movement.velocity.x, 0f), rb.body.getPosition(), true);

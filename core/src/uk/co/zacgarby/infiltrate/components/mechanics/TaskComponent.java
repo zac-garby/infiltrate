@@ -8,11 +8,13 @@ import com.badlogic.ashley.core.Entity;
 public class TaskComponent implements Component, InteractionComponent.Interaction {
     public static final ComponentMapper<TaskComponent> mapper = ComponentMapper.getFor(TaskComponent.class);
     public final String description;
+    public final String[] cutscene;
     public final int order;
 
-    public TaskComponent(String description, int order) {
+    public TaskComponent(String description, int order, String[] cutscene) {
         this.description = description;
         this.order = order;
+        this.cutscene = cutscene;
     }
 
     @Override

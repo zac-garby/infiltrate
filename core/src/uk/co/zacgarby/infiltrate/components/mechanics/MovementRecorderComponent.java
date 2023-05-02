@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class MovementRecorder implements Component {
-    public static final ComponentMapper<MovementRecorder> mapper = ComponentMapper.getFor(MovementRecorder.class);
+public class MovementRecorderComponent implements Component {
+    public static final ComponentMapper<MovementRecorderComponent> mapper = ComponentMapper.getFor(MovementRecorderComponent.class);
     public final Queue<Record> records = new ArrayDeque<>(1000);
 
     public void record(double time, Vector2 pos, Vector2 heading, Vector2 vel) {

@@ -45,4 +45,9 @@ public class RigidbodyComponent implements Component {
     public RigidbodyComponent(float radius) {
         this(radius, 0f, 0f);
     }
+
+    public RigidbodyComponent setFilter(Filter filter) {
+        fixtureDef.filter.set(filter);
+        return this;
+    }
 }

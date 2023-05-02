@@ -16,9 +16,12 @@ public class DialogueSystem extends EntitySystem {
     public int skipAllKey = Input.Keys.ESCAPE;
 
     private ArrayList<String> messages;
-    private ArrayList<Entity> entities = new ArrayList<>();
-    private DialogueCallback callback;
+    private final ArrayList<Entity> entities = new ArrayList<>();
+    private final DialogueCallback callback;
     private final int originX, originY;
+
+    private float timeout;
+    private float interval;
 
     public DialogueSystem(int x, int y, Collection<String> messages, DialogueCallback callback) {
         originX = x;
@@ -26,6 +29,9 @@ public class DialogueSystem extends EntitySystem {
 
         this.messages = new ArrayList<>(messages);
         this.callback = callback;
+
+        this.interval = 2f;
+        this.timeout = interval;
     }
 
     @Override
@@ -37,25 +43,24 @@ public class DialogueSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
-        if (Gdx.input.isKeyJustPressed(skipKey)) {
+        timeout -= deltaTime;
+
+        if (messages.size() > 0 && (timeout <= 0 || Gdx.input.isKeyJustPressed(skipKey))) {
+            timeout = interval;
             nextText();
         }
 
-        if (Gdx.input.isKeyJustPressed(skipAllKey)) {
-            messages = new ArrayList<>();
-            nextText();
-        }
-    }
-
-    private void nextText() {
-        if (messages.size() == 0) {
+        if (Gdx.input.isKeyJustPressed(skipAllKey) || (Gdx.input.isKeyJustPressed(skipKey) && messages.size() == 0)) {
             if (callback != null) {
                 callback.onDialogueFinish(this);
             }
 
             getEngine().removeSystem(this);
-            return;
         }
+    }
+
+    private void nextText() {
+        if (messages.size() == 0) return;
 
         for (Entity e : entities) {
             TextComponent t = TextComponent.mapper.get(e);
@@ -75,6 +80,7 @@ public class DialogueSystem extends EntitySystem {
 
         if (cont) {
             nextText();
+            timeout += interval;
         }
     }
 
