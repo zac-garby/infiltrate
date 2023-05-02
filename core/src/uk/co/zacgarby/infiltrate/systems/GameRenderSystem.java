@@ -30,18 +30,16 @@ import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class RenderSystem extends IteratingSystem {
+public class GameRenderSystem extends IteratingSystem {
     private final SpriteBatch batch;
     private final OrthographicCamera camera;
     private final ShaderProgram shader;
     private ShaderProgram nullShader;
-    private final FrameBuffer destFBO, wallsFBO;
-    private final TextureRegion destFBORegion, wallsFBORegion;
+    private final FrameBuffer destFBO;
+    private final TextureRegion destFBORegion;
     private final Matrix4 idMatrix;
     private final Texture mapMask;
     private final OrthogonalTiledMapRenderer mapRenderer;
-    private final Font font;
-    private ImmutableArray<Entity> uiEntities;
 
     private final Comparator<Object> yComparator = new Comparator<Object>() {
         @Override
@@ -52,7 +50,7 @@ public class RenderSystem extends IteratingSystem {
         }
     };
 
-    public RenderSystem(SpriteBatch batch, OrthographicCamera camera, ShaderProgram shader, TiledMap map, Texture mapMask) {
+    public GameRenderSystem(SpriteBatch batch, OrthographicCamera camera, ShaderProgram shader, TiledMap map, Texture mapMask) {
         super(Family
                 .all(TextureComponent.class, PositionComponent.class)
                 .exclude(HiddenComponent.class).get());
@@ -69,10 +67,10 @@ public class RenderSystem extends IteratingSystem {
         destFBORegion = new TextureRegion(destFBOTex);
         destFBORegion.flip(false, true);
 
-        wallsFBO = new FrameBuffer(Pixmap.Format.RGB888, (int) camera.viewportWidth, (int) camera.viewportHeight, false);
+        FrameBuffer wallsFBO = new FrameBuffer(Pixmap.Format.RGB888, (int) camera.viewportWidth, (int) camera.viewportHeight, false);
         Texture wallsFBOTex = wallsFBO.getColorBufferTexture();
         wallsFBOTex.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        wallsFBORegion = new TextureRegion(wallsFBOTex);
+        TextureRegion wallsFBORegion = new TextureRegion(wallsFBOTex);
         wallsFBORegion.flip(false, true);
 
         OrthographicCamera idCamera = new OrthographicCamera(camera.viewportWidth, camera.viewportHeight);
@@ -81,18 +79,11 @@ public class RenderSystem extends IteratingSystem {
         idMatrix = idCamera.combined;
 
         mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
-
-        font = new Font(
-                Gdx.files.internal("img/font.png"),
-                "abcdefghijklmnopqrstuvwxyz0123456789.,()[]{}<>/\\|!-_+=;:?'\"%#~*"
-        );
     }
 
     @Override
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
-
-        uiEntities = engine.getEntitiesFor(Family.one(TextComponent.class).get());
 
         nullShader = batch.getShader();
     }
@@ -184,25 +175,11 @@ public class RenderSystem extends IteratingSystem {
         batch.end();
         destFBO.end();
 
-
         // render FBO to the actual screen
         batch.setProjectionMatrix(idMatrix);
         batch.setShader(nullShader);
         batch.begin();
         batch.draw(destFBORegion, 0, 0, camera.viewportWidth, camera.viewportHeight);
-
-        // draw ui
-        for (Entity e : uiEntities) {
-            if (TextComponent.mapper.has(e)) {
-                TextComponent text = TextComponent.mapper.get(e);
-                if (text.alignLeft) {
-                    font.draw(batch, text.x, text.y, text.text);
-                } else {
-                    font.drawRight(batch, text.x, text.y, text.text);
-                }
-            }
-        }
-
         batch.end();
     }
 }

@@ -10,8 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
@@ -24,13 +22,7 @@ public class GameScreen implements Screen {
     private final Engine engine;
 
     public GameScreen(Game game) {
-
-        // the amount of "pixels" in the x-axis of the screen
-        float scale = 200f;
-
-        OrthographicCamera camera = new OrthographicCamera(
-                scale,
-                scale * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
+        OrthographicCamera camera = new OrthographicCamera(game.viewportWidth, game.viewportHeight);
 
         if (Math.floor(camera.viewportWidth) != camera.viewportWidth) {
             throw new RuntimeException("non-integer viewport width");
@@ -103,7 +95,8 @@ public class GameScreen implements Screen {
         taskText.add(new TaskDescriptionComponent());
         engine.addEntity(taskText);
 
-        engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, map, mapMask));
+        engine.addSystem(new GameRenderSystem(game.batch, camera, lightingShader, map, mapMask));
+        engine.addSystem(new UIRenderSystem(game.batch, camera.viewportWidth, camera.viewportHeight));
         engine.addSystem(new InputSystem());
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new AnimationSystem(0.1f));
