@@ -25,7 +25,7 @@ public class IntroScreen implements Screen, DialogueSystem.DialogueCallback {
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
         engine.addSystem(new DialogueSystem(10, 70, Arrays.asList(
-                "X-OS v1.29                         [year 2137, 19:44]\\",
+                "X-OS v1.29                          [year 2137, 19:44]\\",
                 "mail\\",
                 "\\",
                 "                    * new mail *\\",
@@ -104,7 +104,7 @@ public class IntroScreen implements Screen, DialogueSystem.DialogueCallback {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.09f, 0.1667f, 0.129f, 1f);
+        ScreenUtils.clear(0.02f, 0.1067f, 0.059f, 1f);
         engine.update(delta);
     }
 

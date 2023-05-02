@@ -13,6 +13,7 @@ import java.util.Collection;
 
 public class DialogueSystem extends EntitySystem {
     public int skipKey = Input.Keys.SPACE;
+    public int skipAllKey = Input.Keys.ESCAPE;
 
     private ArrayList<String> messages;
     private ArrayList<Entity> entities = new ArrayList<>();
@@ -37,6 +38,11 @@ public class DialogueSystem extends EntitySystem {
     @Override
     public void update(float deltaTime) {
         if (Gdx.input.isKeyJustPressed(skipKey)) {
+            nextText();
+        }
+
+        if (Gdx.input.isKeyJustPressed(skipAllKey)) {
+            messages = new ArrayList<>();
             nextText();
         }
     }
