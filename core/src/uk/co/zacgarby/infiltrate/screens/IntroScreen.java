@@ -46,7 +46,7 @@ public class IntroScreen implements Screen, DialogueSystem.DialogueCallback {
                 "\\",
                 "B.E.L. labs? you know them?",
                 "\"big evil labs\" - nasty guys.",
-                "they're based on the outskirts of tokyo.",
+                "they're based in the outskirts of the city.",
                 "\\",
                 "big-pharma, of course. they're doing something\\",
                 "  with humans. something bad.",
@@ -110,7 +110,7 @@ public class IntroScreen implements Screen, DialogueSystem.DialogueCallback {
 
     @Override
     public void onDialogueFinish(DialogueSystem system) {
-        game.setScreen(new GameScreen(game));
+        game.setScreen(game.screenForLevel(1));
     }
 
     @Override

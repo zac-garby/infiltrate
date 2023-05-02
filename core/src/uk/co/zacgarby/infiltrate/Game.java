@@ -1,6 +1,7 @@
 package uk.co.zacgarby.infiltrate;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import uk.co.zacgarby.infiltrate.screens.GameScreen;
 import uk.co.zacgarby.infiltrate.screens.IntroScreen;
@@ -28,5 +29,9 @@ public class Game extends com.badlogic.gdx.Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+	}
+
+	public Screen screenForLevel(int level) {
+		return new GameScreen(this, level);
 	}
 }

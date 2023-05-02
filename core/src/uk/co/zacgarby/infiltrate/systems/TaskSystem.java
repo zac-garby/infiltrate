@@ -15,9 +15,10 @@ public class TaskSystem extends EntitySystem implements EntityListener {
     private ImmutableArray<Entity> tasks;
     private Entity currentTask;
     private Entity gameState;
+    private final TaskCallback callback;
 
-    public TaskSystem() {
-
+    public TaskSystem(TaskCallback callback) {
+        this.callback = callback;
     }
 
     @Override
@@ -73,12 +74,16 @@ public class TaskSystem extends EntitySystem implements EntityListener {
         // when a task component is removed
         // (i.e. completed)
 
+        TaskComponent task = TaskComponent.mapper.get(entity);
+        callback.onTaskComplete(task);
+
         GameStateComponent state = GameStateComponent.mapper.get(gameState);
         state.currentTask++;
 
         if (tasks.size() <= 0) {
             // all tasks finished
             System.out.println("all tasks finished");
+            callback.onAllTasksComplete();
 
             Entity taskTextEntity = getEngine().getEntitiesFor(
                     Family.all(TaskDescriptionComponent.class, TextComponent.class).get()
@@ -92,5 +97,10 @@ public class TaskSystem extends EntitySystem implements EntityListener {
 
         currentTask = getNextTask();
         onNewTask();
+    }
+
+    public interface TaskCallback {
+        void onAllTasksComplete();
+        void onTaskComplete(TaskComponent task);
     }
 }

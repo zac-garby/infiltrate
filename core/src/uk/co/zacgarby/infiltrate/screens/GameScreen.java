@@ -18,10 +18,15 @@ import uk.co.zacgarby.infiltrate.systems.*;
 
 import static uk.co.zacgarby.infiltrate.Map.makeMapMask;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, TaskSystem.TaskCallback {
+    private final Game game;
     private final Engine engine;
+    private final int levelNum;
 
-    public GameScreen(Game game) {
+    public GameScreen(Game game, int levelNum) {
+        this.levelNum = levelNum;
+        this.game = game;
+
         OrthographicCamera camera = new OrthographicCamera(game.viewportWidth, game.viewportHeight);
 
         if (Math.floor(camera.viewportWidth) != camera.viewportWidth) {
@@ -87,7 +92,7 @@ public class GameScreen implements Screen {
         engine.addEntity(locationText);
 
         Entity levelText = new Entity();
-        levelText.add(new TextComponent("LEVEL 1", 183, 183, false));
+        levelText.add(new TextComponent("LEVEL " + levelNum, 183, 183, false));
         engine.addEntity(levelText);
 
         Entity taskText = new Entity();
@@ -103,7 +108,7 @@ public class GameScreen implements Screen {
         engine.addSystem(new CameraFollowSystem());
         engine.addSystem(new InteractionSystem());
         engine.addSystem(new GPSSystem(map));
-        engine.addSystem(new TaskSystem());
+        engine.addSystem(new TaskSystem(this));
     }
 
     @Override
@@ -114,6 +119,16 @@ public class GameScreen implements Screen {
     @Override
     public void render(float dt) {
         engine.update(dt);
+    }
+
+    @Override
+    public void onAllTasksComplete() {
+        game.setScreen(game.screenForLevel(levelNum + 1));
+    }
+
+    @Override
+    public void onTaskComplete(TaskComponent task) {
+
     }
 
     @Override
