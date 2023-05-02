@@ -61,6 +61,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         player.add(new AnimationComponent(2).set(1, 2));
         player.add(new PositionComponent(280, 340));
         player.add(new MovementComponent());
+        player.add(new MovementRecorder());
         player.add(new RigidbodyComponent(2f, 0f, -3.5f));
         player.add(new MovementControlsComponent(130f));
         player.add(new CameraFollowComponent(camera));
@@ -109,6 +110,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         engine.addSystem(new InteractionSystem());
         engine.addSystem(new GPSSystem(map));
         engine.addSystem(new TaskSystem(this));
+        engine.addSystem(new MovementRecordingSystem(0.1f));
     }
 
     @Override
