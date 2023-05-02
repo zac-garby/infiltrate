@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="12" tileheight="12" infinite="0" nextlayerid="3" nextobjectid="27">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="12" tileheight="12" infinite="0" nextlayerid="3" nextobjectid="48">
  <tileset firstgid="1" source="tileset12.tsx"/>
  <layer id="1" name="Tile Layer 1" width="80" height="40">
   <data encoding="csv">
@@ -68,9 +68,29 @@
   <object id="20" name="The Boss's Secretaries" x="654.343" y="367.336" width="84.7814" height="47.6457"/>
   <object id="21" name="I wonder where this goes..." x="738.159" y="245.235" width="25.2242" height="181.124"/>
   <object id="22" name="Observation Room" x="653.116" y="245.995" width="85.1757" height="47.354"/>
-  <object id="23" x="656.806" y="245.38"/>
   <object id="24" name="Research Office 2" x="738.68" y="198.448" width="132.471" height="47.6067"/>
   <object id="25" name="Library" x="763.519" y="246.572" width="107.374" height="97.0309"/>
   <object id="26" name="Toilets" x="570.567" y="245.414" width="59.9075" height="49.5786"/>
+  <object id="27" name="Back Entrance" x="451.245" y="246.76" width="96.039" height="48.2492"/>
+  <object id="28" name="Smoking Area" x="474.221" y="293.172" width="71.6846" height="59.2776"/>
+  <object id="29" name="Outside" x="4.13565" y="4.59517" width="325.797" height="203.566"/>
+  <object id="30" name="Outside" x="4.59517" y="208.161" width="265.141" height="268.358"/>
+  <object id="31" name="Outside" x="325.547" y="4.81103" width="316.994" height="73.2346"/>
+  <object id="32" name="Outside" x="641.471" y="4.81103" width="313.786" height="50.2486"/>
+  <object id="33" name="Outside" x="737.157" y="54.525" width="216.496" height="113.327"/>
+  <object id="34" name="Outside" x="761.747" y="160.368" width="191.907" height="36.8846"/>
+  <object id="35" name="Outside" x="868.659" y="197.252" width="86.5986" height="277.436"/>
+  <object id="36" name="Outside" x="764.42" y="341.583" width="109.585" height="133.105"/>
+  <object id="37" name="Alley" x="545.25" y="438.339" width="220.238" height="36.8846"/>
+  <object id="38" name="Scientist's Exit" x="737.692" y="160.902" width="24.5897" height="39.5574"/>
+  <object id="39" name="Main Corridor" x="474.689" y="79.6493" width="35.2809" height="131.502"/>
+  <object id="40" name="Main Corridor" x="414.283" y="174.266" width="59.8706" height="36.35"/>
+  <object id="41" name="Main Corridor" x="412.68" y="208.478" width="37.9537" height="83.9258"/>
+  <object id="42" name="Secondary Corridor" x="450.633" y="207.944" width="287.058" height="37.4191"/>
+  <object id="43" name="Tertiary Corridor" x="545.785" y="244.828" width="22.986" height="192.976"/>
+  <object id="44" name="Boss's Rooms" x="567.702" y="413.749" width="194.58" height="24.5897"/>
+  <object id="45" name="Offices" x="331.427" y="197.252" width="83.3912" height="25.6588"/>
+  <object id="46" name="Offices" x="330.892" y="222.377" width="22.4515" height="131.502"/>
+  <object id="47" name="Offices" x="352.809" y="330.358" width="63.078" height="24.0552"/>
  </objectgroup>
 </map>
