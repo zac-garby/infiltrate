@@ -16,7 +16,7 @@ import uk.co.zacgarby.infiltrate.components.mechanics.*;
 import uk.co.zacgarby.infiltrate.components.physical.*;
 import uk.co.zacgarby.infiltrate.systems.*;
 
-import static uk.co.zacgarby.infiltrate.Map.makeMapMask;
+import static uk.co.zacgarby.infiltrate.etc.Map.makeMapMask;
 
 public class GameScreen implements Screen, TaskSystem.TaskCallback {
     private final Game game;

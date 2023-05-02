@@ -7,8 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.utils.ScreenUtils;
-import uk.co.zacgarby.infiltrate.Font;
+import uk.co.zacgarby.infiltrate.etc.Font;
 import uk.co.zacgarby.infiltrate.components.graphics.TextComponent;
 
 public class UIRenderSystem extends IteratingSystem {

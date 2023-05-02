@@ -1,4 +1,4 @@
-package uk.co.zacgarby.infiltrate;
+package uk.co.zacgarby.infiltrate.etc;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
