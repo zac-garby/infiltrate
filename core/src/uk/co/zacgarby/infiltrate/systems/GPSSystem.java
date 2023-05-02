@@ -2,20 +2,17 @@ package uk.co.zacgarby.infiltrate.systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalSystem;
-import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import uk.co.zacgarby.infiltrate.components.GPSComponent;
-import uk.co.zacgarby.infiltrate.components.PlayerComponent;
-import uk.co.zacgarby.infiltrate.components.PositionComponent;
-import uk.co.zacgarby.infiltrate.components.TextComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.GPSComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
+import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.TextComponent;
 
 public class GPSSystem extends IntervalSystem {
     private PositionComponent playerPosition;

@@ -19,7 +19,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Font;
-import uk.co.zacgarby.infiltrate.components.*;
+import uk.co.zacgarby.infiltrate.components.graphics.HiddenComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.TextComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.TextureComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.TextureSliceComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.MovementControlsComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
+import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -37,8 +43,20 @@ public class RenderSystem extends IteratingSystem {
     private final Font font;
     private ImmutableArray<Entity> uiEntities;
 
+    private final Comparator<Object> yComparator = new Comparator<Object>() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            PositionComponent s1 = PositionComponent.mapper.get((Entity) o1);
+            PositionComponent s2 = PositionComponent.mapper.get((Entity) o2);
+            return (int) Math.signum(s2.position.y - s1.position.y);
+        }
+    };
+
     public RenderSystem(SpriteBatch batch, OrthographicCamera camera, ShaderProgram shader, TiledMap map, Texture mapMask) {
-        super(Family.all(TextureComponent.class, PositionComponent.class).get());
+        super(Family
+                .all(TextureComponent.class, PositionComponent.class)
+                .exclude(HiddenComponent.class).get());
+
         this.batch = batch;
         this.camera = camera;
         this.priority = 1000;
@@ -156,14 +174,7 @@ public class RenderSystem extends IteratingSystem {
         // render the renderables, in y-order
         Object[] entities = this.getEntities().toArray();
 
-        Arrays.sort(entities, new Comparator<Object>() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                PositionComponent s1 = PositionComponent.mapper.get((Entity) o1);
-                PositionComponent s2 = PositionComponent.mapper.get((Entity) o2);
-                return (int) Math.signum(s2.position.y - s1.position.y);
-            }
-        });
+        Arrays.sort(entities, yComparator);
 
         for (Object e : entities) {
             this.processEntity((Entity) e, dt);

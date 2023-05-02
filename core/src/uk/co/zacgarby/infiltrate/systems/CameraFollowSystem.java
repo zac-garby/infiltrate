@@ -3,8 +3,8 @@ package uk.co.zacgarby.infiltrate.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import uk.co.zacgarby.infiltrate.components.CameraFollowComponent;
-import uk.co.zacgarby.infiltrate.components.PositionComponent;
+import uk.co.zacgarby.infiltrate.components.physical.CameraFollowComponent;
+import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
 public class CameraFollowSystem extends IteratingSystem {
     public CameraFollowSystem() {

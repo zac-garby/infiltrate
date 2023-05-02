@@ -5,7 +5,11 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import uk.co.zacgarby.infiltrate.components.*;
+import uk.co.zacgarby.infiltrate.components.mechanics.MovementControlsComponent;
+import uk.co.zacgarby.infiltrate.components.physical.MovementComponent;
+import uk.co.zacgarby.infiltrate.components.physical.PhysicsWorldComponent;
+import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
+import uk.co.zacgarby.infiltrate.components.physical.RigidbodyComponent;
 
 public class PhysicsSystem extends EntitySystem implements EntityListener {
     public static final float AIR_RESISTANCE = 3f;

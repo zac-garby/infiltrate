@@ -4,14 +4,21 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
-import uk.co.zacgarby.infiltrate.components.*;
+import uk.co.zacgarby.infiltrate.components.graphics.AnimationComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.HiddenComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.InteractableComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.InteractionComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
+import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
 public class InteractionSystem extends IteratingSystem {
     public static final float INTERACTION_DIST = 6.0f;
     private Entity player;
 
     public InteractionSystem() {
-        super(Family.all(InteractionComponent.class).get(), 50);
+        super(Family
+                .all(InteractionComponent.class)
+                .exclude(HiddenComponent.class).get(), 50);
     }
 
     @Override

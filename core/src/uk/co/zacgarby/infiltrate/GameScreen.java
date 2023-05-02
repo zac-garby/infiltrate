@@ -8,15 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import uk.co.zacgarby.infiltrate.components.*;
+import uk.co.zacgarby.infiltrate.components.graphics.*;
+import uk.co.zacgarby.infiltrate.components.mechanics.*;
+import uk.co.zacgarby.infiltrate.components.physical.*;
 import uk.co.zacgarby.infiltrate.systems.*;
 
 import static uk.co.zacgarby.infiltrate.Map.makeMapMask;
@@ -60,6 +58,10 @@ public class GameScreen implements Screen {
         world.add(new PhysicsWorldComponent(map));
         engine.addEntity(world);
 
+        Entity gameState = new Entity();
+        gameState.add(new GameStateComponent());
+        engine.addEntity(gameState);
+
         engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, map, mapMask));
         engine.addSystem(new InputSystem());
         engine.addSystem(new PhysicsSystem(world));
@@ -76,18 +78,29 @@ public class GameScreen implements Screen {
         player.add(new PositionComponent(280, 340));
         player.add(new MovementComponent());
         player.add(new RigidbodyComponent(2f, 0f, -3.5f));
-        player.add(new MovementControlsComponent(200f));
+        player.add(new MovementControlsComponent(130f));
         player.add(new CameraFollowComponent(camera));
         engine.addEntity(player);
 
         Entity task = new Entity();
-        task.add(new InteractionComponent(36.0f, 12.0f));
-        task.add(new TaskComponent("find the secret docs."));
-        task.add(new TextureComponent(new Texture("img/highlight.png"), 36f, 12f));
+        task.add(new InteractionComponent(12.0f, 12.0f));
+        task.add(new TaskComponent("find the secret docs.", 0));
+        task.add(new TextureComponent(new Texture("img/highlight.png"), 12f, 12f));
         task.add(new TextureSliceComponent(0, 0, 1, 1));
         task.add(new AnimationComponent(4).set(0, 0));
         task.add(new PositionComponent(38 * 12 + 6, 25 * 12 + 6));
+        task.add(new HiddenComponent());
         engine.addEntity(task);
+
+        Entity task2 = new Entity();
+        task2.add(new InteractionComponent(12.0f, 12.0f));
+        task2.add(new TaskComponent("escape.", 1));
+        task2.add(new TextureComponent(new Texture("img/highlight.png"), 12f, 12f));
+        task2.add(new TextureSliceComponent(0, 0, 1, 1));
+        task2.add(new AnimationComponent(4).set(0, 0));
+        task2.add(new PositionComponent(40 * 12 + 6, 25 * 12 + 6));
+        task2.add(new HiddenComponent());
+        engine.addEntity(task2);
 
         Entity locationText = new Entity();
         locationText.add(new TextComponent("", 20, 183));
@@ -100,7 +113,10 @@ public class GameScreen implements Screen {
 
         Entity taskText = new Entity();
         taskText.add(new TextComponent("* FIND THE SECRET DOCUMENTS.", 20, 11));
+        taskText.add(new TaskDescriptionComponent());
         engine.addEntity(taskText);
+
+        engine.addSystem(new TaskSystem());
 
         box2DDebugRenderer = new Box2DDebugRenderer();
         worldForDebug = PhysicsWorldComponent.mapper.get(world).world;

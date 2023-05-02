@@ -8,7 +8,11 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import uk.co.zacgarby.infiltrate.components.*;
+import uk.co.zacgarby.infiltrate.components.graphics.AnimationComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.InteractableComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.InteractionComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.MovementControlsComponent;
+import uk.co.zacgarby.infiltrate.components.physical.MovementComponent;
 
 public class InputSystem extends IteratingSystem {
     public InputSystem() {

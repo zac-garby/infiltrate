@@ -1,4 +1,4 @@
-package uk.co.zacgarby.infiltrate.components;
+package uk.co.zacgarby.infiltrate.components.mechanics;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;

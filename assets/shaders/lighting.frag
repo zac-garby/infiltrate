@@ -63,14 +63,14 @@ void main() {
     float d = dot(u_heading, normalize(uv + u_heading * 0.11));
     float d2 = dot(u_heading, normalize(uv));
     float a = acos(d);
-    if (d2 < 0.0) {
+    if (d2 < -0.3) {
         a = length(uv - u_heading * 0.02);
-        f = min(max(1.0 - (a - 0.095) / 0.02, 0.0), f);
+        f = min(max(1.0 - (a - 0.08) / 0.02, 0.0), f);
     } else if (d < 0.0 || a > torchAngle) {
         f = min(max(1.0 - (a - torchAngle) / 0.12, 0.0), f);
     }
 
-    gl_FragColor.rgb *= max(f, 0.1);
+    gl_FragColor.rgb *= max(f, 0.15);
 
 
     // darkest colour possible = purple

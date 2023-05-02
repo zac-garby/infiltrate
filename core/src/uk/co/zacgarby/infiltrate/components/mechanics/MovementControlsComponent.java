@@ -1,9 +1,10 @@
-package uk.co.zacgarby.infiltrate.components;
+package uk.co.zacgarby.infiltrate.components.mechanics;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import uk.co.zacgarby.infiltrate.components.graphics.AnimationComponent;
 
 public class MovementControlsComponent implements Component {
     public static final ComponentMapper<MovementControlsComponent> mapper = ComponentMapper.getFor(MovementControlsComponent.class);

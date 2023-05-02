@@ -3,8 +3,8 @@ package uk.co.zacgarby.infiltrate.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
-import uk.co.zacgarby.infiltrate.components.AnimationComponent;
-import uk.co.zacgarby.infiltrate.components.TextureSliceComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.AnimationComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.TextureSliceComponent;
 
 public class AnimationSystem extends IntervalIteratingSystem {
     public AnimationSystem(float baseInterval) {
