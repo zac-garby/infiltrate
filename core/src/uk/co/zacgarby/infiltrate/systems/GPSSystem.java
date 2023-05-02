@@ -39,7 +39,7 @@ public class GPSSystem extends IntervalSystem {
             this.hud = TextComponent.mapper.get(text);
         }
 
-        MapLayer layer = map.getLayers().get(1);
+        MapLayer layer = map.getLayers().get("Areas");
         MapObjects objects = layer.getObjects();
 
         for (MapObject object : objects) {

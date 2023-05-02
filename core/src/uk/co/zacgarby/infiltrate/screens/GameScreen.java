@@ -8,8 +8,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Filter;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
@@ -17,8 +24,7 @@ import uk.co.zacgarby.infiltrate.components.mechanics.*;
 import uk.co.zacgarby.infiltrate.components.physical.*;
 import uk.co.zacgarby.infiltrate.systems.*;
 
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 import static uk.co.zacgarby.infiltrate.etc.Map.makeMapMask;
 
@@ -27,7 +33,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
     private final Engine engine;
     private final int levelNum;
 
-    private Entity player;
+    private final Entity player;
 
     public GameScreen(Game game, int levelNum, List<Queue<MovementRecorderComponent.Record>> recordings) {
         this.levelNum = levelNum;
@@ -87,28 +93,47 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
             engine.addEntity(oldPlayer);
         }
 
-//        Entity task = new Entity();
-//        task.add(new InteractionComponent(12.0f, 12.0f));
-//        task.add(new TaskComponent("find the secret docs.", 0, new String[]{
-//                "well done, agent.",
-//                "you've found the docs."
-//        }));
-//        task.add(new TextureComponent(new Texture("img/highlight.png"), 12f, 12f));
-//        task.add(new TextureSliceComponent(0, 0, 1, 1));
-//        task.add(new AnimationComponent(4).set(0, 0));
-//        task.add(new PositionComponent(38 * 12 + 6, 25 * 12 + 6));
-//        task.add(new HiddenComponent());
-//        engine.addEntity(task);
+        MapLayer tasksLayer = map.getLayers().get("Tasks Level " + levelNum);
+        if (tasksLayer != null) {
+            Map<Integer, List<RectangleMapObject>> possibleTasks = new HashMap<>();
 
-        Entity task2 = new Entity();
-        task2.add(new InteractionComponent(12.0f, 12.0f));
-        task2.add(new TaskComponent("escape.", 1, null));
-        task2.add(new TextureComponent(new Texture("img/highlight.png"), 12f, 12f));
-        task2.add(new TextureSliceComponent(0, 0, 1, 1));
-        task2.add(new AnimationComponent(4).set(0, 0));
-        task2.add(new PositionComponent(40 * 12 + 6, 25 * 12 + 6));
-        task2.add(new HiddenComponent());
-        engine.addEntity(task2);
+            for (MapObject object : tasksLayer.getObjects()) {
+                Object maybeOrder = object.getProperties().get("order");
+
+                if (object instanceof RectangleMapObject && maybeOrder != null) {
+                    RectangleMapObject rectangleObject = (RectangleMapObject) object;
+                    int order = (int) maybeOrder;
+
+                    if (!possibleTasks.containsKey(order)) {
+                        possibleTasks.put(order, new ArrayList<RectangleMapObject>());
+                    }
+
+                    possibleTasks.get(order).add(rectangleObject);
+                }
+            }
+
+            for (int order : possibleTasks.keySet()) {
+                List<RectangleMapObject> possibilities = possibleTasks.get(order);
+                int r = (int) (Math.random() * possibilities.size());
+                RectangleMapObject rectangleObject = possibilities.get(r);
+                Rectangle rect = rectangleObject.getRectangle();
+
+                System.out.println("registered task of order " + order + " at " + rect.x + ", " + rect.y);
+
+                Entity task = new Entity();
+                task.add(new InteractionComponent(rect.width, rect.height));
+                task.add(new TaskComponent("task name #" + order, order, null));
+                task.add(new TextureComponent(new Texture("img/highlight.png"), rect.width, rect.height));
+                task.add(new TextureSliceComponent(0, 0, 1, 1));
+                task.add(new AnimationComponent(4).set(0, 0));
+                task.add(new PositionComponent(
+                        rect.x + rect.width / 2,
+                        rect.y + rect.height / 2));
+                task.add(new HiddenComponent());
+
+                engine.addEntity(task);
+            }
+        }
 
         Entity locationText = new Entity();
         locationText.add(new TextComponent("", 20, 183));

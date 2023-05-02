@@ -31,10 +31,21 @@ public class TaskSystem extends EntitySystem implements EntityListener {
         );
 
         tasks = engine.getEntitiesFor(Family.all(TaskComponent.class).get());
+        if (tasks.size() == 0) {
+            engine.removeSystem(this);
+            return;
+        }
+
         currentTask = tasks.first();
         onNewTask();
 
         gameState = engine.getEntitiesFor(Family.all(GameStateComponent.class).get()).first();
+    }
+
+    @Override
+    public void removedFromEngine(Engine engine) {
+        super.removedFromEngine(engine);
+        engine.removeEntityListener(this);
     }
 
     private Entity getNextTask() {
