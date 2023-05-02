@@ -22,7 +22,7 @@ public class DoorComponent implements Component, InteractionComponent.Interactio
 
     @Override
     public void doInteraction(Engine engine, Entity entity) {
-        Entity mapEntity = engine.getEntitiesFor(Families.map).first();
+        Entity mapEntity = engine.getEntitiesFor(Family.all(MapComponent.class).get()).first();
         MapComponent map = MapComponent.mapper.get(mapEntity);
 
         TiledMapTileLayer layer = (TiledMapTileLayer) map.map.getLayers().get(0);

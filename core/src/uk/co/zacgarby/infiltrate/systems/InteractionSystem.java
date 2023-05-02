@@ -3,7 +3,6 @@ package uk.co.zacgarby.infiltrate.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import uk.co.zacgarby.infiltrate.components.*;
 
@@ -12,7 +11,7 @@ public class InteractionSystem extends IteratingSystem {
     private Entity player;
 
     public InteractionSystem() {
-        super(Families.interaction, 50);
+        super(Family.all(InteractionComponent.class).get(), 50);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class InteractionSystem extends IteratingSystem {
 
     @Override
     public void update(float deltaTime) {
-        player = getEngine().getEntitiesFor(Families.player).first();
+        player = getEngine().getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
         super.update(deltaTime);
     }
 }

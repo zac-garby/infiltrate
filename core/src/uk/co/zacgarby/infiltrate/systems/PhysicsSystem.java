@@ -1,13 +1,7 @@
 package uk.co.zacgarby.infiltrate.systems;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -26,8 +20,8 @@ public class PhysicsSystem extends EntitySystem implements EntityListener {
 
     @Override
     public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Families.physics);
-        engine.addEntityListener(Families.physics, this);
+        entities = engine.getEntitiesFor(Family.all(RigidbodyComponent.class, PositionComponent.class).get());
+        engine.addEntityListener(Family.all(RigidbodyComponent.class, PositionComponent.class).get(), this);
     }
 
     @Override

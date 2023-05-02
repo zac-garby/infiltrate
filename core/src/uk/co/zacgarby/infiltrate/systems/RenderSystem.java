@@ -2,7 +2,9 @@ package uk.co.zacgarby.infiltrate.systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,9 +17,8 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import uk.co.zacgarby.infiltrate.Font;
 import uk.co.zacgarby.infiltrate.components.*;
 
 import java.util.Arrays;
@@ -33,9 +34,11 @@ public class RenderSystem extends IteratingSystem {
     private final Matrix4 idMatrix;
     private final Texture mapMask;
     private final OrthogonalTiledMapRenderer mapRenderer;
+    private final Font font;
+    private ImmutableArray<Entity> uiEntities;
 
     public RenderSystem(SpriteBatch batch, OrthographicCamera camera, ShaderProgram shader, TiledMap map, Texture mapMask) {
-        super(Families.renderable);
+        super(Family.all(TextureComponent.class, PositionComponent.class).get());
         this.batch = batch;
         this.camera = camera;
         this.priority = 1000;
@@ -60,11 +63,18 @@ public class RenderSystem extends IteratingSystem {
         idMatrix = idCamera.combined;
 
         mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
+
+        font = new Font(
+                Gdx.files.internal("img/font.png"),
+                "abcdefghijklmnopqrstuvwxyz0123456789.,()[]{}<>/\\|!-_+=;:?'~%#~*|"
+        );
     }
 
     @Override
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
+
+        uiEntities = engine.getEntitiesFor(Family.one(TextComponent.class).get());
 
         nullShader = batch.getShader();
     }
@@ -139,7 +149,7 @@ public class RenderSystem extends IteratingSystem {
         shader.setUniformf("u_height", mapMask.getHeight());
 
         // heading vector for player heading
-        Entity player = getEngine().getEntitiesFor(Families.player).first();
+        Entity player = getEngine().getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
         MovementControlsComponent control = MovementControlsComponent.mapper.get(player);
         shader.setUniformf("u_heading", control.heading);
 
@@ -169,6 +179,19 @@ public class RenderSystem extends IteratingSystem {
         batch.setShader(nullShader);
         batch.begin();
         batch.draw(destFBORegion, 0, 0, camera.viewportWidth, camera.viewportHeight);
+
+        // draw ui
+        for (Entity e : uiEntities) {
+            if (TextComponent.mapper.has(e)) {
+                TextComponent text = TextComponent.mapper.get(e);
+                if (text.alignLeft) {
+                    font.draw(batch, text.x, text.y, text.text);
+                } else {
+                    font.drawRight(batch, text.x, text.y, text.text);
+                }
+            }
+        }
+
         batch.end();
     }
 }

@@ -58,6 +58,7 @@ public class GameScreen implements Screen {
         world.add(new MapComponent(map));
         world.add(new PositionComponent(0, 0));
         world.add(new PhysicsWorldComponent(map));
+        engine.addEntity(world);
 
         engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, map, mapMask));
         engine.addSystem(new InputSystem());
@@ -65,8 +66,7 @@ public class GameScreen implements Screen {
         engine.addSystem(new AnimationSystem(0.1f));
         engine.addSystem(new CameraFollowSystem());
         engine.addSystem(new InteractionSystem());
-
-        engine.addEntity(world);
+        engine.addSystem(new GPSSystem(map));
 
         Entity player = new Entity();
         player.add(new PlayerComponent());
@@ -88,6 +88,19 @@ public class GameScreen implements Screen {
         task.add(new AnimationComponent(4).set(0, 0));
         task.add(new PositionComponent(38 * 12 + 6, 25 * 12 + 6));
         engine.addEntity(task);
+
+        Entity locationText = new Entity();
+        locationText.add(new TextComponent("", 20, 183));
+        locationText.add(new GPSComponent());
+        engine.addEntity(locationText);
+
+        Entity levelText = new Entity();
+        levelText.add(new TextComponent("LEVEL 1", 183, 183, false));
+        engine.addEntity(levelText);
+
+        Entity taskText = new Entity();
+        taskText.add(new TextComponent("* FIND THE SECRET DOCUMENTS.", 20, 11));
+        engine.addEntity(taskText);
 
         box2DDebugRenderer = new Box2DDebugRenderer();
         worldForDebug = PhysicsWorldComponent.mapper.get(world).world;

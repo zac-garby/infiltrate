@@ -12,7 +12,7 @@ import uk.co.zacgarby.infiltrate.components.*;
 
 public class InputSystem extends IteratingSystem {
     public InputSystem() {
-        super(Families.control);
+        super(Family.all(MovementControlsComponent.class, MovementComponent.class, AnimationComponent.class).get());
         this.priority = 100;
     }
 
