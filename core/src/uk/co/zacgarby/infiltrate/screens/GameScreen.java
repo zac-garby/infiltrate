@@ -1,4 +1,4 @@
-package uk.co.zacgarby.infiltrate;
+package uk.co.zacgarby.infiltrate.screens;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
 import uk.co.zacgarby.infiltrate.components.physical.*;
@@ -20,20 +21,14 @@ import uk.co.zacgarby.infiltrate.systems.*;
 import static uk.co.zacgarby.infiltrate.Map.makeMapMask;
 
 public class GameScreen implements Screen {
-    private final Game game;
     private final Engine engine;
-    private final OrthographicCamera camera;
-
-    private final Box2DDebugRenderer box2DDebugRenderer;
-    private final World worldForDebug;
 
     public GameScreen(Game game) {
-        this.game = game;
 
         // the amount of "pixels" in the x-axis of the screen
         float scale = 200f;
 
-        camera = new OrthographicCamera(
+        OrthographicCamera camera = new OrthographicCamera(
                 scale,
                 scale * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()));
 
@@ -61,14 +56,6 @@ public class GameScreen implements Screen {
         Entity gameState = new Entity();
         gameState.add(new GameStateComponent());
         engine.addEntity(gameState);
-
-        engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, map, mapMask));
-        engine.addSystem(new InputSystem());
-        engine.addSystem(new PhysicsSystem(world));
-        engine.addSystem(new AnimationSystem(0.1f));
-        engine.addSystem(new CameraFollowSystem());
-        engine.addSystem(new InteractionSystem());
-        engine.addSystem(new GPSSystem(map));
 
         Entity player = new Entity();
         player.add(new PlayerComponent());
@@ -112,14 +99,18 @@ public class GameScreen implements Screen {
         engine.addEntity(levelText);
 
         Entity taskText = new Entity();
-        taskText.add(new TextComponent("* FIND THE SECRET DOCUMENTS.", 20, 11));
+        taskText.add(new TextComponent("* .", 20, 11));
         taskText.add(new TaskDescriptionComponent());
         engine.addEntity(taskText);
 
+        engine.addSystem(new RenderSystem(game.batch, camera, lightingShader, map, mapMask));
+        engine.addSystem(new InputSystem());
+        engine.addSystem(new PhysicsSystem(world));
+        engine.addSystem(new AnimationSystem(0.1f));
+        engine.addSystem(new CameraFollowSystem());
+        engine.addSystem(new InteractionSystem());
+        engine.addSystem(new GPSSystem(map));
         engine.addSystem(new TaskSystem());
-
-        box2DDebugRenderer = new Box2DDebugRenderer();
-        worldForDebug = PhysicsWorldComponent.mapper.get(world).world;
     }
 
     @Override
@@ -130,7 +121,6 @@ public class GameScreen implements Screen {
     @Override
     public void render(float dt) {
         engine.update(dt);
-//        box2DDebugRenderer.render(worldForDebug, camera.combined);
     }
 
     @Override

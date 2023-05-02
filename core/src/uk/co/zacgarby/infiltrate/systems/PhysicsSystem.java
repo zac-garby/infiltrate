@@ -25,6 +25,11 @@ public class PhysicsSystem extends EntitySystem implements EntityListener {
     @Override
     public void addedToEngine(Engine engine) {
         entities = engine.getEntitiesFor(Family.all(RigidbodyComponent.class, PositionComponent.class).get());
+
+        for (Entity e : entities) {
+            this.entityAdded(e);
+        }
+
         engine.addEntityListener(Family.all(RigidbodyComponent.class, PositionComponent.class).get(), this);
     }
 
