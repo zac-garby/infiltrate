@@ -66,7 +66,7 @@ public class RenderSystem extends IteratingSystem {
 
         font = new Font(
                 Gdx.files.internal("img/font.png"),
-                "abcdefghijklmnopqrstuvwxyz0123456789.,()[]{}<>/\\|!-_+=;:?'~%#~*|"
+                "abcdefghijklmnopqrstuvwxyz0123456789.,()[]{}<>/\\|!-_+=;:?'\"%#~*"
         );
     }
 

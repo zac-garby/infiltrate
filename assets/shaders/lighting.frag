@@ -52,10 +52,11 @@ void main() {
         gl_FragColor.rgb *= min(sqrt(sqrt(m)), 1.0);
     }
 
+    float f = 1.0;
+
     // maximum torch range
     if (len_uv > torchDistance) {
-        float f = max(1.0 - (len_uv - torchDistance) / distanceFalloff, 0.0);
-        gl_FragColor.rgb *= f;
+        f = min(max(1.0 - (len_uv - torchDistance) / distanceFalloff, 0.0), f);
     }
 
     // torch directionality
@@ -64,13 +65,14 @@ void main() {
     float a = acos(d);
     if (d2 < 0.0) {
         a = length(uv - u_heading * 0.02);
-        float f = min(max(1.0 - (a - 0.095) / 0.02, 0.0), 1.0);
-        gl_FragColor.rgb *= f;
+        f = min(max(1.0 - (a - 0.095) / 0.02, 0.0), f);
     } else if (d < 0.0 || a > torchAngle) {
-        float f = min(max(1.0 - (a - torchAngle) / 0.12, 0.0), 1.0);
-        gl_FragColor.rgb *= f;
+        f = min(max(1.0 - (a - torchAngle) / 0.12, 0.0), f);
     }
 
+    gl_FragColor.rgb *= max(f, 0.1);
+
+
     // darkest colour possible = purple
-    gl_FragColor.rgb = max(0.85 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
+    gl_FragColor.rgb = max(0.6 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
 }
