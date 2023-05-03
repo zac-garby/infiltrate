@@ -10,12 +10,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Filter;
 import uk.co.zacgarby.infiltrate.Game;
@@ -54,9 +51,6 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         TiledMap map = new TmxMapLoader().load("map12.tmx");
         Texture mapMask = makeMapMask(map, new Pixmap(Gdx.files.internal("img/tileset-mask.png")));
 
-        Filter playerFilter = new Filter();
-        playerFilter.groupIndex = -1; // don't collide with other players
-
         engine = new Engine();
 
         Entity world = new Entity();
@@ -69,20 +63,41 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         gameState.add(new GameStateComponent());
         engine.addEntity(gameState);
 
-        player = new Entity();
-        player.add(new PlayerComponent());
-        player.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
-        player.add(new TextureSliceComponent(0, 0, 9, 11));
-        player.add(new AnimationComponent(2).set(1, 2));
-        player.add(new PositionComponent(280, 340));
-        player.add(new MovementComponent());
-        player.add(new MovementRecorderComponent());
-        player.add(new RigidbodyComponent(2f, 0f, -3.5f)
-                .setFilter(playerFilter));
-        player.add(new MovementControlsComponent(130f));
-        player.add(new CameraFollowComponent(camera));
-        engine.addEntity(player);
+        player = makePlayer(camera, map, levelNum);
+        loadRecordedPlayers(recordings);
+        loadTasks(levelNum, map);
+        makeUI(levelNum);
 
+        engine.addSystem(new GameRenderSystem(game.batch, camera, lightingShader, map, mapMask));
+        engine.addSystem(new UIRenderSystem(game.batch, camera.viewportWidth, camera.viewportHeight));
+        engine.addSystem(new InputSystem());
+        engine.addSystem(new PhysicsSystem(world));
+        engine.addSystem(new AnimationSystem(0.1f));
+        engine.addSystem(new CameraFollowSystem());
+        engine.addSystem(new InteractionSystem());
+        engine.addSystem(new GPSSystem(map));
+        engine.addSystem(new TaskSystem(this));
+        engine.addSystem(new MovementRecordingSystem(0.1f));
+        engine.addSystem(new MovementPlaybackSystem());
+    }
+
+    private void makeUI(int levelNum) {
+        Entity locationText = new Entity();
+        locationText.add(new TextComponent("", 20, 183));
+        locationText.add(new GPSComponent());
+        engine.addEntity(locationText);
+
+        Entity levelText = new Entity();
+        levelText.add(new TextComponent("LEVEL " + levelNum, 183, 183, false));
+        engine.addEntity(levelText);
+
+        Entity taskText = new Entity();
+        taskText.add(new TextComponent("* .", 20, 11));
+        taskText.add(new TaskDescriptionComponent());
+        engine.addEntity(taskText);
+    }
+
+    private void loadRecordedPlayers(List<Queue<MovementRecorderComponent.Record>> recordings) {
         for (Queue<MovementRecorderComponent.Record> records : recordings) {
             Entity oldPlayer = new Entity();
             oldPlayer.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
@@ -92,7 +107,33 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
             oldPlayer.add(new MovementPlaybackComponent(records));
             engine.addEntity(oldPlayer);
         }
+    }
 
+    private Entity makePlayer(OrthographicCamera camera, TiledMap map, int levelNum) {
+        MapLayer spawnLayer = map.getLayers().get("Spawnpoints");
+        RectangleMapObject spawn = (RectangleMapObject) spawnLayer.getObjects().get("Spawn " + levelNum);
+
+        Filter playerFilter = new Filter();
+        playerFilter.groupIndex = -1; // don't collide with other players
+
+        final Entity player = new Entity();
+        player.add(new PlayerComponent());
+        player.add(new TextureComponent(new Texture("img/agent.png"), 9f, 11f));
+        player.add(new TextureSliceComponent(0, 0, 9, 11));
+        player.add(new AnimationComponent(2).set(1, 2));
+        player.add(new PositionComponent(spawn.getRectangle().x, spawn.getRectangle().y));
+        player.add(new MovementComponent());
+        player.add(new MovementRecorderComponent());
+        player.add(new RigidbodyComponent(2f, 0f, -3.5f)
+                .setFilter(playerFilter));
+        player.add(new MovementControlsComponent(130f));
+        player.add(new CameraFollowComponent(camera));
+        engine.addEntity(player);
+
+        return player;
+    }
+
+    private void loadTasks(int levelNum, TiledMap map) {
         MapLayer tasksLayer = map.getLayers().get("Tasks Level " + levelNum);
         if (tasksLayer != null) {
             Map<Integer, List<RectangleMapObject>> possibleTasks = new HashMap<>();
@@ -134,32 +175,6 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
                 engine.addEntity(task);
             }
         }
-
-        Entity locationText = new Entity();
-        locationText.add(new TextComponent("", 20, 183));
-        locationText.add(new GPSComponent());
-        engine.addEntity(locationText);
-
-        Entity levelText = new Entity();
-        levelText.add(new TextComponent("LEVEL " + levelNum, 183, 183, false));
-        engine.addEntity(levelText);
-
-        Entity taskText = new Entity();
-        taskText.add(new TextComponent("* .", 20, 11));
-        taskText.add(new TaskDescriptionComponent());
-        engine.addEntity(taskText);
-
-        engine.addSystem(new GameRenderSystem(game.batch, camera, lightingShader, map, mapMask));
-        engine.addSystem(new UIRenderSystem(game.batch, camera.viewportWidth, camera.viewportHeight));
-        engine.addSystem(new InputSystem());
-        engine.addSystem(new PhysicsSystem(world));
-        engine.addSystem(new AnimationSystem(0.1f));
-        engine.addSystem(new CameraFollowSystem());
-        engine.addSystem(new InteractionSystem());
-        engine.addSystem(new GPSSystem(map));
-        engine.addSystem(new TaskSystem(this));
-        engine.addSystem(new MovementRecordingSystem(0.1f));
-        engine.addSystem(new MovementPlaybackSystem());
     }
 
     @Override
