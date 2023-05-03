@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,6 +23,8 @@ import uk.co.zacgarby.infiltrate.components.graphics.TextureComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.TextureSliceComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementControlsComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
+import uk.co.zacgarby.infiltrate.components.mechanics.TorchComponent;
+import uk.co.zacgarby.infiltrate.components.physical.HeadingComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
 import java.util.Arrays;
@@ -37,6 +40,9 @@ public class GameRenderSystem extends IteratingSystem {
     private final Matrix4 idMatrix;
     private final Texture mapMask;
     private final OrthogonalTiledMapRenderer mapRenderer;
+    private ImmutableArray<Entity> torches;
+    private final float[] uCamX = new float[5], uCamY = new float[5];
+    private final float[] uHeading = new float[10];
 
     private final Comparator<Object> yComparator = new Comparator<Object>() {
         @Override
@@ -49,8 +55,10 @@ public class GameRenderSystem extends IteratingSystem {
 
     public GameRenderSystem(SpriteBatch batch, OrthographicCamera camera, ShaderProgram shader, TiledMap map, Texture mapMask) {
         super(Family
-                .all(TextureComponent.class, PositionComponent.class)
-                .exclude(HiddenComponent.class).get());
+                .all(
+                        TextureComponent.class,
+                        PositionComponent.class
+                ).exclude(HiddenComponent.class).get());
 
         this.batch = batch;
         this.camera = camera;
@@ -83,6 +91,7 @@ public class GameRenderSystem extends IteratingSystem {
         super.addedToEngine(engine);
 
         nullShader = batch.getShader();
+        torches = engine.getEntitiesFor(Family.all(TorchComponent.class).get());
     }
 
     @Override
@@ -149,15 +158,24 @@ public class GameRenderSystem extends IteratingSystem {
         shader.setUniformi("u_mask", 1);
         Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
 
-        shader.setUniformf("u_cam_x", camera.position.x / mapMask.getWidth());
-        shader.setUniformf("u_cam_y", camera.position.y / mapMask.getHeight());
+        for (int i = 0; i < torches.size(); i++) {
+            Entity e = torches.get(i);
+            PositionComponent position = PositionComponent.mapper.get(e);
+            HeadingComponent heading = HeadingComponent.mapper.get(e);
+
+            uCamX[i] = position.position.x / mapMask.getWidth();
+            uCamY[i] = position.position.y / mapMask.getHeight();
+            uHeading[2*i] = heading.heading.x;
+            uHeading[2*i + 1] = heading.heading.y;
+        }
+
+        shader.setUniformi("u_num_players", torches.size());
+        shader.setUniform1fv("u_cam_x", uCamX, 0, torches.size());
+        shader.setUniform1fv("u_cam_y", uCamY, 0, torches.size());
         shader.setUniformf("u_width", mapMask.getWidth());
         shader.setUniformf("u_height", mapMask.getHeight());
 
-        // heading vector for player heading
-        Entity player = getEngine().getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
-        MovementControlsComponent control = MovementControlsComponent.mapper.get(player);
-        shader.setUniformf("u_heading", control.heading);
+        shader.setUniform2fv("u_heading", uHeading, 0, 2 * torches.size());
 
         // render the renderables, in y-order
         Object[] entities = this.getEntities().toArray();

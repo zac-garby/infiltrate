@@ -12,11 +12,17 @@ import uk.co.zacgarby.infiltrate.components.graphics.AnimationComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.InteractableComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.InteractionComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementControlsComponent;
+import uk.co.zacgarby.infiltrate.components.physical.HeadingComponent;
 import uk.co.zacgarby.infiltrate.components.physical.MovementComponent;
 
 public class InputSystem extends IteratingSystem {
     public InputSystem() {
-        super(Family.all(MovementControlsComponent.class, MovementComponent.class, AnimationComponent.class).get());
+        super(Family.all(
+                MovementControlsComponent.class,
+                MovementComponent.class,
+                AnimationComponent.class,
+                HeadingComponent.class
+        ).get());
         this.priority = 100;
     }
 
@@ -25,6 +31,7 @@ public class InputSystem extends IteratingSystem {
         MovementControlsComponent controls = MovementControlsComponent.mapper.get(entity);
         MovementComponent movement = MovementComponent.mapper.get(entity);
         AnimationComponent animation = AnimationComponent.mapper.get(entity);
+        HeadingComponent heading = HeadingComponent.mapper.get(entity);
 
         Vector2 move = new Vector2();
 
@@ -50,7 +57,7 @@ public class InputSystem extends IteratingSystem {
 
         // update torch direction
         if (move.len2() > 0.1) {
-            controls.heading.interpolate(move.cpy(), 4.5f * deltaTime, Interpolation.circleIn).nor();
+            heading.heading.interpolate(move.cpy(), 4.5f * deltaTime, Interpolation.circleIn).nor();
         }
 
         // do movement animations

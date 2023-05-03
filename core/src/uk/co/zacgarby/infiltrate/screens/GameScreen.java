@@ -14,7 +14,9 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
+import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
@@ -104,7 +106,9 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
             oldPlayer.add(new TextureSliceComponent(0, 0, 9, 11));
             oldPlayer.add(new AnimationComponent(2).set(0, 0));
             oldPlayer.add(new PositionComponent(280, 340));
+            oldPlayer.add(new HeadingComponent(new Vector2(0.0f, 0.0f)));
             oldPlayer.add(new MovementPlaybackComponent(records));
+            oldPlayer.add(new TorchComponent());
             engine.addEntity(oldPlayer);
         }
     }
@@ -128,6 +132,8 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
                 .setFilter(playerFilter));
         player.add(new MovementControlsComponent(130f));
         player.add(new CameraFollowComponent(camera));
+        player.add(new HeadingComponent(new Vector2(1.0f, 0.0f)));
+        player.add(new TorchComponent());
         engine.addEntity(player);
 
         return player;

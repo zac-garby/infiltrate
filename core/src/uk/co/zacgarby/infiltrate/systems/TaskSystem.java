@@ -67,6 +67,7 @@ public class TaskSystem extends EntitySystem implements EntityListener {
         TaskComponent task = TaskComponent.mapper.get(currentTask);
 
         currentTask.remove(HiddenComponent.class);
+        System.out.println("un-hidden task");
 
         Entity taskTextEntity = getEngine().getEntitiesFor(
                 Family.all(TaskDescriptionComponent.class, TextComponent.class).get()).first();

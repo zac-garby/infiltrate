@@ -17,7 +17,6 @@ public class MovementControlsComponent implements Component {
 
     public float speed;
 
-    public Vector2 heading = new Vector2(1.0f, 0.0f).nor();
     public AnimationComponent.Animation leftAnimation = new AnimationComponent.Animation(3, 4);
     public AnimationComponent.Animation rightAnimation = new AnimationComponent.Animation(1, 2);
     public AnimationComponent.Animation upAnimation = new AnimationComponent.Animation(7, 8);
