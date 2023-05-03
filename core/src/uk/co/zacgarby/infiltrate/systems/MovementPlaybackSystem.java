@@ -43,6 +43,8 @@ public class MovementPlaybackSystem extends IteratingSystem {
                         .currentRecord.position.cpy()
                         .interpolate(playback.nextRecord.position, (float) t, Interpolation.linear));
             }
+        } else {
+            getEngine().removeEntity(entity);
         }
     }
 }
