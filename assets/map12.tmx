@@ -112,71 +112,85 @@
  <objectgroup id="3" name="Tasks Level 1">
   <object id="48" x="287.96" y="216.184" width="11.9627" height="11.1083">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="49" x="360.022" y="228.431" width="12.5324" height="11.1083">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="50" x="312.171" y="251.787" width="10.5386" height="11.3931">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="51" x="395.625" y="264.035" width="11.9627" height="11.1083">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="52" x="360.022" y="263.465" width="12.2476" height="12.5324">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="53" x="360.591" y="300.208" width="12.2476" height="10.8234">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="54" x="383.662" y="299.638" width="11.6779" height="11.9627">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="55" x="288.815" y="324.133" width="11.6779" height="10.5386">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="56" x="276.282" y="287.96" width="24.78" height="11.6779">
    <properties>
+    <property name="description" value="find the secret docs."/>
     <property name="order" type="int" value="0"/>
    </properties>
   </object>
   <object id="57" x="420.405" y="300.208" width="10.5386" height="19.9379">
    <properties>
+    <property name="description" value="download the files."/>
     <property name="order" type="int" value="1"/>
    </properties>
   </object>
   <object id="58" x="431.513" y="300.493" width="12.2476" height="19.9379">
    <properties>
+    <property name="description" value="download the files."/>
     <property name="order" type="int" value="1"/>
    </properties>
   </object>
   <object id="59" x="444.615" y="300.493" width="11.1083" height="19.9379">
    <properties>
+    <property name="description" value="download the files."/>
     <property name="order" type="int" value="1"/>
    </properties>
   </object>
   <object id="60" x="456.293" y="300.208" width="10.5386" height="20.2227">
    <properties>
+    <property name="description" value="download the files."/>
     <property name="order" type="int" value="1"/>
    </properties>
   </object>
   <object id="61" x="518.67" y="393.631" width="19.9379" height="34.1793">
    <properties>
+    <property name="description" value="escape"/>
     <property name="order" type="int" value="2"/>
    </properties>
   </object>

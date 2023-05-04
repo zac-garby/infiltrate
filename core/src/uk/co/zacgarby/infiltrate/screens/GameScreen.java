@@ -169,7 +169,9 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
 
                 Entity task = new Entity();
                 task.add(new InteractionComponent(rect.width, rect.height));
-                task.add(new TaskComponent("task name #" + order, order, null));
+                task.add(new TaskComponent(
+                        rectangleObject.getProperties().get("description", String.class),
+                        order, null));
                 task.add(new TextureComponent(new Texture("img/highlight.png"), rect.width, rect.height));
                 task.add(new TextureSliceComponent(0, 0, 1, 1));
                 task.add(new AnimationComponent(4).set(0, 0));

@@ -8,7 +8,7 @@
 float pi = 3.14159;
 float stepSize = 0.00005;
 float torchAngle = 30.0 * (pi / 180.0); // 40 degrees
-float torchDistance = 5.0;
+float torchDistance = 4.0;
 float distanceFalloff = 0.5;
 
 varying LOWP vec4 v_color;
@@ -77,7 +77,7 @@ void main() {
         float a = acos(d);
         if (d2 < 0.5) {
             a = length(diff - heading * 0.5);
-            f = min(max(1.0 - (a - 0.4) / 0.35, 0.0), f);
+            f = min(max(1.0 - (a - 0.4) / 0.25, 0.0), f);
         } else if (d < 0.0 || a > torchAngle) {
             f = min(max(1.0 - (a - torchAngle) / 0.2, 0.0), f);
         }
