@@ -7,8 +7,8 @@
 
 float pi = 3.14159;
 float stepSize = 0.00005;
-float torchAngle = 30.0 * (pi / 180.0); // 40 degrees
-float torchDistance = 4.0;
+float torchAngle = 30.0 * (pi / 180.0);
+float torchDistance = 5.0;
 float distanceFalloff = 0.5;
 
 varying LOWP vec4 v_color;
@@ -21,6 +21,7 @@ uniform float u_width, u_height;
 uniform vec2 u_heading[5];
 uniform sampler2D u_texture;
 uniform sampler2D u_mask;
+uniform bool u_gameover;
 
 void main() {
     u_heading;
@@ -78,11 +79,13 @@ void main() {
         if (d2 < 0.5) {
             a = length(diff - heading * 0.5);
             f = min(max(1.0 - (a - 0.4) / 0.25, 0.0), f);
-        } else if (d < 0.0 || a > torchAngle) {
+        }
+
+        if (d < 0.0 || a > torchAngle) {
             f = min(max(1.0 - (a - torchAngle) / 0.2, 0.0), f);
         }
 
-        dim_this *= max(f, 0.15);
+        dim_this *= max(f, 0.1);
         dim = max(dim, dim_this);
     }
 
@@ -90,4 +93,10 @@ void main() {
 
     // darkest colour possible = purple
     gl_FragColor.rgb = max(0.6 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
+
+    if (u_gameover) {
+        // darken colour
+        gl_FragColor.rgb *= 0.3;
+        gl_FragColor.r *= 2.0;
+    }
 }

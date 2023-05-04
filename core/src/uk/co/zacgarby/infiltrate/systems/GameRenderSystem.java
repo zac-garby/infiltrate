@@ -31,6 +31,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class GameRenderSystem extends IteratingSystem {
+    public boolean gameOver = false;
+
     private final SpriteBatch batch;
     private final OrthographicCamera camera;
     private final ShaderProgram shader;
@@ -174,8 +176,8 @@ public class GameRenderSystem extends IteratingSystem {
         shader.setUniform1fv("u_cam_y", uCamY, 0, torches.size());
         shader.setUniformf("u_width", mapMask.getWidth());
         shader.setUniformf("u_height", mapMask.getHeight());
-
         shader.setUniform2fv("u_heading", uHeading, 0, 2 * torches.size());
+        shader.setUniformi("u_gameover", gameOver ? 1 : 0);
 
         // render the renderables, in y-order
         Object[] entities = this.getEntities().toArray();

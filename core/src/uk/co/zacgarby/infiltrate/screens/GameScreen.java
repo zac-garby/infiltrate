@@ -2,6 +2,7 @@ package uk.co.zacgarby.infiltrate.screens;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,13 +11,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
@@ -27,7 +27,7 @@ import java.util.*;
 
 import static uk.co.zacgarby.infiltrate.etc.Map.makeMapMask;
 
-public class GameScreen implements Screen, TaskSystem.TaskCallback {
+public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetectionSystem.DetectionListener {
     private final Game game;
     private final Engine engine;
     private final int levelNum;
@@ -50,7 +50,8 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
                 Gdx.files.internal("shaders/lighting.vert"),
                 Gdx.files.internal("shaders/lighting.frag"));
 
-        TiledMap map = new TmxMapLoader().load("map12.tmx");
+        TiledMap map = game.map;
+
         Texture mapMask = makeMapMask(map, new Pixmap(Gdx.files.internal("img/tileset-mask.png")));
 
         engine = new Engine();
@@ -81,6 +82,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         engine.addSystem(new TaskSystem(this));
         engine.addSystem(new MovementRecordingSystem(0.1f));
         engine.addSystem(new MovementPlaybackSystem());
+        engine.addSystem(new TorchDetectionSystem(0.1f, mapMask, player, this));
     }
 
     private void makeUI(int levelNum) {
@@ -130,7 +132,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         player.add(new MovementRecorderComponent());
         player.add(new RigidbodyComponent(2f, 0f, -3.5f)
                 .setFilter(playerFilter));
-        player.add(new MovementControlsComponent(130f));
+        player.add(new MovementControlsComponent(220f));
         player.add(new CameraFollowComponent(camera));
         player.add(new HeadingComponent(new Vector2(1.0f, 0.0f)));
         player.add(new TorchComponent());
@@ -164,14 +166,21 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
                 int r = (int) (Math.random() * possibilities.size());
                 RectangleMapObject rectangleObject = possibilities.get(r);
                 Rectangle rect = rectangleObject.getRectangle();
+                MapProperties properties = rectangleObject.getProperties();
 
                 System.out.println("registered task of order " + order + " at " + rect.x + ", " + rect.y);
+
+                String[] cutscene = null;
+                if (properties.containsKey("cutscene")) {
+                    String cutsceneString = properties.get("cutscene", String.class);
+                    cutscene = cutsceneString.split("\n");
+                }
 
                 Entity task = new Entity();
                 task.add(new InteractionComponent(rect.width, rect.height));
                 task.add(new TaskComponent(
-                        rectangleObject.getProperties().get("description", String.class),
-                        order, null));
+                        properties.get("description", String.class),
+                        order, cutscene));
                 task.add(new TextureComponent(new Texture("img/highlight.png"), rect.width, rect.height));
                 task.add(new TextureSliceComponent(0, 0, 1, 1));
                 task.add(new AnimationComponent(4).set(0, 0));
@@ -206,6 +215,33 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback {
         if (task.cutscene != null) {
             game.setScreen(new CutsceneScreen(game, this, task.cutscene));
         }
+    }
+
+    @Override
+    public void onDetected(Entity detectedBy) {
+        engine.removeSystem(engine.getSystem(InputSystem.class));
+        engine.removeSystem(engine.getSystem(PhysicsSystem.class));
+        engine.removeSystem(engine.getSystem(AnimationSystem.class));
+        engine.removeSystem(engine.getSystem(InteractionSystem.class));
+        engine.removeSystem(engine.getSystem(TaskSystem.class));
+        engine.removeSystem(engine.getSystem(MovementRecordingSystem.class));
+        engine.removeSystem(engine.getSystem(MovementPlaybackSystem.class));
+        engine.removeSystem(engine.getSystem(TorchDetectionSystem.class));
+
+        engine.removeAllEntities(Family.all(TextComponent.class).get());
+
+        Entity text = new Entity();
+        text.add(new PositionComponent(100, 100));
+        text.add(new TextComponent("!! you were detected !!", 61, 103));
+        engine.addEntity(text);
+
+        Entity text2 = new Entity();
+        text2.add(new PositionComponent(100, 100));
+        text2.add(new TextComponent("press [ENTER] to try again...", 52, 95));
+        engine.addEntity(text2);
+
+        engine.addSystem(new GameOverSystem(game, game.screenForLevel(levelNum)));
+        engine.getSystem(GameRenderSystem.class).gameOver = true;
     }
 
     @Override

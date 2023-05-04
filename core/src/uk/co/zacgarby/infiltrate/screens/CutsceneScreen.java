@@ -22,7 +22,7 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback {
 
         ArrayList<String> linesCol = new ArrayList<>(Arrays.asList(lines));
         linesCol.add("\\");
-        linesCol.add("            [ press space to continue ]");
+        linesCol.add("             [ press space to continue ]");
 
         engine = new Engine();
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));

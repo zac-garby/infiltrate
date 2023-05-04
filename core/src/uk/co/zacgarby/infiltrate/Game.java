@@ -3,7 +3,12 @@ package uk.co.zacgarby.infiltrate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementRecorderComponent;
+import uk.co.zacgarby.infiltrate.screens.CutsceneScreen;
 import uk.co.zacgarby.infiltrate.screens.GameScreen;
 import uk.co.zacgarby.infiltrate.screens.IntroScreen;
 
@@ -14,7 +19,8 @@ import java.util.Queue;
 public class Game extends com.badlogic.gdx.Game {
 	public SpriteBatch batch;
 	public float viewportWidth, viewportHeight;
-	private List<Queue<MovementRecorderComponent.Record>> previousRecordings = new ArrayList<>(5);
+	private final List<Queue<MovementRecorderComponent.Record>> previousRecordings = new ArrayList<>(5);
+	public TiledMap map;
 
 	@Override
 	public void create () {
@@ -24,7 +30,9 @@ public class Game extends com.badlogic.gdx.Game {
 
 		batch = new SpriteBatch();
 
-		this.setScreen(new IntroScreen(this));
+		map = new TmxMapLoader().load("map12.tmx");
+
+		this.setScreen(screenForLevel(1));
 	}
 
 	@Override
@@ -42,6 +50,13 @@ public class Game extends com.badlogic.gdx.Game {
 	}
 
 	public Screen screenForLevel(int level) {
-		return new GameScreen(this, level, previousRecordings);
+		MapLayer spawnsLayer = map.getLayers().get("Spawnpoints");
+		RectangleMapObject spawn = (RectangleMapObject) spawnsLayer.getObjects().get("Spawn " + level);
+		String[] cutscene = spawn.getProperties().get("cutscene", String.class).split("\n");
+
+		return new CutsceneScreen(
+				this,
+				new GameScreen(this, level, previousRecordings),
+				cutscene);
 	}
 }

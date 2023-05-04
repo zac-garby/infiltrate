@@ -48,7 +48,7 @@
         "tileset.tsx"
     ],
     "project": "infiltrate.tiled-project",
-    "property.type": "string",
+    "property.type": "float",
     "recentFiles": [
         "map12.tmx",
         "tileset12.tsx",
