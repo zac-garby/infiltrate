@@ -19,11 +19,11 @@
             }
         },
         "map12.tmx": {
-            "scale": 1.5513,
-            "selectedLayer": 5,
+            "scale": 1.62,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 629.7943660155998,
-                "y": 378.07000580158575
+                "x": 653.7037037037037,
+                "y": 329.32098765432096
             }
         },
         "tileset.tsx": {
@@ -48,7 +48,7 @@
         "map12.tmx"
     ],
     "project": "infiltrate.tiled-project",
-    "property.type": "string",
+    "property.type": "bool",
     "recentFiles": [
         "tileset.tsx",
         "map12.tmx",

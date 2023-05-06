@@ -39,6 +39,8 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         this.levelNum = levelNum;
         this.game = game;
 
+        System.out.println("recordings: " + recordings.size());
+
         OrthographicCamera camera = new OrthographicCamera(game.viewportWidth, game.viewportHeight);
 
         if (Math.floor(camera.viewportWidth) != camera.viewportWidth) {

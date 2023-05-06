@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="12" tileheight="12" infinite="0" nextlayerid="9" nextobjectid="119">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="12" tileheight="12" infinite="0" nextlayerid="9" nextobjectid="129">
  <tileset firstgid="1" source="tileset12.tsx"/>
  <layer id="1" name="Tile Layer 1" width="80" height="40">
   <data encoding="csv">
@@ -167,7 +167,7 @@ know when you've found them.
   dave xoxo
 \
       wait,
-        darn. ignore that too</property>
+        ignore that too</property>
     <property name="dx" type="float" value="1"/>
     <property name="dy" type="float" value="0"/>
    </properties>
@@ -358,6 +358,95 @@ the boss's life may depend on this.
   </object>
   <object id="110" name="Spawn 5" x="739.202" y="43.6477">
    <properties>
+    <property name="cutscene">SPY-OS v1.29                        [year 2137, 19:44]\
+mail\
+\
+                    * new mail *\
+             press [space] to continue
+\
+hello, agent.
+\
+your employer, computronics corp inc., has\
+  a task for you, relating to goings-on at\
+  B.E.L. labs.
+\
+the boss will be launching his experiment\
+  on human life extension tomorrow morning.
+\
+he hopes to &quot;harvest the life&quot;, what-\
+  ever that means, of the surrounding\
+  population, to extend his own.
+\
+hopefully, you would agree that this, if\
+  allowed, would be devastating.
+\
+as a result, your task is an important one.\
+  we need you to disable the project, and\
+  recover as much information about it as\
+  you can for our own operations.
+\
+we will drop you at the north of the complex.
+\
+find your way to the research library in\
+  the east wing. there's a book in there\
+  that will be essential to our\
+  understanding of his techniques.
+\
+similarly, we will need you to collect\
+  some information from the machines in\
+  one of the labs, and also make a copy\
+  of the supercomputer's hard-drive.
+\
+we want you to download the entire\
+  employee registry, as well. this should\
+  be on one of the computers in reception.
+\
+we trust that you know where these\
+  locations are.
+\
+with all this information for us, you\
+  will head to the secret project area.
+\
+this is located just past the boss's\
+  offices. he likes to be close, you\
+  see.
+\
+there will be a small observation\
+  office. download what you can off of\
+  the computers there, and then continue\
+  into the project area.
+\
+few people enter this room and come out\
+  alive. you will be one of the first.
+\
+our intelligence suggests you should find\
+  some sort of contraption there. or a\
+  device. something along those lines.
+\
+what we need you to do is disable this.
+\
+not switch it off, but really, really,\
+  *disable* it.
+\
+we cannot let them activate this device\
+  in earnest.
+\
+once you have disabled the device, meet\
+  us in the car park at the front of the\
+  building for a debrief.
+\
+  best,\
+  dave
+\
+P.S. we, computronics corp inc., have found\
+  a double-agent in our roster. we have sent\
+  this agent into the building at the same\
+  time, calling his bluff.
+\
+if you see him, make sure he doesn't see\
+  you. he is working for B.E.L. labs.
+\
+be careful, agent.</property>
     <property name="dx" type="float" value="1"/>
     <property name="dy" type="float" value="-0.7"/>
    </properties>
@@ -977,13 +1066,262 @@ now, get behind reception and find the\
   </object>
  </objectgroup>
  <objectgroup id="8" name="Tasks Level 5">
-  <object id="111" x="828.007" y="324.484" width="11.4716" height="10.6522"/>
-  <object id="112" x="839.889" y="300.721" width="12.2911" height="10.2425"/>
-  <object id="113" x="791.134" y="275.729" width="13.1105" height="10.6522"/>
-  <object id="114" x="563.806" y="144.979" width="10.6082" height="10.6082"/>
-  <object id="115" x="659.673" y="156.373" width="11.7869" height="11.394"/>
-  <object id="116" x="671.067" y="157.159" width="12.5727" height="11.0011"/>
-  <object id="117" x="708.392" y="133.192" width="11.0011" height="11.0011"/>
-  <object id="118" x="587.773" y="168.553" width="11.7869" height="11.7869"/>
+  <object id="111" x="828.007" y="324.484" width="11.4716" height="10.6522">
+   <properties>
+    <property name="cutscene">that's the one
+\
+ok, now you have the book, make\
+  your way over to the lab and\
+  get some data off of those\
+  funny-looking oscilloscopes.</property>
+    <property name="description" value="find the book in the library."/>
+    <property name="order" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="112" x="839.889" y="300.721" width="12.2911" height="10.2425">
+   <properties>
+    <property name="cutscene">that's the one
+\
+ok, now you have the book, make\
+  your way over to the lab and\
+  get some data off of those\
+  funny-looking oscilloscopes.</property>
+    <property name="description" value="find the book in the library."/>
+    <property name="order" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="113" x="791.134" y="275.729" width="13.1105" height="10.6522">
+   <properties>
+    <property name="cutscene">that's the one
+\
+ok, now you have the book, make\
+  your way over to the lab and\
+  get some data off of those\
+  funny-looking oscilloscopes.</property>
+    <property name="description" value="find the book in the library."/>
+    <property name="order" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="114" x="563.806" y="144.979" width="10.6082" height="10.6082">
+   <properties>
+    <property name="cutscene">perfect. no idea what it all\
+  means, but i'm sure our scientists\
+  can figure that out...
+\
+now, get yourself over the the super-\
+  computer room, at the south-west of\
+  the building, and copy the drives.
+\
+we want every last bit of data on\
+  them.</property>
+    <property name="description" value="get the data from the lab machines."/>
+    <property name="order" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="115" x="659.673" y="156.373" width="11.7869" height="11.394">
+   <properties>
+    <property name="cutscene">perfect. no idea what it all\
+  means, but i'm sure our scientists\
+  can figure that out...
+\
+now, get yourself over the the super-\
+  computer room, at the south-west of\
+  the building, and copy the drives.
+\
+we want every last bit of data on\
+  them.</property>
+    <property name="description" value="get the data from the lab machines."/>
+    <property name="order" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="116" x="671.067" y="157.159" width="12.5727" height="11.0011">
+   <properties>
+    <property name="cutscene">perfect. no idea what it all\
+  means, but i'm sure our scientists\
+  can figure that out...
+\
+now, get yourself over the the super-\
+  computer room, at the south-west of\
+  the building, and copy the drives.
+\
+we want every last bit of data on\
+  them.</property>
+    <property name="description" value="get the data from the lab machines."/>
+    <property name="order" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="117" x="708.392" y="133.192" width="11.0011" height="11.0011">
+   <properties>
+    <property name="cutscene">perfect. no idea what it all\
+  means, but i'm sure our scientists\
+  can figure that out...
+\
+now, get yourself over the the super-\
+  computer room, at the south-west of\
+  the building, and copy the drives.
+\
+we want every last bit of data on\
+  them.</property>
+    <property name="description" value="get the data from the lab machines."/>
+    <property name="order" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="118" x="587.773" y="168.553" width="11.7869" height="11.7869">
+   <properties>
+    <property name="cutscene">perfect. no idea what it all\
+  means, but i'm sure our scientists\
+  can figure that out...
+\
+now, get yourself over the the super-\
+  computer room, at the south-west of\
+  the building, and copy the drives.
+\
+we want every last bit of data on\
+  them.</property>
+    <property name="description" value="get the data from the lab machines."/>
+    <property name="order" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="119" x="420.399" y="300.959" width="11.0011" height="19.2519">
+   <properties>
+    <property name="cutscene">that was fast.
+\
+how on earth were you able to\
+  download 100 petabytes of\
+  data in one second?
+\
+oh well, tell me later.
+\
+for now, go up to reception and\
+  try and find a list of all the\
+  employees working here.</property>
+    <property name="description" value="copy the supercomputer drives."/>
+    <property name="order" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="120" x="431.793" y="300.566" width="11.0011" height="19.2519">
+   <properties>
+    <property name="cutscene">that was fast.
+\
+how on earth were you able to\
+  download 100 petabytes of\
+  data in one second?
+\
+oh well, tell me later.
+\
+for now, go up to reception and\
+  try and find a list of all the\
+  employees working here.</property>
+    <property name="description" value="copy the supercomputer drives."/>
+    <property name="order" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="121" x="443.973" y="300.959" width="11.394" height="18.859">
+   <properties>
+    <property name="cutscene">that was fast.
+\
+how on earth were you able to\
+  download 100 petabytes of\
+  data in one second?
+\
+oh well, tell me later.
+\
+for now, go up to reception and\
+  try and find a list of all the\
+  employees working here.</property>
+    <property name="description" value="copy the supercomputer drives."/>
+    <property name="order" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="122" x="456.546" y="300.566" width="10.6082" height="19.2519">
+   <properties>
+    <property name="cutscene">that was fast.
+\
+how on earth were you able to\
+  download 100 petabytes of\
+  data in one second?
+\
+oh well, tell me later.
+\
+for now, go up to reception and\
+  try and find a list of all the\
+  employees working here.</property>
+    <property name="description" value="copy the supercomputer drives."/>
+    <property name="order" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="123" x="374.037" y="144.586" width="7.85793" height="9.03662">
+   <properties>
+    <property name="cutscene">perfect.
+\
+now, you need to find the secret project.
+\
+it's towards the south-east of the\
+  complex, past the boss's and his\
+  secretary's office.
+\
+you should find an observation room. see\
+  what information you can find us from\
+  there.</property>
+    <property name="description" value="download the list of employees."/>
+    <property name="order" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="124" x="374.823" y="85.6514" width="7.46503" height="8.25083">
+   <properties>
+    <property name="cutscene">perfect.
+\
+now, you need to find the secret project.
+\
+it's towards the south-east of the\
+  complex, past the boss's and his\
+  secretary's office.
+\
+you should find an observation room. see\
+  what information you can find us from\
+  there.</property>
+    <property name="description" value="download the list of employees."/>
+    <property name="order" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="125" x="683.64" y="275.42" width="12.1798" height="11.0011">
+   <properties>
+    <property name="cutscene">fascinating.
+\
+now. see that button? in the\
+  chamber just past this room?
+\
+try and dismantle it.
+\
+but whatever you do.
+\
+do. not. press the button.</property>
+    <property name="description" value="copy the observation data."/>
+    <property name="order" type="int" value="4"/>
+   </properties>
+  </object>
+  <object id="126" x="707.606" y="275.42" width="11.7869" height="10.6082">
+   <properties>
+    <property name="cutscene">fascinating.
+\
+now. see that button? in the\
+  chamber just past this room?
+\
+try and dismantle it.
+\
+but whatever you do.
+\
+do. not. press the button.</property>
+    <property name="description" value="copy the observation data."/>
+    <property name="order" type="int" value="4"/>
+   </properties>
+  </object>
+  <object id="127" x="648.279" y="324.532" width="11.394" height="10.6082">
+   <properties>
+    <property name="cutscene" value=""/>
+    <property name="description" value="disable the project..."/>
+    <property name="order" type="int" value="5"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
