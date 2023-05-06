@@ -1,9 +1,12 @@
 package uk.co.zacgarby.infiltrate.screens;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
+import uk.co.zacgarby.infiltrate.components.graphics.UITextureComponent;
 import uk.co.zacgarby.infiltrate.systems.DialogueSystem;
 import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
@@ -25,6 +28,11 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback {
         linesCol.add("             [ press space to continue ]");
 
         engine = new Engine();
+
+        Entity profile = new Entity();
+        profile.add(new UITextureComponent(new Texture("img/profile.png"), 0, 0));
+        engine.addEntity(profile);
+
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
         engine.addSystem(new DialogueSystem(10, 70, linesCol, this));
     }

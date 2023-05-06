@@ -20,7 +20,7 @@ public class DialogueSystem extends EntitySystem {
     private final int originX, originY;
 
     private float timeout;
-    private float interval;
+    private final float interval;
 
     public DialogueSystem(int x, int y, Collection<String> messages, DialogueCallback callback) {
         originX = x;
