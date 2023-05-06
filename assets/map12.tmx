@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="12" tileheight="12" infinite="0" nextlayerid="7" nextobjectid="91">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="12" tileheight="12" infinite="0" nextlayerid="9" nextobjectid="119">
  <tileset firstgid="1" source="tileset12.tsx"/>
  <layer id="1" name="Tile Layer 1" width="80" height="40">
   <data encoding="csv">
@@ -20,7 +20,7 @@
 63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,62,60,2684354619,2684354619,2684354619,2684354619,61,58,58,41,1,1,1,1,1,1,8,8,8,8,8,8,1,1,8,24,21,8,1,50,51,54,53,50,1,8,1,1,1,1,1,1,1,8,7,8,58,58,58,58,58,58,58,58,58,58,58,3221225531,62,57,57,63,
 63,63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,1610612798,59,58,58,58,58,58,58,58,8,1,1,1,1,1,1,4,1,1,1,1,1,1,1,8,23,55,8,1,1,1,18,1,1,1,4,1,51,53,53,50,52,1,4,1,8,58,58,58,58,58,58,58,58,58,58,58,3221225531,57,57,57,63,
 63,63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,62,59,58,58,58,58,58,58,58,8,2147483656,44,45,45,43,8,8,8,44,45,43,8,1,1,8,20,22,8,55,1,1,11,11,55,1,8,1,1,1,1,1,1,1,8,7,8,8,44,45,45,45,45,45,43,8,58,58,3221225531,57,57,63,63,
-63,63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,62,59,58,58,2147483656,2147483656,2147483656,2147483656,2147483656,8,2147483649,2147483649,1,1,1,1,4,1,1,1,1,1,1,1,8,8,8,8,8,8,8,44,45,43,7,8,8,7,8,44,45,43,8,8,1,13,12,14,17,16,17,16,17,17,8,58,58,3221225531,57,57,63,63,
+63,63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,62,59,58,58,2147483656,2147483656,2147483656,2147483656,2147483656,8,2147483649,2147483649,1,1,1,1,4,1,1,1,1,1,1,1,8,8,8,8,8,8,8,44,45,43,7,8,8,44,45,45,45,43,8,8,1,13,12,14,17,16,17,16,17,17,8,58,58,3221225531,57,57,63,63,
 63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,62,59,58,58,42,2147483664,2147483665,2147483669,12,2147483656,2147483649,2147483656,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,1,1,1,1,1,18,1,18,1,1,8,58,58,3221225531,57,57,63,63,
 63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,2684354622,59,58,58,41,18,2147483649,2147483649,2147483649,2147483652,2147483649,2147483656,11,21,15,16,8,1,1,8,8,8,44,45,45,45,43,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,1,1610612772,1610612771,1610612770,38,17,17,11,11,1,8,58,58,3221225531,57,57,63,63,
 63,63,63,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,1610612798,59,58,58,2147483656,2147483656,2147483656,2147483656,2147483656,2147483656,2147483649,4,1,1,1,18,8,1,1,8,58,58,58,58,58,58,58,8,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,8,58,58,3221225531,57,57,57,63,
@@ -286,8 +286,85 @@ good luck, 6.
    </properties>
    <point/>
   </object>
+  <object id="91" name="Spawn 4" x="816.09" y="397.086">
+   <properties>
+    <property name="cutscene">SPY-OS v1.29                        [year 2137, 19:44]\
+mail\
+\
+                    * new mail *\
+             press [space] to continue
+\
+agent,
+\
+it's Takashi, from B.E.L. labs. we have a problem.
+\
+we have intel that the boss, our fearless leader,\
+  has been targeted by some unfortunate cases of\
+  industrial espionage.
+\
+malicious agents are on their way to the complex\
+  as we speak. we believe his drink has been\
+  posioned!
+\
+we need you to do something about this, and fast!
+\
+we can't simply remove the poisoned drink, as\
+  this would give our advantage up. we need\
+  them to think they succeeded.
+\
+as a result, we need you to install a\
+  beverage holder in the boss's car.
+\
+yes, really...
+\
+if he has one, he will buy a coffee on the way\
+  in to work, and will leave his poisoned drink\
+  until it's cold. at this point, we will have\
+  reason to take it from him without suspicion.
+\
+we will drop you at the south-east of the\
+  building. find your way into the library to\
+  your north. there will be a manual in there\
+  to help you install the beverage holder.
+\
+then, we need you to find your way to reception\
+  to check the computers for his registration\
+  number. we wouldn't want to go putting a cup\
+  holder in the wrong car now would we?
+\
+then, you'll need to get the keys. his secretary\
+  holds a second set, although you might have to\
+  check down the backs of sofas and the like...
+\
+then do the thing. his car should be somewhere\
+  in the car park - he took a taxi home after\
+  last night's office party.
+\
+when you've got the beverage holder up and\
+  running, let us know, and we'll extract you\
+  from the same location where you will be\
+  dropped.
+\
+good luck, agent.\
+\
+the boss's life may depend on this.
+\
+  - takashi\
+    B.E.L. labs, head of counter-espionage</property>
+    <property name="dx" type="float" value="0"/>
+    <property name="dy" type="float" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="110" name="Spawn 5" x="739.202" y="43.6477">
+   <properties>
+    <property name="dx" type="float" value="1"/>
+    <property name="dy" type="float" value="-0.7"/>
+   </properties>
+   <point/>
+  </object>
  </objectgroup>
- <objectgroup id="3" name="Tasks Level 1">
+ <objectgroup id="3" name="Tasks Level 1" locked="1">
   <object id="48" x="287.96" y="216.184" width="11.9627" height="11.1083">
    <properties>
     <property name="cutscene">good job, agent.
@@ -629,7 +706,7 @@ of the building.</property>
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="6" name="Tasks Level 3">
+ <objectgroup id="6" name="Tasks Level 3" locked="1">
   <object id="82" x="383.95" y="229.237" width="11.9239" height="10.1353">
    <properties>
     <property name="cutscene">that's the one.
@@ -732,5 +809,181 @@ the building, near the reception.</property>
     <property name="order" type="int" value="3"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="7" name="Tasks Level 4" locked="1">
+  <object id="94" x="374.29" y="84.4422" width="7.21131" height="9.30492">
+   <properties>
+    <property name="cutscene">right, &quot;BO55 M4N&quot;.
+\
+I should've guessed.
+\
+ok, go find those keys. the boss's\
+  secretary is in the south-eastern\
+  block of the building.</property>
+    <property name="description" value="find reg number in reception PC."/>
+    <property name="order" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="95" x="374.988" y="144.459" width="6.51345" height="8.37443">
+   <properties>
+    <property name="cutscene">right, &quot;BO55 M4N&quot;.
+\
+I should've guessed.
+\
+ok, go find those keys. the boss's\
+  secretary is in the south-eastern\
+  block of the building.</property>
+    <property name="description" value="find reg number in reception PC."/>
+    <property name="order" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="97" x="672.594" y="396.574" width="11.1826" height="10.3644">
+   <properties>
+    <property name="cutscene">of *course* he left them down the\
+  back of the sofa. typical.
+\
+now, go find the car. it should be\
+  out with the others in the car\
+  park to your west.</property>
+    <property name="description" value="find keys with boss's secretary."/>
+    <property name="order" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="98" x="683.777" y="396.029" width="12.8191" height="10.6371">
+   <properties>
+    <property name="cutscene">of *course* he left them down the\
+  back of the sofa. typical.
+\
+now, go find the car. it should be\
+  out with the others in the car\
+  park to your west.</property>
+    <property name="description" value="find keys with boss's secretary."/>
+    <property name="order" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="99" x="380.755" y="360.844" width="18.5468" height="34.6389">
+   <properties>
+    <property name="cutscene">phew!
+\
+that should save him for now.
+\
+thanks, agent. now get out of there\
+  without being seen. we're at the\
+  grassy drop-off point to your far\
+  east.</property>
+    <property name="description" value="install beverage holder in boss's car."/>
+    <property name="order" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="100" x="331.933" y="361.117" width="19.6378" height="34.6389">
+   <properties>
+    <property name="cutscene">phew!
+\
+that should save him for now.
+\
+thanks, agent. now get out of there\
+  without being seen. we're at the\
+  grassy drop-off point to your far\
+  east.</property>
+    <property name="description" value="install beverage holder in boss's car."/>
+    <property name="order" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="101" x="344.207" y="432.577" width="19.9105" height="36.0026">
+   <properties>
+    <property name="cutscene">phew!
+\
+that should save him for now.
+\
+thanks, agent. now get out of there\
+  without being seen. we're at the\
+  grassy drop-off point to your far\
+  east.</property>
+    <property name="description" value="install beverage holder in boss's car."/>
+    <property name="order" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="102" x="439.941" y="432.577" width="20.1833" height="34.9116">
+   <properties>
+    <property name="cutscene">phew!
+\
+that should save him for now.
+\
+thanks, agent. now get out of there\
+  without being seen. we're at the\
+  grassy drop-off point to your far\
+  east.</property>
+    <property name="description" value="install beverage holder in boss's car."/>
+    <property name="order" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="103" x="839.928" y="323.756" width="11.8207" height="11.8207">
+   <properties>
+    <property name="cutscene">that's the one.
+\
+hopefully the instructions make sense\
+  to you.
+\
+now, get behind reception and find the\
+  boss's car's registration number.</property>
+    <property name="description" value="find car manual in library."/>
+    <property name="order" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="104" x="815.63" y="300.443" width="12.1491" height="10.8357">
+   <properties>
+    <property name="cutscene">that's the one.
+\
+hopefully the instructions make sense\
+  to you.
+\
+now, get behind reception and find the\
+  boss's car's registration number.</property>
+    <property name="description" value="find car manual in library."/>
+    <property name="order" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="105" x="791.66" y="300.443" width="12.4774" height="10.5073">
+   <properties>
+    <property name="cutscene">that's the one.
+\
+hopefully the instructions make sense\
+  to you.
+\
+now, get behind reception and find the\
+  boss's car's registration number.</property>
+    <property name="description" value="find car manual in library."/>
+    <property name="order" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="106" x="803.481" y="323.756" width="12.4774" height="12.1491">
+   <properties>
+    <property name="cutscene">that's the one.
+\
+hopefully the instructions make sense\
+  to you.
+\
+now, get behind reception and find the\
+  boss's car's registration number.</property>
+    <property name="description" value="find car manual in library."/>
+    <property name="order" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="107" x="816.286" y="396.651" width="22.9847" height="23.3131">
+   <properties>
+    <property name="description" value="escape!"/>
+    <property name="order" type="int" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="Tasks Level 5">
+  <object id="111" x="828.007" y="324.484" width="11.4716" height="10.6522"/>
+  <object id="112" x="839.889" y="300.721" width="12.2911" height="10.2425"/>
+  <object id="113" x="791.134" y="275.729" width="13.1105" height="10.6522"/>
+  <object id="114" x="563.806" y="144.979" width="10.6082" height="10.6082"/>
+  <object id="115" x="659.673" y="156.373" width="11.7869" height="11.394"/>
+  <object id="116" x="671.067" y="157.159" width="12.5727" height="11.0011"/>
+  <object id="117" x="708.392" y="133.192" width="11.0011" height="11.0011"/>
+  <object id="118" x="587.773" y="168.553" width="11.7869" height="11.7869"/>
  </objectgroup>
 </map>

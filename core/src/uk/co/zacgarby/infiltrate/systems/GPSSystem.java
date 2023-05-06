@@ -12,11 +12,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import uk.co.zacgarby.infiltrate.components.graphics.GPSComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
-import uk.co.zacgarby.infiltrate.components.graphics.TextComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
 
 public class GPSSystem extends IntervalSystem {
     private PositionComponent playerPosition;
-    private TextComponent hud;
+    private UITextComponent hud;
     public final TiledMap map;
 
     public GPSSystem(TiledMap map) {
@@ -36,7 +36,7 @@ public class GPSSystem extends IntervalSystem {
             this.playerPosition = PositionComponent.mapper.get(player);
 
             Entity text = getEngine().getEntitiesFor(Family.all(GPSComponent.class).get()).first();
-            this.hud = TextComponent.mapper.get(text);
+            this.hud = UITextComponent.mapper.get(text);
         }
 
         MapLayer layer = map.getLayers().get("Areas");

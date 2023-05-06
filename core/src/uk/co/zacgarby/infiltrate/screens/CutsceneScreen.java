@@ -41,7 +41,7 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.02f, 0.1067f, 0.059f, 1f);
+        ScreenUtils.clear(0.13f, 0.0667f, 0.1529f, 1f);
         engine.update(delta);
     }
 

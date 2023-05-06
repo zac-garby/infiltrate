@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -52,6 +53,20 @@ public class Font {
         texture = new Texture(pm);
     }
 
+    public void draw(SpriteBatch batch, int x, int y, String text, UITextComponent.Align align) {
+        switch (align) {
+            case Left:
+                draw(batch, x, y, text);
+                break;
+            case Right:
+                drawRight(batch, x, y, text);
+                break;
+            case Center:
+                drawCenter(batch, x, y, text);
+                break;
+        }
+    }
+
     public void draw(SpriteBatch batch, int x, int y, String text) {
         for (byte b : text.getBytes()) {
             char c = Character.toLowerCase((char) b);
@@ -70,6 +85,10 @@ public class Font {
 
     public void drawRight(SpriteBatch batch, int x, int y, String text) {
         draw(batch, x - measure(text) - 1, y, text);
+    }
+
+    public void drawCenter(SpriteBatch batch, int x, int y, String text) {
+        draw(batch, x - measure(text) / 2, y, text);
     }
 
     public int measure(String text) {

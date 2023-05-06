@@ -32,7 +32,7 @@ public class Game extends com.badlogic.gdx.Game {
 
 		map = new TmxMapLoader().load("map12.tmx");
 
-		this.setScreen(screenForLevel(1));
+		this.setScreen(new IntroScreen(this, screenForLevel(1)));
 	}
 
 	@Override
@@ -50,13 +50,17 @@ public class Game extends com.badlogic.gdx.Game {
 	}
 
 	public Screen screenForLevel(int level) {
-		MapLayer spawnsLayer = map.getLayers().get("Spawnpoints");
-		RectangleMapObject spawn = (RectangleMapObject) spawnsLayer.getObjects().get("Spawn " + level);
-		String[] cutscene = spawn.getProperties().get("cutscene", String.class).split("\n");
+		if (level <= 5) {
+			MapLayer spawnsLayer = map.getLayers().get("Spawnpoints");
+			RectangleMapObject spawn = (RectangleMapObject) spawnsLayer.getObjects().get("Spawn " + level);
+			String[] cutscene = spawn.getProperties().get("cutscene", String.class).split("\n");
 
-		return new CutsceneScreen(
-				this,
-				new GameScreen(this, level, previousRecordings),
-				cutscene);
+			return new CutsceneScreen(
+					this,
+					new GameScreen(this, level, previousRecordings),
+					cutscene);
+		} else {
+			return null;
+		}
 	}
 }

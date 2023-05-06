@@ -3,10 +3,9 @@ package uk.co.zacgarby.infiltrate.systems;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.systems.IntervalSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import uk.co.zacgarby.infiltrate.components.graphics.TextComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,7 +62,7 @@ public class DialogueSystem extends EntitySystem {
         if (messages.size() == 0) return;
 
         for (Entity e : entities) {
-            TextComponent t = TextComponent.mapper.get(e);
+            UITextComponent t = UITextComponent.mapper.get(e);
             t.y += 8;
         }
 
@@ -74,7 +73,7 @@ public class DialogueSystem extends EntitySystem {
         }
 
         Entity text = new Entity();
-        text.add(new TextComponent(message, originX, originY));
+        text.add(new UITextComponent(message, originX, originY));
         getEngine().addEntity(text);
         entities.add(text);
 

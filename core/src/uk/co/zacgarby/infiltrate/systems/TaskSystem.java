@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import uk.co.zacgarby.infiltrate.components.graphics.HiddenComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.TaskDescriptionComponent;
-import uk.co.zacgarby.infiltrate.components.graphics.TextComponent;
+import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.GameStateComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.TaskComponent;
 
@@ -70,8 +70,8 @@ public class TaskSystem extends EntitySystem implements EntityListener {
         System.out.println("un-hidden task");
 
         Entity taskTextEntity = getEngine().getEntitiesFor(
-                Family.all(TaskDescriptionComponent.class, TextComponent.class).get()).first();
-        TextComponent taskText = TextComponent.mapper.get(taskTextEntity);
+                Family.all(TaskDescriptionComponent.class, UITextComponent.class).get()).first();
+        UITextComponent taskText = UITextComponent.mapper.get(taskTextEntity);
 
         taskText.text = "* " + task.description;
     }
@@ -98,10 +98,10 @@ public class TaskSystem extends EntitySystem implements EntityListener {
             callback.onAllTasksComplete();
 
             Entity taskTextEntity = getEngine().getEntitiesFor(
-                    Family.all(TaskDescriptionComponent.class, TextComponent.class).get()
+                    Family.all(TaskDescriptionComponent.class, UITextComponent.class).get()
             ).first();
 
-            TextComponent taskText = TextComponent.mapper.get(taskTextEntity);
+            UITextComponent taskText = UITextComponent.mapper.get(taskTextEntity);
             taskText.text = "(no tasks remaining)";
 
             return;

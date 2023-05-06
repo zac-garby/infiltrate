@@ -88,16 +88,16 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
     private void makeUI(int levelNum) {
         Entity locationText = new Entity();
-        locationText.add(new TextComponent("", 20, 183));
+        locationText.add(new UITextComponent("", 20, 183));
         locationText.add(new GPSComponent());
         engine.addEntity(locationText);
 
         Entity levelText = new Entity();
-        levelText.add(new TextComponent("LEVEL " + levelNum, 183, 183, false));
+        levelText.add(new UITextComponent("LEVEL " + levelNum, 183, 183, UITextComponent.Align.Right));
         engine.addEntity(levelText);
 
         Entity taskText = new Entity();
-        taskText.add(new TextComponent("* .", 20, 11));
+        taskText.add(new UITextComponent("* .", 20, 11));
         taskText.add(new TaskDescriptionComponent());
         engine.addEntity(taskText);
     }
@@ -232,16 +232,16 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.removeSystem(engine.getSystem(MovementPlaybackSystem.class));
         engine.removeSystem(engine.getSystem(TorchDetectionSystem.class));
 
-        engine.removeAllEntities(Family.all(TextComponent.class).get());
+        engine.removeAllEntities(Family.all(UITextComponent.class).get());
 
         Entity text = new Entity();
         text.add(new PositionComponent(100, 100));
-        text.add(new TextComponent("!! you were detected !!", 61, 103));
+        text.add(new UITextComponent("!! you were detected !!", 61, 103));
         engine.addEntity(text);
 
         Entity text2 = new Entity();
         text2.add(new PositionComponent(100, 100));
-        text2.add(new TextComponent("press [ENTER] to try again...", 52, 95));
+        text2.add(new UITextComponent("press [ENTER] to try again...", 52, 95));
         engine.addEntity(text2);
 
         engine.addSystem(new GameOverSystem(game, game.screenForLevel(levelNum)));
