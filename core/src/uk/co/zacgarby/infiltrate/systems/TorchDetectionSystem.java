@@ -14,9 +14,11 @@ import uk.co.zacgarby.infiltrate.components.physical.HeadingComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
 public class TorchDetectionSystem extends IntervalIteratingSystem {
-    public static final float RANGE = 5.0f * 12f;
+    public static final float RANGE = 6.0f * 12f;
     public static final float STEP_SIZE = 0.1f;
     public static final float TORCH_ANGLE = 50.0f; // degrees
+    private static final Vector2 up = new Vector2(0.0f, 1.0f);
+
     private final Entity player;
     private final Pixmap mapMask;
     private final DetectionListener listener;
@@ -64,13 +66,20 @@ public class TorchDetectionSystem extends IntervalIteratingSystem {
         int steps = (int) (diff.len() / STEP_SIZE);
         Vector2 delta = diff.cpy().nor().scl(STEP_SIZE);
 
+        float m = 1.0f;
         for (int i = 0; i < steps; i++) {
             from.add(delta);
             int pix = mapMask.getPixel((int) from.x, mapMask.getHeight() - (int) from.y);
 
             if (pix > 0) {
-                return false;
+                m -= 0.0058;
             }
+        }
+
+        m += 0.5f * Math.abs(up.dot(diff.cpy().nor()) * ((float) mapMask.getWidth() / mapMask.getHeight()));
+
+        if (m < 0.1f) {
+            return false;
         }
 
         float d = heading.dot(diff.add(heading.cpy().scl(0.5f)).nor());

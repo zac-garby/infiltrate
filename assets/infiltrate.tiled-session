@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tileset.tsx",
+    "activeFile": "map12.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -19,11 +19,11 @@
             }
         },
         "map12.tmx": {
-            "scale": 3.7294,
-            "selectedLayer": 0,
+            "scale": 1.5513,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 589.5050142114012,
-                "y": 223.09218641068267
+                "x": 629.7943660155998,
+                "y": 378.07000580158575
             }
         },
         "tileset.tsx": {
@@ -44,16 +44,16 @@
     "map.tileWidth": 12,
     "map.width": 80,
     "openFiles": [
-        "map.tmx",
-        "tileset.tsx"
+        "tileset.tsx",
+        "map12.tmx"
     ],
     "project": "infiltrate.tiled-project",
-    "property.type": "float",
+    "property.type": "string",
     "recentFiles": [
+        "tileset.tsx",
         "map12.tmx",
         "tileset12.tsx",
-        "map.tmx",
-        "tileset.tsx"
+        "map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

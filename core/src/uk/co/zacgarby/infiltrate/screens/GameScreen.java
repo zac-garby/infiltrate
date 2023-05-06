@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -109,7 +110,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
             oldPlayer.add(new AnimationComponent(2).set(0, 0));
             oldPlayer.add(new PositionComponent(280, 340));
             oldPlayer.add(new HeadingComponent(new Vector2(0.0f, 0.0f)));
-            oldPlayer.add(new MovementPlaybackComponent(records));
+            oldPlayer.add(new MovementPlaybackComponent(new ArrayDeque<>(records)));
             oldPlayer.add(new TorchComponent());
             engine.addEntity(oldPlayer);
         }
@@ -202,6 +203,9 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
     @Override
     public void render(float dt) {
         engine.update(dt);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            onAllTasksComplete();
+        }
     }
 
     @Override
