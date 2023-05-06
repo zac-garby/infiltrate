@@ -34,6 +34,7 @@ public class UITextComponent implements Component {
     }
 
     public enum Effect {
-        Flashing
+        Flashing,
+        TypeOut
     }
 }

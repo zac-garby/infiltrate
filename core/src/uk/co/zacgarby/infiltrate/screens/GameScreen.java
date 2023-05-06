@@ -143,6 +143,8 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
     }
 
     private void loadTasks(int levelNum, TiledMap map) {
+        Random rand = new Random();
+
         MapLayer tasksLayer = map.getLayers().get("Tasks Level " + levelNum);
         if (tasksLayer != null) {
             Map<Integer, List<RectangleMapObject>> possibleTasks = new HashMap<>();
@@ -164,7 +166,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
             for (int order : possibleTasks.keySet()) {
                 List<RectangleMapObject> possibilities = possibleTasks.get(order);
-                int r = (int) (Math.random() * possibilities.size());
+                int r = Math.abs(rand.nextInt()) % possibilities.size();
                 RectangleMapObject rectangleObject = possibilities.get(r);
                 Rectangle rect = rectangleObject.getRectangle();
                 MapProperties properties = rectangleObject.getProperties();

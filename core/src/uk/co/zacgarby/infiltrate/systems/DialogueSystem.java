@@ -73,7 +73,10 @@ public class DialogueSystem extends EntitySystem {
         }
 
         Entity text = new Entity();
-        text.add(new UITextComponent(message, originX, originY));
+        text.add(new UITextComponent(
+                message, originX, originY,
+                UITextComponent.Align.Left, UITextComponent.Effect.TypeOut)
+        );
         getEngine().addEntity(text);
         entities.add(text);
 

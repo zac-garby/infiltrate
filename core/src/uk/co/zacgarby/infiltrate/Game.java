@@ -29,7 +29,6 @@ public class Game extends com.badlogic.gdx.Game {
 		viewportHeight =  scale * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
 
 		batch = new SpriteBatch();
-
 		map = new TmxMapLoader().load("map12.tmx");
 
 		this.setScreen(new IntroScreen(this, screenForLevel(1)));

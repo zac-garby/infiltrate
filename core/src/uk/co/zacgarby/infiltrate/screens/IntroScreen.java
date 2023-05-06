@@ -16,19 +16,18 @@ public class IntroScreen implements Screen {
     private final Engine engine;
 
     public IntroScreen(Game game, Screen firstLevel) {
-
         engine = new Engine();
 
         Entity background = new Entity();
         background.add(new UITextureComponent(new Texture("img/intro.png"), 0, 0));
         background.add(new UITextComponent(
-                "loading ...", 100, 140,
+                "[ press the any key to start ]", 100, 140,
                 UITextComponent.Align.Center,
                 UITextComponent.Effect.Flashing));
         engine.addEntity(background);
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
-        engine.addSystem(new IntroScreenSystem(game, firstLevel, 5.0f));
+        engine.addSystem(new IntroScreenSystem(game, firstLevel));
     }
 
     @Override

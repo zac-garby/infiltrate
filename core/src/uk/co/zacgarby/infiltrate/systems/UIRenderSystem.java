@@ -16,8 +16,8 @@ public class UIRenderSystem extends IteratingSystem {
     private final Font font;
     private final OrthographicCamera camera;
     private final ShaderProgram shader;
-    private float time = 0.0f;
-    private final float flashTime = 0.5f;
+    private float flashTime = 0.0f, typeTime = 0.0f;
+    private final float flashInterval = 0.35f, typeInterval = 0.02f;
     private boolean flashOn = true;
 
     public UIRenderSystem(SpriteBatch batch, float viewportWidth, float viewportHeight) {
@@ -47,8 +47,7 @@ public class UIRenderSystem extends IteratingSystem {
         if (UITextComponent.mapper.has(e)) {
             UITextComponent text = UITextComponent.mapper.get(e);
 
-            if (time >= flashTime) {
-                time = 0.0f;
+            if (flashTime >= flashInterval) {
                 flashOn = !flashOn;
             }
 
@@ -60,12 +59,21 @@ public class UIRenderSystem extends IteratingSystem {
 
     @Override
     public void update(float deltaTime) {
-        time += deltaTime;
+        flashTime += deltaTime;
+        typeTime += deltaTime;
 
         batch.setProjectionMatrix(camera.combined);
         batch.setShader(shader);
         batch.begin();
         super.update(deltaTime);
         batch.end();
+
+        if (flashTime >= flashInterval) {
+            flashTime = 0.0f;
+        }
+
+        if (typeTime >= typeInterval) {
+            typeTime = 0.0f;
+        }
     }
 }
