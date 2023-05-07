@@ -36,10 +36,6 @@ public class GameRenderSystem extends IteratingSystem {
     private final SpriteBatch batch;
     private final OrthographicCamera camera;
     private final ShaderProgram shader;
-    private ShaderProgram nullShader;
-    private final FrameBuffer destFBO;
-    private final TextureRegion destFBORegion;
-    private final Matrix4 idMatrix;
     private final Texture mapMask;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private ImmutableArray<Entity> torches;
@@ -68,22 +64,11 @@ public class GameRenderSystem extends IteratingSystem {
         this.shader = shader;
         this.mapMask = mapMask;
 
-        destFBO = new FrameBuffer(Pixmap.Format.RGB888, (int) camera.viewportWidth, (int) camera.viewportHeight, false);
-        Texture destFBOTex = destFBO.getColorBufferTexture();
-        destFBOTex.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        destFBORegion = new TextureRegion(destFBOTex);
-        destFBORegion.flip(false, true);
-
         FrameBuffer wallsFBO = new FrameBuffer(Pixmap.Format.RGB888, (int) camera.viewportWidth, (int) camera.viewportHeight, false);
         Texture wallsFBOTex = wallsFBO.getColorBufferTexture();
         wallsFBOTex.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         TextureRegion wallsFBORegion = new TextureRegion(wallsFBOTex);
         wallsFBORegion.flip(false, true);
-
-        OrthographicCamera idCamera = new OrthographicCamera(camera.viewportWidth, camera.viewportHeight);
-        idCamera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-        idCamera.update();
-        idMatrix = idCamera.combined;
 
         mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
     }
@@ -92,15 +77,12 @@ public class GameRenderSystem extends IteratingSystem {
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
 
-        nullShader = batch.getShader();
         torches = engine.getEntitiesFor(Family.all(TorchComponent.class).get());
     }
 
     @Override
     public void removedFromEngine(Engine engine) {
         super.removedFromEngine(engine);
-
-        batch.setShader(nullShader);
     }
 
     @Override
@@ -138,16 +120,12 @@ public class GameRenderSystem extends IteratingSystem {
     @Override
     public void update(float dt) {
         camera.update();
-
-        ScreenUtils.clear(0, 0, 0, 1);
-
+        
         // render game to lower-res FBO
         batch.setProjectionMatrix(camera.combined);
 
         // enable the lighting shader
         batch.setShader(shader);
-
-        destFBO.begin();
 
         mapRenderer.setView(camera);
         mapRenderer.setMap(mapRenderer.getMap());
@@ -189,14 +167,6 @@ public class GameRenderSystem extends IteratingSystem {
         }
 
         // end FBO batch
-        batch.end();
-        destFBO.end();
-
-        // render FBO to the actual screen
-        batch.setProjectionMatrix(idMatrix);
-        batch.setShader(nullShader);
-        batch.begin();
-        batch.draw(destFBORegion, 0, 0, camera.viewportWidth, camera.viewportHeight);
         batch.end();
     }
 }
