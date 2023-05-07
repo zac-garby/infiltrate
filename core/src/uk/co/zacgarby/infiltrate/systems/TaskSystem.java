@@ -97,13 +97,6 @@ public class TaskSystem extends EntitySystem implements EntityListener {
             System.out.println("all tasks finished");
             callback.onAllTasksComplete();
 
-            Entity taskTextEntity = getEngine().getEntitiesFor(
-                    Family.all(TaskDescriptionComponent.class, UITextComponent.class).get()
-            ).first();
-
-            UITextComponent taskText = UITextComponent.mapper.get(taskTextEntity);
-            taskText.text = "(no tasks remaining)";
-
             return;
         }
 

@@ -51,6 +51,11 @@ public class FadeSystem extends EntitySystem {
         }
     }
 
+    @Override
+    public void removedFromEngine(Engine engine) {
+        game.fboShader.setUniformf("u_fade", 1.0f);
+    }
+
     public interface Callback {
         void onFadeComplete(FadeSystem fade);
     }
