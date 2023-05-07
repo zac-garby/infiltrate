@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -52,7 +53,9 @@ public class UIRenderSystem extends IteratingSystem {
             }
 
             if (text.effect != UITextComponent.Effect.Flashing || flashOn) {
+                batch.setColor(text.colour);
                 font.draw(batch, text.x, text.y, text.text, text.align);
+                batch.setColor(Color.WHITE);
             }
         }
     }

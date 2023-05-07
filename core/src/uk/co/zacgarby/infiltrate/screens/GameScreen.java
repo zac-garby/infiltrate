@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -107,7 +108,12 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.addEntity(taskText);
 
         Entity taskLocationText = new Entity();
-        taskLocationText.add(new UITextComponent("[go to: ...]", 20, 5));
+        taskLocationText.add(new UITextComponent(
+                "[go to: ...]",
+                20, 5,
+                UITextComponent.Align.Left,
+                null,
+                new Color(0.5f, 0.4f, 0.4f, 1.0f)));
         taskLocationText.add(new InstructionTextComponent());
         engine.addEntity(taskLocationText);
     }

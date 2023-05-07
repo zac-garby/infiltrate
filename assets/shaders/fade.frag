@@ -18,7 +18,4 @@ void main() {
 
     // apply fade
     gl_FragColor.rgb *= u_fade;
-
-    // darkest colour possible = purple
-    gl_FragColor.rgb = max(0.6 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);
 }

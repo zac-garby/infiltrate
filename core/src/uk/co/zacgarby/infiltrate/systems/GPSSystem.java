@@ -60,6 +60,6 @@ public class GPSSystem extends IntervalSystem {
             }
         }
 
-        return null;
+        return "Outside";
     }
 }
