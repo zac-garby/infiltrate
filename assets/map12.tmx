@@ -162,6 +162,14 @@ since you're new here, we've given you a\
   to your east, and pretend to check in. you\
   know, just to get the hang of things.
 \
+use the [WASD] keys to move around, and use\
+  [SPACE] to interact with your objectives.
+\
+oh, and last thing. you can skip these\
+  dialogues by pressing [ESCAPE], but they\
+  tend to contain useful information so try\
+  not to do this too much.
+\
   best,\
   dave xoxo
 \
@@ -224,6 +232,14 @@ i'll direct you when you're inside.
 \
 good luck! we'll extract you near the bushes\
   at the south-east of the complex.
+\
+now listen carefully, agent.
+\
+there are other operations going on in\
+  the lab this evening.
+\
+apparently computronics corp inc. are in\
+  there too; make sure they don't see you.
 \
    - k</property>
     <property name="dx" type="float" value="1"/>
@@ -656,11 +672,17 @@ to the south of the building.</property>
     <property name="cutscene">great, now that wasn't so hard now\
   was it?
 \
+and you figured out walking. well done!
+\
+now, if you want to look around\
+  without moving, you can hold [SHIFT].
+\
 now you've got the hang of it, find\
   your way south to the offices.
 \
 in one of them, we've marked some\
-  documents for you to pick up.</property>
+  documents for you to pick up.
+</property>
     <property name="description" value="&quot;check in&quot; at reception to your east."/>
     <property name="order" type="int" value="0"/>
    </properties>

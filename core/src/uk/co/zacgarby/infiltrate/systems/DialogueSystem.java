@@ -49,7 +49,11 @@ public class DialogueSystem extends EntitySystem {
             nextText();
         }
 
-        if (Gdx.input.isKeyJustPressed(skipAllKey) || (Gdx.input.isKeyJustPressed(skipKey) && messages.size() == 0)) {
+        if (Gdx.input.isKeyJustPressed(skipAllKey) && messages.size() > 0) {
+            while (messages.size() > 0) {
+                nextText();
+            }
+        } else if ((Gdx.input.isKeyJustPressed(skipKey) || Gdx.input.isKeyJustPressed(skipAllKey)) && messages.size() == 0) {
             if (callback != null) {
                 callback.onDialogueFinish(this);
             }
