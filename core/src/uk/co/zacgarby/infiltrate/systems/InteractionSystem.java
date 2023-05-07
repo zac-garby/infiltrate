@@ -12,7 +12,7 @@ import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
 public class InteractionSystem extends IteratingSystem {
-    public static final float INTERACTION_DIST = 6.0f;
+    public static final float INTERACTION_DIST = 9.0f;
     private Entity player;
 
     public InteractionSystem() {
