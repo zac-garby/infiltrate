@@ -62,21 +62,21 @@ public class InputSystem extends IteratingSystem {
         // set player velocity
         if (!Gdx.input.isKeyPressed(controls.noMove)) {
             movement.velocity = move;
+
+            // do movement animations
+            if (move.x < 0) {
+                animation.set(controls.leftAnimation);
+            } else if (move.x > 0) {
+                animation.set(controls.rightAnimation);
+            } else if (move.y < 0) {
+                animation.set(controls.downAnimation);
+            } else if (move.y > 0) {
+                animation.set(controls.upAnimation);
+            } else {
+                animation.set(controls.stillAnimation);
+            }
         } else {
             movement.velocity.set(0.0f, 0.0f);
-        }
-
-        // do movement animations
-        if (move.x < 0) {
-            animation.set(controls.leftAnimation);
-        } else if (move.x > 0) {
-            animation.set(controls.rightAnimation);
-        } else if (move.y < 0) {
-            animation.set(controls.downAnimation);
-        } else if (move.y > 0) {
-            animation.set(controls.upAnimation);
-        } else {
-            animation.set(controls.stillAnimation);
         }
 
         // do interactions
