@@ -108,7 +108,7 @@ float get_dim(float cam_x, float cam_y, vec2 heading) {
     float a = acos(d);
     if (d2 < 0.5) {
         a = length(diff - heading * 0.5);
-        f = min(max(1.0 - (a - 0.4) / 0.25, 0.0), f);
+        f = min(max(1.0 - (a - 0.8) / 0.25, 0.0), f);
     }
 
     if (d < 0.0 || a > torchAngle) {
