@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.UITextureComponent;
-import uk.co.zacgarby.infiltrate.systems.DialogueSystem;
+import uk.co.zacgarby.infiltrate.systems.FadeSystem;
 import uk.co.zacgarby.infiltrate.systems.IntroScreenSystem;
 import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
@@ -28,6 +28,7 @@ public class IntroScreen implements Screen {
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
         engine.addSystem(new IntroScreenSystem(game, firstLevel));
+        engine.addSystem(new FadeSystem(game.fboShader, 1.5f, true));
     }
 
     @Override

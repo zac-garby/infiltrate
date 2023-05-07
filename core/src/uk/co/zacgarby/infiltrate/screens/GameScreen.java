@@ -28,7 +28,7 @@ import java.util.*;
 
 import static uk.co.zacgarby.infiltrate.etc.Map.makeMapMask;
 
-public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetectionSystem.DetectionListener {
+public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetectionSystem.DetectionListener, FadeSystem.Callback {
     private final Game game;
     private final Engine engine;
     private final int levelNum;
@@ -86,6 +86,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.addSystem(new MovementRecordingSystem(0.1f));
         engine.addSystem(new MovementPlaybackSystem());
         engine.addSystem(new TorchDetectionSystem(0.1f, mapMask, player, this));
+        engine.addSystem(new FadeSystem(game.fboShader, 0.3f, true));
     }
 
     private void makeUI(int levelNum) {
@@ -214,6 +215,13 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
     @Override
     public void onAllTasksComplete() {
+        removeSystemsAndUI();
+
+        engine.addSystem(new FadeSystem(game.fboShader, 0.5f, false, this));
+    }
+
+    @Override
+    public void onFadeComplete(FadeSystem fade) {
         game.addRecording(MovementRecorderComponent.mapper.get(player).records);
         game.setScreen(game.screenForLevel(levelNum + 1));
     }
@@ -227,16 +235,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
     @Override
     public void onDetected(Entity detectedBy) {
-        engine.removeSystem(engine.getSystem(InputSystem.class));
-        engine.removeSystem(engine.getSystem(PhysicsSystem.class));
-        engine.removeSystem(engine.getSystem(AnimationSystem.class));
-        engine.removeSystem(engine.getSystem(InteractionSystem.class));
-        engine.removeSystem(engine.getSystem(TaskSystem.class));
-        engine.removeSystem(engine.getSystem(MovementRecordingSystem.class));
-        engine.removeSystem(engine.getSystem(MovementPlaybackSystem.class));
-        engine.removeSystem(engine.getSystem(TorchDetectionSystem.class));
-
-        engine.removeAllEntities(Family.all(UITextComponent.class).get());
+        removeSystemsAndUI();
 
         Entity text = new Entity();
         text.add(new PositionComponent(100, 100));
@@ -250,6 +249,19 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
         engine.addSystem(new GameOverSystem(game, game.screenForLevel(levelNum)));
         engine.getSystem(GameRenderSystem.class).gameOver = true;
+    }
+
+    private void removeSystemsAndUI() {
+        engine.removeSystem(engine.getSystem(InputSystem.class));
+        engine.removeSystem(engine.getSystem(PhysicsSystem.class));
+        engine.removeSystem(engine.getSystem(AnimationSystem.class));
+        engine.removeSystem(engine.getSystem(InteractionSystem.class));
+        engine.removeSystem(engine.getSystem(TaskSystem.class));
+        engine.removeSystem(engine.getSystem(MovementRecordingSystem.class));
+        engine.removeSystem(engine.getSystem(MovementPlaybackSystem.class));
+        engine.removeSystem(engine.getSystem(TorchDetectionSystem.class));
+
+        engine.removeAllEntities(Family.all(UITextComponent.class).get());
     }
 
     @Override

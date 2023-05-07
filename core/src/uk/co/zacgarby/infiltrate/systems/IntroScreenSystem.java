@@ -7,19 +7,26 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import uk.co.zacgarby.infiltrate.Game;
 
-public class IntroScreenSystem extends EntitySystem {
+public class IntroScreenSystem extends EntitySystem implements FadeSystem.Callback {
     private final Screen to;
     private final Game game;
+    private FadeSystem fadeOut;
 
     public IntroScreenSystem(Game game, Screen to) {
         this.game = game;
         this.to = to;
+        fadeOut = new FadeSystem(game.fboShader, 0.8f, false, this);
     }
 
     @Override
     public void update(float deltaTime) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-            game.setScreen(to);
+            getEngine().addSystem(fadeOut);
         }
+    }
+
+    @Override
+    public void onFadeComplete(FadeSystem fade) {
+        game.setScreen(to);
     }
 }

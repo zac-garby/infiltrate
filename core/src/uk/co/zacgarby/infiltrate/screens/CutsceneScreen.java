@@ -8,13 +8,14 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.graphics.UITextureComponent;
 import uk.co.zacgarby.infiltrate.systems.DialogueSystem;
+import uk.co.zacgarby.infiltrate.systems.FadeSystem;
 import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback {
+public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback, FadeSystem.Callback {
     private final Engine engine;
     private final Game game;
     private final Screen returnTo;
@@ -35,10 +36,16 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback {
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
         engine.addSystem(new DialogueSystem(10, 70, linesCol, this));
+        engine.addSystem(new FadeSystem(game.fboShader, 0.2f, true));
     }
 
     @Override
     public void onDialogueFinish(DialogueSystem system) {
+        engine.addSystem(new FadeSystem(game.fboShader, 0.2f, false, this));
+    }
+
+    @Override
+    public void onFadeComplete(FadeSystem fade) {
         game.setScreen(returnTo);
     }
 
@@ -49,7 +56,7 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.13f, 0.0667f, 0.1529f, 1f);
+        ScreenUtils.clear(0.6f * 0.13f, 0.6f * 0.0667f, 0.6f * 0.1529f, 1f);
         engine.update(delta);
     }
 
