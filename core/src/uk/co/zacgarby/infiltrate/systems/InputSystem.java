@@ -52,12 +52,18 @@ public class InputSystem extends IteratingSystem {
             move.x += 1f;
         }
 
-        // set player velocity
-        movement.velocity = move.nor().scl(controls.speed);
+        move.nor().scl(controls.speed);
 
         // update torch direction
         if (move.len2() > 0.1) {
-            heading.heading.interpolate(move.cpy(), 1.5f * deltaTime, Interpolation.circleIn).nor();
+            heading.heading.interpolate(move.cpy(), 1.5f * deltaTime, Interpolation.circle).nor();
+        }
+
+        // set player velocity
+        if (!Gdx.input.isKeyPressed(controls.noMove)) {
+            movement.velocity = move;
+        } else {
+            movement.velocity.set(0.0f, 0.0f);
         }
 
         // do movement animations

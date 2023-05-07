@@ -169,7 +169,7 @@ know when you've found them.
       wait,
         ignore that too</property>
     <property name="dx" type="float" value="1"/>
-    <property name="dy" type="float" value="0"/>
+    <property name="dy" type="float" value="0.1"/>
    </properties>
    <point/>
   </object>
@@ -228,7 +228,7 @@ good luck! we'll extract you near the bushes\
 \
    - k</property>
     <property name="dx" type="float" value="1"/>
-    <property name="dy" type="float" value="1"/>
+    <property name="dy" type="float" value="1.1"/>
    </properties>
    <point/>
   </object>
@@ -282,7 +282,7 @@ good luck, 6.
 \
  - 9</property>
     <property name="dx" type="float" value="-0.5"/>
-    <property name="dy" type="float" value="-1"/>
+    <property name="dy" type="float" value="-1.1"/>
    </properties>
    <point/>
   </object>
@@ -351,7 +351,7 @@ the boss's life may depend on this.
 \
   - takashi\
     B.E.L. labs, head of counter-espionage</property>
-    <property name="dx" type="float" value="0"/>
+    <property name="dx" type="float" value="0.3"/>
     <property name="dy" type="float" value="1"/>
    </properties>
    <point/>

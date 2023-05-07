@@ -14,6 +14,8 @@ public class MovementControlsComponent implements Component {
     public int keyUp = Input.Keys.W;
     public int keyDown = Input.Keys.S;
     public int keyInteract = Input.Keys.SPACE;
+    public int noMove = Input.Keys.SHIFT_LEFT;
+
 
     public float speed;
 
