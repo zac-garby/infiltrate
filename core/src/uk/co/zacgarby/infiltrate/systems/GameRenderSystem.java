@@ -24,6 +24,7 @@ import uk.co.zacgarby.infiltrate.components.graphics.TextureSliceComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementControlsComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.TorchComponent;
+import uk.co.zacgarby.infiltrate.components.physical.CameraFollowComponent;
 import uk.co.zacgarby.infiltrate.components.physical.HeadingComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
@@ -93,10 +94,18 @@ public class GameRenderSystem extends IteratingSystem {
         if (TextureSliceComponent.mapper.has(entity)) {
             TextureSliceComponent slice = TextureSliceComponent.mapper.get(entity);
 
+            float px = Math.round(position.position.x - texture.originX);
+            float py = Math.round(position.position.y - texture.originY);
+
+
+            if (CameraFollowComponent.mapper.has(entity)) {
+                px = Math.round(camera.position.x - texture.originX);
+                py = Math.round(camera.position.y - texture.originY);
+            }
+
             batch.draw(
                     texture.texture,
-                    Math.round(position.position.x - texture.originX),
-                    Math.round(position.position.y - texture.originY),
+                    px, py,
                     texture.originX, texture.originY,
                     texture.width, texture.height,
                     1f, 1f, 0f,
@@ -120,7 +129,7 @@ public class GameRenderSystem extends IteratingSystem {
     @Override
     public void update(float dt) {
         camera.update();
-        
+
         // render game to lower-res FBO
         batch.setProjectionMatrix(camera.combined);
 
