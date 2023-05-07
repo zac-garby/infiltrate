@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import uk.co.zacgarby.infiltrate.Game;
+import uk.co.zacgarby.infiltrate.components.graphics.InstructionTextComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
 import uk.co.zacgarby.infiltrate.components.physical.*;
@@ -98,9 +99,14 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.addEntity(levelText);
 
         Entity taskText = new Entity();
-        taskText.add(new UITextComponent("* .", 20, 11));
+        taskText.add(new UITextComponent("* .", 20, 12));
         taskText.add(new TaskDescriptionComponent());
         engine.addEntity(taskText);
+
+        Entity taskLocationText = new Entity();
+        taskLocationText.add(new UITextComponent("[go to: ...]", 20, 5));
+        taskLocationText.add(new InstructionTextComponent());
+        engine.addEntity(taskLocationText);
     }
 
     private void loadRecordedPlayers(List<Queue<MovementRecorderComponent.Record>> recordings) {

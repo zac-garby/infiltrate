@@ -2,11 +2,13 @@ package uk.co.zacgarby.infiltrate.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
+import uk.co.zacgarby.infiltrate.components.graphics.InstructionTextComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.HiddenComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.TaskDescriptionComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.GameStateComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.TaskComponent;
+import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -67,13 +69,22 @@ public class TaskSystem extends EntitySystem implements EntityListener {
         TaskComponent task = TaskComponent.mapper.get(currentTask);
 
         currentTask.remove(HiddenComponent.class);
-        System.out.println("un-hidden task");
 
         Entity taskTextEntity = getEngine().getEntitiesFor(
                 Family.all(TaskDescriptionComponent.class, UITextComponent.class).get()).first();
         UITextComponent taskText = UITextComponent.mapper.get(taskTextEntity);
 
         taskText.text = "* " + task.description;
+
+        GPSSystem gps = getEngine().getSystem(GPSSystem.class);
+        String taskLocation = gps.getLocation(PositionComponent.mapper.get(currentTask).position);
+
+        Entity instructionEntity = getEngine().getEntitiesFor(
+                Family.all(InstructionTextComponent.class, UITextComponent.class).get()
+        ).first();
+        UITextComponent instructionText = UITextComponent.mapper.get(instructionEntity);
+
+        instructionText.text = "[ go to: " + taskLocation + " ]";
     }
 
     @Override

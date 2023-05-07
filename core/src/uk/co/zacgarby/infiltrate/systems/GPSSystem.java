@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
 import uk.co.zacgarby.infiltrate.components.graphics.GPSComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
@@ -39,18 +40,26 @@ public class GPSSystem extends IntervalSystem {
             this.hud = UITextComponent.mapper.get(text);
         }
 
+        String location = getLocation(playerPosition.position);
+        if (location != null) {
+            hud.text = "* " + location;
+        } else {
+            // no matches
+            hud.text = "* -";
+        }
+    }
+
+    public String getLocation(Vector2 position) {
         MapLayer layer = map.getLayers().get("Areas");
         MapObjects objects = layer.getObjects();
 
         for (MapObject object : objects) {
             RectangleMapObject rect = (RectangleMapObject) object;
-            if (rect.getRectangle().contains(playerPosition.position)) {
-                hud.text = "* " + object.getName();
-                return;
+            if (rect.getRectangle().contains(position)) {
+                return object.getName();
             }
         }
 
-        // no matches
-        hud.text = "* -";
+        return null;
     }
 }
