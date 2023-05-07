@@ -6,10 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextureComponent;
-import uk.co.zacgarby.infiltrate.systems.DialogueSystem;
-import uk.co.zacgarby.infiltrate.systems.IntroScreenSystem;
+import uk.co.zacgarby.infiltrate.components.ui.UITextureComponent;
 import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
 public class GameOverScreen implements Screen {

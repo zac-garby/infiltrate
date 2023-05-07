@@ -10,10 +10,10 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import uk.co.zacgarby.infiltrate.components.graphics.GPSComponent;
+import uk.co.zacgarby.infiltrate.components.ui.GPSComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 
 public class GPSSystem extends IntervalSystem {
     private PositionComponent playerPosition;

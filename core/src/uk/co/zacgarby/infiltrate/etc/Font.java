@@ -4,11 +4,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 
 public class Font {

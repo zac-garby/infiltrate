@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;

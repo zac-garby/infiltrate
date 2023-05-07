@@ -7,9 +7,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextureComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextureComponent;
 import uk.co.zacgarby.infiltrate.etc.Font;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 
 public class UIRenderSystem extends IteratingSystem {
     private final SpriteBatch batch;

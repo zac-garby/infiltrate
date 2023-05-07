@@ -2,10 +2,10 @@ package uk.co.zacgarby.infiltrate.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import uk.co.zacgarby.infiltrate.components.graphics.InstructionTextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.InstructionTextComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.HiddenComponent;
-import uk.co.zacgarby.infiltrate.components.graphics.TaskDescriptionComponent;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.TaskDescriptionComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.GameStateComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.TaskComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;

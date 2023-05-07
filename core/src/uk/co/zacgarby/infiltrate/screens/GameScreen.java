@@ -19,10 +19,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import uk.co.zacgarby.infiltrate.Game;
-import uk.co.zacgarby.infiltrate.components.graphics.InstructionTextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.GPSComponent;
+import uk.co.zacgarby.infiltrate.components.ui.InstructionTextComponent;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
 import uk.co.zacgarby.infiltrate.components.physical.*;
+import uk.co.zacgarby.infiltrate.components.ui.TaskDescriptionComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 import uk.co.zacgarby.infiltrate.systems.*;
 
 import java.util.*;

@@ -6,14 +6,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
-import uk.co.zacgarby.infiltrate.components.graphics.UITextureComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextureComponent;
 import uk.co.zacgarby.infiltrate.systems.DialogueSystem;
 import uk.co.zacgarby.infiltrate.systems.FadeSystem;
 import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback, FadeSystem.Callback {
     private final Engine engine;
