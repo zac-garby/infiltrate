@@ -20,13 +20,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import uk.co.zacgarby.infiltrate.Game;
-import uk.co.zacgarby.infiltrate.components.ui.GPSComponent;
-import uk.co.zacgarby.infiltrate.components.ui.InstructionTextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.*;
 import uk.co.zacgarby.infiltrate.components.graphics.*;
 import uk.co.zacgarby.infiltrate.components.mechanics.*;
 import uk.co.zacgarby.infiltrate.components.physical.*;
-import uk.co.zacgarby.infiltrate.components.ui.TaskDescriptionComponent;
-import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 import uk.co.zacgarby.infiltrate.systems.*;
 
 import java.util.*;
@@ -90,6 +87,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.addSystem(new MovementPlaybackSystem());
         engine.addSystem(new TorchDetectionSystem(0.1f, mapMask, player, this));
         engine.addSystem(new FadeSystem(game, 0.3f, true));
+        engine.addSystem(new TracerSystem(player));
     }
 
     private void makeUI(int levelNum) {
@@ -129,6 +127,16 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
             oldPlayer.add(new MovementPlaybackComponent(new ArrayDeque<>(records)));
             oldPlayer.add(new TorchComponent());
             engine.addEntity(oldPlayer);
+
+            Entity tracer = new Entity();
+            tracer.add(new UITextComponent(
+                    "!", -10, -10,
+                    UITextComponent.Align.Center,
+                    UITextComponent.Effect.Flashing,
+                    Color.RED));
+            tracer.add(new TracerComponent(oldPlayer));
+//            tracer.add(new HiddenComponent());
+            engine.addEntity(tracer);
         }
     }
 

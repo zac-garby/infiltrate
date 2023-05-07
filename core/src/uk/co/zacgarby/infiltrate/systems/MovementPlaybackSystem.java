@@ -3,6 +3,7 @@ package uk.co.zacgarby.infiltrate.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +12,7 @@ import uk.co.zacgarby.infiltrate.components.mechanics.MovementPlaybackComponent;
 import uk.co.zacgarby.infiltrate.components.physical.HeadingComponent;
 import uk.co.zacgarby.infiltrate.components.physical.MovementComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
+import uk.co.zacgarby.infiltrate.components.ui.TracerComponent;
 
 public class MovementPlaybackSystem extends IteratingSystem {
     private double time = 0.0;
@@ -52,6 +54,14 @@ public class MovementPlaybackSystem extends IteratingSystem {
             }
         } else {
             getEngine().removeEntity(entity);
+
+            ImmutableArray<Entity> tracers = getEngine().getEntitiesFor(Family.all(TracerComponent.class).get());
+            for (Entity e : tracers) {
+                TracerComponent tracer = TracerComponent.mapper.get(e);
+                if (tracer.agent == entity) {
+                    getEngine().removeEntity(e);
+                }
+            }
         }
     }
 }

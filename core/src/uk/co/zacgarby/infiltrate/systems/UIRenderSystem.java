@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import uk.co.zacgarby.infiltrate.components.graphics.HiddenComponent;
 import uk.co.zacgarby.infiltrate.components.ui.UITextureComponent;
 import uk.co.zacgarby.infiltrate.etc.Font;
 import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
@@ -22,7 +23,12 @@ public class UIRenderSystem extends IteratingSystem {
     private boolean flashOn = true;
 
     public UIRenderSystem(SpriteBatch batch, float viewportWidth, float viewportHeight) {
-        super(Family.one(UITextComponent.class, UITextureComponent.class).get(), 1100);
+        super(Family.one(
+                UITextComponent.class,
+                UITextureComponent.class
+        ).exclude(
+                HiddenComponent.class
+        ).get(), 1100);
         this.batch = batch;
 
         shader = batch.getShader();

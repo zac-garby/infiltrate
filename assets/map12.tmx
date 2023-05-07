@@ -694,7 +694,21 @@ in one of them, we've marked some\
     <property name="cutscene">good job, agent.
 \
 there should be some more\
-in the room to your east.</property>
+  in the room to your east.
+\
+you may have noticed another agent\
+  walking around. please make sure\
+  he doesn't spot you.
+\
+don't worry, it shouldn't be too\
+  hard. after all, you should know\
+  exactly where he's been and where\
+  he's going...
+\
+also, we have equipped you with an\
+  agent-radar - you should be able to\
+  detect nearby enemies (notice the\
+  &quot;!&quot; symbols when you get too close).</property>
     <property name="description" value="steal the vials."/>
     <property name="order" type="int" value="0"/>
    </properties>
@@ -704,7 +718,21 @@ in the room to your east.</property>
     <property name="cutscene">good job, agent.
 \
 there should be some more\
-in the room to your east.</property>
+  in the room to your east.
+\
+you may have noticed another agent\
+  walking around. please make sure\
+  he doesn't spot you.
+\
+don't worry, it shouldn't be too\
+  hard. after all, you should know\
+  exactly where he's been and where\
+  he's going...
+\
+also, we have equipped you with an\
+  agent-radar - you should be able to\
+  detect nearby enemies (notice the\
+  &quot;!&quot; symbols when you get too close).</property>
     <property name="description" value="steal the vials."/>
     <property name="order" type="int" value="0"/>
    </properties>
@@ -714,7 +742,21 @@ in the room to your east.</property>
     <property name="cutscene">good job, agent.
 \
 there should be some more\
-in the room to your east.</property>
+  in the room to your east.
+\
+you may have noticed another agent\
+  walking around. please make sure\
+  he doesn't spot you.
+\
+don't worry, it shouldn't be too\
+  hard. after all, you should know\
+  exactly where he's been and where\
+  he's going...
+\
+also, we have equipped you with an\
+  agent-radar - you should be able to\
+  detect nearby enemies (notice the\
+  &quot;!&quot; symbols when you get too close).</property>
     <property name="description" value="steal the vials."/>
     <property name="order" type="int" value="0"/>
    </properties>
