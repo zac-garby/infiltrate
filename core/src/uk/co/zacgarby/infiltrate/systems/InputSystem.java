@@ -56,7 +56,7 @@ public class InputSystem extends IteratingSystem {
 
         // update torch direction
         if (move.len2() > 0.1) {
-            heading.heading.interpolate(move.cpy(), 1.5f * deltaTime, Interpolation.circle).nor();
+            heading.heading.interpolate(move.cpy(), 1.2f * deltaTime, Interpolation.circle).nor();
         }
 
         // set player velocity
