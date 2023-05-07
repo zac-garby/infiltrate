@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementRecorderComponent;
 import uk.co.zacgarby.infiltrate.screens.CutsceneScreen;
+import uk.co.zacgarby.infiltrate.screens.GameOverScreen;
 import uk.co.zacgarby.infiltrate.screens.GameScreen;
 import uk.co.zacgarby.infiltrate.screens.IntroScreen;
 
@@ -59,7 +60,7 @@ public class Game extends com.badlogic.gdx.Game {
 					new GameScreen(this, level, previousRecordings),
 					cutscene);
 		} else {
-			return null;
+			return new GameOverScreen(this, null);
 		}
 	}
 }

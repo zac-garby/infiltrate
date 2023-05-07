@@ -57,7 +57,7 @@ public class InputSystem extends IteratingSystem {
 
         // update torch direction
         if (move.len2() > 0.1) {
-            heading.heading.interpolate(move.cpy(), 4.5f * deltaTime, Interpolation.circleIn).nor();
+            heading.heading.interpolate(move.cpy(), 1.5f * deltaTime, Interpolation.circleIn).nor();
         }
 
         // do movement animations

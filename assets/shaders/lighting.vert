@@ -3,7 +3,6 @@ attribute vec4 a_color;
 attribute vec2 a_texCoord0;
 
 uniform mat4 u_projTrans;
-uniform float u_cam_x, u_cam_y;
 uniform float u_width, u_height;
 
 varying vec4 v_color;
