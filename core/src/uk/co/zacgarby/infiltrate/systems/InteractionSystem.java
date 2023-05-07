@@ -10,9 +10,12 @@ import uk.co.zacgarby.infiltrate.components.mechanics.InteractableComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.InteractionComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.PlayerComponent;
 import uk.co.zacgarby.infiltrate.components.physical.PositionComponent;
+import uk.co.zacgarby.infiltrate.components.ui.InstructionTextComponent;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 
 public class InteractionSystem extends IteratingSystem {
     public static final float INTERACTION_DIST = 9.0f;
+    private String oldInstructionText;
     private Entity player;
 
     public InteractionSystem() {
@@ -40,6 +43,14 @@ public class InteractionSystem extends IteratingSystem {
             if (!alreadyInteractable) {
                 anim.set(0, 1);
                 entity.add(new InteractableComponent());
+
+                Entity instructionEntity = getEngine().getEntitiesFor(
+                        Family.all(InstructionTextComponent.class, UITextComponent.class).get()
+                ).first();
+                UITextComponent instructionText = UITextComponent.mapper.get(instructionEntity);
+
+                oldInstructionText = instructionText.text;
+                instructionText.text = "[ found objective. press: SPACE ]";
             }
         } else {
             anim.set(0, 0);
