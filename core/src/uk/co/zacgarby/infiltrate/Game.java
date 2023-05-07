@@ -28,7 +28,6 @@ public class Game extends com.badlogic.gdx.Game {
 	private TextureRegion fboRegion;
 	private Matrix4 idMatrix;
 	public ShaderProgram fboShader;
-	public float fade = 0.0f;
 
 	public float viewportWidth, viewportHeight;
 	private final List<Queue<MovementRecorderComponent.Record>> previousRecordings = new ArrayList<>(5);
@@ -67,8 +66,6 @@ public class Game extends com.badlogic.gdx.Game {
 
 	@Override
 	public void render () {
-		fboShader.setUniformf("u_fade", fade);
-
 		// render screen to the down-scaled FBO
 		fbo.begin();
 		ScreenUtils.clear(0, 0, 0, 1);

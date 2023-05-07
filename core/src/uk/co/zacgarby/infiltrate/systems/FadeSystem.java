@@ -31,12 +31,15 @@ public class FadeSystem extends EntitySystem {
         }
 
         time += deltaTime;
+        float fade;
 
         if (in) {
-            game.fade = Math.min(time / timeout, 1.0f);
+            fade = Math.min(time / timeout, 1.0f);
         } else {
-            game.fade = 1.0f - Math.min(time / timeout, 1.0f);
+            fade = 1.0f - Math.min(time / timeout, 1.0f);
         }
+
+        game.fboShader.setUniformf("u_fade", fade);
 
         if (time > timeout) {
             done = true;
