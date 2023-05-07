@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.1" name="tileset12" tilewidth="12" tileheight="12" tilecount="71" columns="71">
- <image source="img/tileset.png" width="852" height="12"/>
+<tileset version="1.10" tiledversion="1.10.1" name="tileset12" tilewidth="12" tileheight="12" tilecount="81" columns="81">
+ <image source="img/tileset.png" width="972" height="12"/>
  <tile id="0">
   <properties>
    <property name="collides" type="bool" value="false"/>
@@ -267,6 +267,46 @@
   </properties>
  </tile>
  <tile id="70">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="71">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="72">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="73">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="74">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="75">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="76">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="77">
+  <properties>
+   <property name="collides" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="78">
   <properties>
    <property name="collides" type="bool" value="true"/>
   </properties>
