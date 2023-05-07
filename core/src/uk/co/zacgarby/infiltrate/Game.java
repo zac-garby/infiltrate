@@ -60,7 +60,7 @@ public class Game extends com.badlogic.gdx.Game {
 
 		map = new TmxMapLoader().load("map12.tmx");
 
-		Screen firstLevel = screenForLevel(1);
+		Screen firstLevel = screenForLevel(1, 0.0f);
 		this.setScreen(new IntroScreen(this, firstLevel));
 	}
 
@@ -89,7 +89,7 @@ public class Game extends com.badlogic.gdx.Game {
 		previousRecordings.add(records);
 	}
 
-	public Screen screenForLevel(int level) {
+	public Screen screenForLevel(int level, float time) {
 		if (level <= 5) {
 			MapLayer spawnsLayer = map.getLayers().get("Spawnpoints");
 			RectangleMapObject spawn = (RectangleMapObject) spawnsLayer.getObjects().get("Spawn " + level);
@@ -97,7 +97,7 @@ public class Game extends com.badlogic.gdx.Game {
 
 			return new CutsceneScreen(
 					this,
-					new GameScreen(this, level, previousRecordings),
+					new GameScreen(this, level, time, previousRecordings),
 					cutscene);
 		} else {
 			return new GameOverScreen(this, null);

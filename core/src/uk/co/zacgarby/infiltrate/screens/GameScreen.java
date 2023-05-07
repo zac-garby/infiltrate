@@ -37,7 +37,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
     private final Entity player;
 
-    public GameScreen(Game game, int levelNum, List<Queue<MovementRecorderComponent.Record>> recordings) {
+    public GameScreen(Game game, int levelNum, float time, List<Queue<MovementRecorderComponent.Record>> recordings) {
         this.levelNum = levelNum;
         this.game = game;
 
@@ -88,6 +88,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.addSystem(new TorchDetectionSystem(0.1f, mapMask, player, this));
         engine.addSystem(new FadeSystem(game, 0.3f, true));
         engine.addSystem(new TracerSystem(player));
+        engine.addSystem(new ClockSystem(time));
     }
 
     private void makeUI(int levelNum) {
@@ -99,6 +100,11 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         Entity levelText = new Entity();
         levelText.add(new UITextComponent("LEVEL " + levelNum, 183, 183, UITextComponent.Align.Right));
         engine.addEntity(levelText);
+
+        Entity timeText = new Entity();
+        timeText.add(new UITextComponent("00:00", 183, 190, UITextComponent.Align.Right));
+        timeText.add(new ClockComponent());
+        engine.addEntity(timeText);
 
         Entity taskText = new Entity();
         taskText.add(new UITextComponent("* .", 20, 12));
@@ -242,7 +248,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
     @Override
     public void onFadeComplete(FadeSystem fade) {
         game.addRecording(MovementRecorderComponent.mapper.get(player).records);
-        game.setScreen(game.screenForLevel(levelNum + 1));
+        game.setScreen(game.screenForLevel(levelNum + 1, getTimer()));
     }
 
     @Override
@@ -266,7 +272,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         text2.add(new UITextComponent("press [ENTER] to try again...", 52, 95));
         engine.addEntity(text2);
 
-        engine.addSystem(new GameOverSystem(game, game.screenForLevel(levelNum)));
+        engine.addSystem(new GameOverSystem(game, game.screenForLevel(levelNum, getTimer())));
         engine.getSystem(GameRenderSystem.class).gameOver = true;
     }
 
@@ -281,6 +287,11 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.removeSystem(engine.getSystem(TorchDetectionSystem.class));
 
         engine.removeAllEntities(Family.all(UITextComponent.class).get());
+    }
+
+    public float getTimer() {
+        ClockSystem clock = engine.getSystem(ClockSystem.class);
+        return clock.time;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
 import uk.co.zacgarby.infiltrate.components.ui.UITextureComponent;
+import uk.co.zacgarby.infiltrate.systems.FadeSystem;
 import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
 public class GameOverScreen implements Screen {
@@ -20,6 +21,7 @@ public class GameOverScreen implements Screen {
         engine.addEntity(background);
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
+        engine.addSystem(new FadeSystem(game, 5.0f, true));
     }
 
     @Override
