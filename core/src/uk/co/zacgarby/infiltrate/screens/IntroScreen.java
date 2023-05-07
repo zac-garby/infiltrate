@@ -28,7 +28,7 @@ public class IntroScreen implements Screen {
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
         engine.addSystem(new IntroScreenSystem(game, firstLevel));
-        engine.addSystem(new FadeSystem(game.fboShader, 1.5f, true));
+        engine.addSystem(new FadeSystem(game, 1.5f, true));
     }
 
     @Override

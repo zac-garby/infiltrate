@@ -15,7 +15,7 @@ public class IntroScreenSystem extends EntitySystem implements FadeSystem.Callba
     public IntroScreenSystem(Game game, Screen to) {
         this.game = game;
         this.to = to;
-        fadeOut = new FadeSystem(game.fboShader, 0.8f, false, this);
+        fadeOut = new FadeSystem(game, 0.8f, false, this);
     }
 
     @Override

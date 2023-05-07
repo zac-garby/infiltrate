@@ -36,12 +36,12 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback, 
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
         engine.addSystem(new DialogueSystem(10, 70, linesCol, this));
-        engine.addSystem(new FadeSystem(game.fboShader, 0.2f, true));
+        engine.addSystem(new FadeSystem(game, 0.2f, true));
     }
 
     @Override
     public void onDialogueFinish(DialogueSystem system) {
-        engine.addSystem(new FadeSystem(game.fboShader, 0.2f, false, this));
+        engine.addSystem(new FadeSystem(game, 0.2f, false, this));
     }
 
     @Override

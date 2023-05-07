@@ -39,8 +39,6 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         this.levelNum = levelNum;
         this.game = game;
 
-        System.out.println("recordings: " + recordings.size());
-
         OrthographicCamera camera = new OrthographicCamera(game.viewportWidth, game.viewportHeight);
 
         if (Math.floor(camera.viewportWidth) != camera.viewportWidth) {
@@ -86,7 +84,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         engine.addSystem(new MovementRecordingSystem(0.1f));
         engine.addSystem(new MovementPlaybackSystem());
         engine.addSystem(new TorchDetectionSystem(0.1f, mapMask, player, this));
-        engine.addSystem(new FadeSystem(game.fboShader, 0.3f, true));
+        engine.addSystem(new FadeSystem(game, 0.3f, true));
     }
 
     private void makeUI(int levelNum) {
@@ -174,8 +172,6 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
                 Rectangle rect = rectangleObject.getRectangle();
                 MapProperties properties = rectangleObject.getProperties();
 
-                System.out.println("registered task of order " + order + " at " + rect.x + ", " + rect.y);
-
                 String[] cutscene = null;
                 if (properties.containsKey("cutscene")) {
                     String cutsceneString = properties.get("cutscene", String.class);
@@ -217,7 +213,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
     public void onAllTasksComplete() {
         removeSystemsAndUI();
 
-        engine.addSystem(new FadeSystem(game.fboShader, 0.5f, false, this));
+        engine.addSystem(new FadeSystem(game, 0.5f, false, this));
     }
 
     @Override

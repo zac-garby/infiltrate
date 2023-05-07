@@ -3,46 +3,48 @@ package uk.co.zacgarby.infiltrate.systems;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import uk.co.zacgarby.infiltrate.Game;
 
 public class FadeSystem extends EntitySystem {
-    private final ShaderProgram fadeShader;
+    private final Game game;
     private final float timeout;
     private final boolean in;
     private final Callback callback;
     private float time = 0.0f;
+    private boolean done = false;
 
-    public FadeSystem(ShaderProgram fadeShader, float timeout, boolean in, Callback callback) {
-        this.fadeShader = fadeShader;
+    public FadeSystem(Game game, float timeout, boolean in, Callback callback) {
+        this.game = game;
         this.timeout = timeout;
         this.in = in;
         this.callback = callback;
     }
 
-    public FadeSystem(ShaderProgram fadeShader, float timeout, boolean in) {
+    public FadeSystem(Game fadeShader, float timeout, boolean in) {
         this(fadeShader, timeout, in, null);
     }
 
     @Override
     public void update(float deltaTime) {
+        if (done) {
+            return;
+        }
+
         time += deltaTime;
 
         if (in) {
-            fadeShader.setUniformf("u_fade", Math.min(time / timeout, 1.0f));
+            game.fade = Math.min(time / timeout, 1.0f);
         } else {
-            fadeShader.setUniformf("u_fade", 1.0f - Math.min(time / timeout, 1.0f));
+            game.fade = 1.0f - Math.min(time / timeout, 1.0f);
         }
 
         if (time > timeout) {
-            getEngine().removeSystem(this);
-        }
-    }
+            done = true;
 
-    @Override
-    public void removedFromEngine(Engine engine) {
-        fadeShader.setUniformf("u_fade", 1.0f);
-
-        if (callback != null) {
-            callback.onFadeComplete(this);
+            if (callback != null) {
+                callback.onFadeComplete(this);
+                getEngine().removeSystem(this);
+            }
         }
     }
 
