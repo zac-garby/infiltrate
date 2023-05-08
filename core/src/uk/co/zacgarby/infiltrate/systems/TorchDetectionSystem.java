@@ -71,14 +71,14 @@ public class TorchDetectionSystem extends IntervalIteratingSystem {
             from.add(delta);
             int pix = mapMask.getPixel((int) from.x, mapMask.getHeight() - (int) from.y);
 
-            if (pix > 0) {
+            if (pix != 0) {
                 m -= 0.058;
             }
         }
 
         m += 0.5f * Math.abs(up.dot(diff.cpy().nor()) * ((float) mapMask.getWidth() / mapMask.getHeight()));
 
-        if (m < -2f) {
+        if (m < -1f) {
             return false;
         }
 

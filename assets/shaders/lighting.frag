@@ -10,8 +10,8 @@ float stepSize = 0.0005;
 float torchAngle = 30.0 * (pi / 180.0);
 float torchDistance = 5.5;
 float distanceFalloff = 0.5;
-float initialWait = 0.5;
-float fadeIn = 0.5;
+float initialWait = 1.5;
+float fadeIn = 1.0;
 
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
@@ -39,7 +39,7 @@ void main() {
     gl_FragColor = v_color * texture2D(u_texture, v_texCoords);
 
     if (u_time < initialWait) {
-        gl_FragColor.rgb *= 0.1;
+        gl_FragColor.rgb *= 0.3 * (1.0 - u_time / initialWait);
     } else {
         float dim = get_dim(u_cam_x[0], u_cam_y[0], u_heading[0]);
         float other_dim = 0.0;
