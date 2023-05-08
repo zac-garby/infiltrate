@@ -22,6 +22,7 @@ uniform vec2 u_heading[5];
 uniform sampler2D u_texture;
 uniform sampler2D u_mask;
 uniform bool u_gameover;
+uniform float u_time;
 
 float get_dim(float, float, vec2);
 
@@ -35,29 +36,37 @@ void main() {
 
     gl_FragColor = v_color * texture2D(u_texture, v_texCoords);
 
-    float dim = get_dim(u_cam_x[0], u_cam_y[0], u_heading[0]);
-    float other_dim = 0.0;
+    if (u_time < 1.0) {
+        gl_FragColor.rgb *= 0.0;
+    } else {
+        float dim = get_dim(u_cam_x[0], u_cam_y[0], u_heading[0]);
+        float other_dim = 0.0;
 
-    // can only see enemy torches if they are visible
-    // *obviously?*
-    if (dim > 0.2 && !u_gameover) {
-        other_dim = 0.0;
+        // can only see enemy torches if they are visible
+        // *obviously?*
+        if (dim > 0.2 && !u_gameover) {
+            other_dim = 0.0;
 
-        for (int i = 1; i < u_num_players; i++) {
-            vec2 diff = vec2(u_cam_x[i], 1.0 - u_cam_y[i]) - mask_uv;
-            if (diff.x * diff.x + diff.y * diff.y < 4.0 * torchDistance * torchDistance) {
-                other_dim = max(other_dim, get_dim(u_cam_x[i], u_cam_y[i], u_heading[i]));
+            for (int i = 1; i < u_num_players; i++) {
+                vec2 diff = vec2(u_cam_x[i], 1.0 - u_cam_y[i]) - mask_uv;
+                if (diff.x * diff.x + diff.y * diff.y < 4.0 * torchDistance * torchDistance) {
+                    other_dim = max(other_dim, get_dim(u_cam_x[i], u_cam_y[i], u_heading[i]));
+                }
+            }
+
+            // make enemy torches red-ish
+            if (other_dim > 0.1) {
+                gl_FragColor.gb *= 0.5;
+                gl_FragColor.r += other_dim;
             }
         }
 
-        // make enemy torches red-ish
-        if (other_dim > 0.1) {
-            gl_FragColor.gb *= 0.5;
-            gl_FragColor.r += other_dim;
+        gl_FragColor.rgb *= dim;
+
+        if (u_time < 1.5) {
+            gl_FragColor.rgb *= (u_time - 1.0) / 0.5;
         }
     }
-
-    gl_FragColor.rgb *= dim;
 
     // darkest colour possible = purple
     gl_FragColor.rgb = max(0.6 * vec3(0.13, 0.0667, 0.1529), gl_FragColor.rgb);

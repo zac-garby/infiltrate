@@ -42,6 +42,7 @@ public class GameRenderSystem extends IteratingSystem {
     private ImmutableArray<Entity> torches;
     private final float[] uCamX = new float[5], uCamY = new float[5];
     private final float[] uHeading = new float[10];
+    private float time;
 
     private final Comparator<Object> yComparator = new Comparator<Object>() {
         @Override
@@ -128,6 +129,8 @@ public class GameRenderSystem extends IteratingSystem {
 
     @Override
     public void update(float dt) {
+        time += dt;
+
         camera.update();
 
         // render game to lower-res FBO
@@ -165,6 +168,7 @@ public class GameRenderSystem extends IteratingSystem {
         shader.setUniformf("u_height", mapMask.getHeight());
         shader.setUniform2fv("u_heading", uHeading, 0, 2 * torches.size());
         shader.setUniformi("u_gameover", gameOver ? 1 : 0);
+        shader.setUniformf("u_time", time);
 
         // render the renderables, in y-order
         Object[] entities = this.getEntities().toArray();
