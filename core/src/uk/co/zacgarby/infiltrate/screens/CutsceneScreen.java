@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
@@ -62,6 +63,8 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback, 
 
     @Override
     public void show() {
+        DialogueSystem.beep.play();
+
         if (playMusic) {
             game.musicPlayer.queue(music, (60f / 140f) * 8f);
         }

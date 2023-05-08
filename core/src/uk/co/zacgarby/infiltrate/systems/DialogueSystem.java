@@ -5,12 +5,15 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class DialogueSystem extends EntitySystem {
+    public static Sound beep;
+
     public int skipKey = Input.Keys.SPACE;
     public int skipAllKey = Input.Keys.ESCAPE;
 
@@ -31,6 +34,10 @@ public class DialogueSystem extends EntitySystem {
 
         this.interval = 2f;
         this.timeout = interval;
+
+        if (beep == null) {
+            beep = Gdx.audio.newSound(Gdx.files.internal("music/beep.wav"));
+        }
     }
 
     @Override
@@ -46,10 +53,13 @@ public class DialogueSystem extends EntitySystem {
 
         if (messages.size() > 0 && (timeout <= 0 || Gdx.input.isKeyJustPressed(skipKey))) {
             timeout = interval;
+            beep.play();
             nextText();
         }
 
         if (Gdx.input.isKeyJustPressed(skipAllKey) && messages.size() > 0) {
+            beep.play();
+
             while (messages.size() > 0) {
                 nextText();
             }
