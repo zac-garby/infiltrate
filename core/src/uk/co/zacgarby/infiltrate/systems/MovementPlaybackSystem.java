@@ -7,6 +7,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import uk.co.zacgarby.infiltrate.components.graphics.AnimationComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementControlsComponent;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementPlaybackComponent;
 import uk.co.zacgarby.infiltrate.components.physical.HeadingComponent;
@@ -21,7 +22,8 @@ public class MovementPlaybackSystem extends IteratingSystem {
         super(Family.all(
                 MovementPlaybackComponent.class,
                 PositionComponent.class,
-                HeadingComponent.class
+                HeadingComponent.class,
+                AnimationComponent.class
         ).get());
     }
 
@@ -36,6 +38,7 @@ public class MovementPlaybackSystem extends IteratingSystem {
         MovementPlaybackComponent playback = MovementPlaybackComponent.mapper.get(entity);
         PositionComponent position = PositionComponent.mapper.get(entity);
         HeadingComponent heading = HeadingComponent.mapper.get(entity);
+        AnimationComponent animation = AnimationComponent.mapper.get(entity);
 
         if (playback.nextRecord != null) {
             if (time >= playback.nextRecord.time) {
@@ -51,6 +54,19 @@ public class MovementPlaybackSystem extends IteratingSystem {
                 heading.heading.set(playback
                         .currentRecord.heading.cpy()
                         .interpolate(playback.nextRecord.heading, (float) t, Interpolation.circle));
+
+                Vector2 move = playback.currentRecord.velocity;
+                if (move.x < 0) {
+                    animation.set(playback.leftAnimation);
+                } else if (move.x > 0) {
+                    animation.set(playback.rightAnimation);
+                } else if (move.y < 0) {
+                    animation.set(playback.downAnimation);
+                } else if (move.y > 0) {
+                    animation.set(playback.upAnimation);
+                } else {
+                    animation.set(playback.stillAnimation);
+                }
             }
         } else {
             getEngine().removeEntity(entity);
