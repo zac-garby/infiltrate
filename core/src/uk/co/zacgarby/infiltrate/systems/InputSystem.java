@@ -16,6 +16,9 @@ import uk.co.zacgarby.infiltrate.components.physical.HeadingComponent;
 import uk.co.zacgarby.infiltrate.components.physical.MovementComponent;
 
 public class InputSystem extends IteratingSystem {
+    private float time = 0.0f;
+    private float inputWait = 2.0f;
+
     public InputSystem() {
         super(Family.all(
                 MovementControlsComponent.class,
@@ -27,68 +30,79 @@ public class InputSystem extends IteratingSystem {
     }
 
     @Override
+    public void update(float deltaTime) {
+        time += deltaTime;
+
+        super.update(deltaTime);
+    }
+
+    @Override
     protected void processEntity(Entity entity, float deltaTime) {
         MovementControlsComponent controls = MovementControlsComponent.mapper.get(entity);
         MovementComponent movement = MovementComponent.mapper.get(entity);
         AnimationComponent animation = AnimationComponent.mapper.get(entity);
         HeadingComponent heading = HeadingComponent.mapper.get(entity);
 
-        Vector2 move = new Vector2();
+        if (time >= inputWait) {
+            Vector2 move = new Vector2();
 
-        // calculate movement direction
-        if (Gdx.input.isKeyPressed(controls.keyUp)) {
-            move.y += 1f;
-        }
+            // calculate movement direction
+            if (Gdx.input.isKeyPressed(controls.keyUp)) {
+                move.y += 1f;
+            }
 
-        if (Gdx.input.isKeyPressed(controls.keyDown)) {
-            move.y -= 1f;
-        }
+            if (Gdx.input.isKeyPressed(controls.keyDown)) {
+                move.y -= 1f;
+            }
 
-        if (Gdx.input.isKeyPressed(controls.keyLeft)) {
-            move.x -= 1f;
-        }
+            if (Gdx.input.isKeyPressed(controls.keyLeft)) {
+                move.x -= 1f;
+            }
 
-        if (Gdx.input.isKeyPressed(controls.keyRight)) {
-            move.x += 1f;
-        }
+            if (Gdx.input.isKeyPressed(controls.keyRight)) {
+                move.x += 1f;
+            }
 
-        move.nor().scl(controls.speed);
+            move.nor().scl(controls.speed);
 
-        // update torch direction
-        if (move.len2() > 0.1) {
-            heading.heading.interpolate(move.cpy(), 1.2f * deltaTime, Interpolation.circle).nor();
-        }
+            // update torch direction
+            if (move.len2() > 0.1) {
+                heading.heading.interpolate(move.cpy(), 1.2f * deltaTime, Interpolation.circle).nor();
+            }
 
-        // set player velocity
-        if (!Gdx.input.isKeyPressed(controls.noMove)) {
-            movement.velocity = move;
+            // set player velocity
+            if (!Gdx.input.isKeyPressed(controls.noMove)) {
+                movement.velocity = move;
 
-            // do movement animations
-            if (move.x < 0) {
-                animation.set(controls.leftAnimation);
-            } else if (move.x > 0) {
-                animation.set(controls.rightAnimation);
-            } else if (move.y < 0) {
-                animation.set(controls.downAnimation);
-            } else if (move.y > 0) {
-                animation.set(controls.upAnimation);
+                // do movement animations
+                if (move.x < 0) {
+                    animation.set(controls.leftAnimation);
+                } else if (move.x > 0) {
+                    animation.set(controls.rightAnimation);
+                } else if (move.y < 0) {
+                    animation.set(controls.downAnimation);
+                } else if (move.y > 0) {
+                    animation.set(controls.upAnimation);
+                } else {
+                    animation.set(controls.stillAnimation);
+                }
             } else {
-                animation.set(controls.stillAnimation);
+                movement.velocity.set(0.0f, 0.0f);
+            }
+
+            // do interactions
+            if (Gdx.input.isKeyJustPressed(controls.keyInteract)) {
+                ImmutableArray<Entity> interactables = getEngine().getEntitiesFor(
+                        Family.all(InteractableComponent.class).get()
+                );
+
+                if (interactables.size() > 0) {
+                    Entity interactable = interactables.first();
+                    doInteraction(interactable);
+                }
             }
         } else {
-            movement.velocity.set(0.0f, 0.0f);
-        }
-
-        // do interactions
-        if (Gdx.input.isKeyJustPressed(controls.keyInteract)) {
-            ImmutableArray<Entity> interactables = getEngine().getEntitiesFor(
-                    Family.all(InteractableComponent.class).get()
-            );
-
-            if (interactables.size() > 0) {
-                Entity interactable = interactables.first();
-                doInteraction(interactable);
-            }
+            animation.set(controls.stillAnimation);
         }
     }
 
