@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.components.mechanics.MovementRecorderComponent;
+import uk.co.zacgarby.infiltrate.etc.MusicPlayer;
 import uk.co.zacgarby.infiltrate.screens.*;
 
 import java.util.ArrayList;
@@ -30,8 +31,10 @@ public class Game extends com.badlogic.gdx.Game {
 	public ShaderProgram fboShader;
 
 	public float viewportWidth, viewportHeight;
-	private final List<Queue<MovementRecorderComponent.Record>> previousRecordings = new ArrayList<>(5);
+	private List<Queue<MovementRecorderComponent.Record>> previousRecordings = new ArrayList<>(5);
 	public TiledMap map;
+
+	public MusicPlayer musicPlayer = new MusicPlayer();
 
 	@Override
 	public void create () {
@@ -65,6 +68,8 @@ public class Game extends com.badlogic.gdx.Game {
 
 	@Override
 	public void render () {
+		musicPlayer.update(Gdx.graphics.getDeltaTime());
+
 		// render screen to the down-scaled FBO
 		fbo.begin();
 		ScreenUtils.clear(0, 0, 0, 1);
@@ -97,8 +102,11 @@ public class Game extends com.badlogic.gdx.Game {
 			return new CutsceneScreen(
 					this,
 					new GameScreen(this, level, time, previousRecordings),
-					cutscene);
+					cutscene,
+					true);
 		} else {
+			previousRecordings.clear();
+
 			return new GameOverScreen(
 					this,
 					new IntroScreen(this, screenForLevel(1, 0.0f)),

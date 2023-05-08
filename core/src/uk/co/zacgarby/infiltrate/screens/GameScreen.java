@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -34,12 +35,15 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
     private final Game game;
     private final Engine engine;
     private final int levelNum;
-
     private final Entity player;
+    private final Music music;
 
     public GameScreen(Game game, int levelNum, float time, List<Queue<MovementRecorderComponent.Record>> recordings) {
         this.levelNum = levelNum;
         this.game = game;
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/game.wav"));
+        music.setLooping(true);
 
         OrthographicCamera camera = new OrthographicCamera(game.viewportWidth, game.viewportHeight);
 
@@ -245,7 +249,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
     @Override
     public void show() {
-
+        game.musicPlayer.queue(music, (60f / 140f) * 8f);
     }
 
     @Override

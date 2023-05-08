@@ -2,7 +2,9 @@ package uk.co.zacgarby.infiltrate.screens;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
@@ -14,9 +16,15 @@ import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
 public class IntroScreen implements Screen {
     private final Engine engine;
+    private final Music music;
+    private final Game game;
 
     public IntroScreen(Game game, Screen firstLevel) {
+        this.game = game;
         engine = new Engine();
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/intro.wav"));
+        music.setLooping(true);
 
         Entity background = new Entity();
         background.add(new UITextureComponent(new Texture("img/intro.png"), 0, 0));
@@ -33,7 +41,7 @@ public class IntroScreen implements Screen {
 
     @Override
     public void show() {
-
+        game.musicPlayer.queue(music, 1f);
     }
 
     @Override

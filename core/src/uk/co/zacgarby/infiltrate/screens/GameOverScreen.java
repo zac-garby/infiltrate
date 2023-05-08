@@ -2,7 +2,9 @@ package uk.co.zacgarby.infiltrate.screens;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -18,12 +20,15 @@ public class GameOverScreen implements Screen, FadeSystem.Callback {
     private final float time;
     private final Game game;
     private final Screen nextScreen;
+    private final Music music;
 
     public GameOverScreen(Game game, Screen nextScreen, float time) {
         this.game = game;
         this.nextScreen = nextScreen;
         engine = new Engine();
         this.time = time;
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/gameover.wav"));
 
         Entity background = new Entity();
         background.add(new UITextureComponent(new Texture("img/outro.png"), 0, 0));
@@ -40,7 +45,7 @@ public class GameOverScreen implements Screen, FadeSystem.Callback {
         engine.addEntity(timeText);
 
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
-        engine.addSystem(new FadeSystem(game, 5.0f, true, this));
+        engine.addSystem(new FadeSystem(game, 10.0f, true, this));
     }
 
     @Override
@@ -63,7 +68,7 @@ public class GameOverScreen implements Screen, FadeSystem.Callback {
 
     @Override
     public void show() {
-
+        game.musicPlayer.queue(music, 20.0f);
     }
 
     @Override

@@ -2,7 +2,9 @@ package uk.co.zacgarby.infiltrate.screens;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
@@ -18,10 +20,16 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback, 
     private final Engine engine;
     private final Game game;
     private final Screen returnTo;
+    private final boolean playMusic;
+    private final Music music;
 
-    public CutsceneScreen(Game game, Screen returnTo, String[] lines) {
+    public CutsceneScreen(Game game, Screen returnTo, String[] lines, boolean playMusic) {
         this.game = game;
         this.returnTo = returnTo;
+        this.playMusic = playMusic;
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/cutscene.wav"));
+        music.setLooping(true);
 
         ArrayList<String> linesCol = new ArrayList<>(Arrays.asList(lines));
         linesCol.add("\\");
@@ -38,6 +46,10 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback, 
         engine.addSystem(new FadeSystem(game, 0.2f, true));
     }
 
+    public CutsceneScreen(Game game, Screen returnTo, String[] lines) {
+        this(game, returnTo, lines, false);
+    }
+
     @Override
     public void onDialogueFinish(DialogueSystem system) {
         engine.addSystem(new FadeSystem(game, 0.2f, false, this));
@@ -50,7 +62,9 @@ public class CutsceneScreen implements Screen, DialogueSystem.DialogueCallback, 
 
     @Override
     public void show() {
-
+        if (playMusic) {
+            game.musicPlayer.queue(music, (60f / 140f) * 8f);
+        }
     }
 
     @Override
