@@ -182,7 +182,9 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
                 .setFilter(playerFilter));
         player.add(new MovementControlsComponent(160f));
         player.add(new CameraFollowComponent(camera));
-        player.add(new HeadingComponent(new Vector2(1.0f, 0.0f)));
+        player.add(new HeadingComponent(new Vector2(
+                spawn.getProperties().get("dx", Float.class),
+                spawn.getProperties().get("dy", Float.class)).nor()));
         player.add(new TorchComponent());
         engine.addEntity(player);
 
