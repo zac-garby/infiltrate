@@ -48,12 +48,12 @@
  <objectgroup id="2" name="Areas" opacity="0.22">
   <object id="1" name="Reception" x="329.233" y="77.0476" width="87.767" height="121.075"/>
   <object id="2" name="Toilets" x="415.992" y="77.0476" width="61.008" height="48.2357"/>
-  <object id="3" name="Admin Office" x="415.992" y="127.549" width="58.595" height="46.2933"/>
+  <object id="3" name="Admin Office - Reception" x="415.992" y="127.549" width="58.595" height="46.2933"/>
   <object id="4" name="Lab 1 - Storage" x="509.226" y="126.254" width="40.774" height="84.1696"/>
   <object id="5" name="Lab 2 - Storage" x="642.279" y="54.3865" width="95.1764" height="59.2425"/>
-  <object id="6" name="Research Office 1" x="510.521" y="78.0188" width="130.139" height="48.5594"/>
-  <object id="7" name="Lab 1" x="546.455" y="126.902" width="95.5002" height="82.551"/>
-  <object id="8" name="Lab 2" x="639" y="110" width="99.4271" height="99.7763"/>
+  <object id="6" name="Research Office 1 - North" x="510.521" y="78.0188" width="130.139" height="48.5594"/>
+  <object id="7" name="Lab 1 - West" x="546.455" y="126.902" width="95.5002" height="82.551"/>
+  <object id="8" name="Lab 2 - East" x="639" y="110" width="99.4271" height="99.7763"/>
   <object id="9" name="&quot;The Project&quot;" x="570.613" y="292.93" width="167.432" height="72.4449"/>
   <object id="10" name="Office A-1" x="352.789" y="221.062" width="61.3089" height="37.8363"/>
   <object id="11" name="Office A-2" x="353.139" y="259.95" width="60.9585" height="35.0336"/>
@@ -67,9 +67,9 @@
   <object id="19" name="The Boss's Office" x="569.775" y="366.678" width="84.4311" height="50.322"/>
   <object id="20" name="The Boss's Secretaries" x="654.343" y="367.336" width="84.7814" height="47.6457"/>
   <object id="21" name="Secret Corridor" x="736" y="245.235" width="27.3832" height="181.124"/>
-  <object id="22" name="Observation Room" x="653.116" y="245.995" width="85.1757" height="52.005"/>
-  <object id="24" name="Research Office 2" x="738.68" y="198.448" width="132.471" height="47.6067"/>
-  <object id="25" name="Library" x="763.519" y="244" width="107.374" height="99.6029"/>
+  <object id="22" name="Observation Room - &quot;The Project&quot;" x="653.116" y="245.995" width="85.1757" height="52.005"/>
+  <object id="24" name="Research Office 2 - East" x="738.68" y="198.448" width="132.471" height="47.6067"/>
+  <object id="25" name="East Research Library" x="763.519" y="244" width="107.374" height="99.6029"/>
   <object id="26" name="Toilets" x="566" y="245.414" width="64.4745" height="49.5786"/>
   <object id="27" name="Back Entrance" x="449" y="236.469" width="98.284" height="58.5402"/>
   <object id="28" name="Smoking Area" x="474.221" y="293.172" width="71.6846" height="59.2776"/>
@@ -88,7 +88,7 @@
   <object id="132" name="North-West Extraction Point" x="212" y="91" width="41" height="47"/>
  </objectgroup>
  <objectgroup id="4" name="Spawnpoints">
-  <object id="67" name="Spawn 1" x="257.505" y="115.5">
+  <object id="67" name="Spawn 1" x="283" y="113">
    <properties>
     <property name="cutscene">SPY-OS v1.29                        [year 2137, 19:44]\
 mail\
