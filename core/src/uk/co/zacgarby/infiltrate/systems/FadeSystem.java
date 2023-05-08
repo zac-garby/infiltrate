@@ -8,7 +8,7 @@ import uk.co.zacgarby.infiltrate.Game;
 public class FadeSystem extends EntitySystem {
     private final Game game;
     private final float timeout;
-    private final boolean in;
+    public final boolean in;
     private final Callback callback;
     private float time = 0.0f;
     private boolean done = false;
@@ -46,7 +46,11 @@ public class FadeSystem extends EntitySystem {
 
             if (callback != null) {
                 callback.onFadeComplete(this);
-                getEngine().removeSystem(this);
+                try {
+                    getEngine().removeSystem(this);
+                } catch (NullPointerException ignored) {
+
+                }
             }
         }
     }

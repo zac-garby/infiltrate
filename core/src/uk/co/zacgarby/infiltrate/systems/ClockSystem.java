@@ -26,11 +26,7 @@ public class ClockSystem extends IteratingSystem {
         UITextComponent textComponent = UITextComponent.mapper.get(entity);
         ClockComponent clockComponent = ClockComponent.mapper.get(entity);
 
-        if (clockComponent.isTotalTime) {
-            textComponent.text = String.format("%02d:%02d", getMinutes(totalTime), getSeconds(totalTime));
-        } else {
-            textComponent.text = String.format("%02d:%02d", getMinutes(levelTime), getSeconds(levelTime));
-        }
+        textComponent.text = getTimeString(clockComponent.isTotalTime ? totalTime : levelTime);
     }
 
     @Override
@@ -39,6 +35,10 @@ public class ClockSystem extends IteratingSystem {
         levelTime += deltaTime;
 
         super.update(deltaTime);
+    }
+
+    public static String getTimeString(float t) {
+        return String.format("%02d:%02d", getMinutes(t), getSeconds(t));
     }
 
     public static int getMinutes(float t) {

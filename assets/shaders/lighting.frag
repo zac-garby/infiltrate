@@ -6,7 +6,7 @@
 #endif
 
 float pi = 3.14159;
-float stepSize = 0.00005;
+float stepSize = 0.0005;
 float torchAngle = 30.0 * (pi / 180.0);
 float torchDistance = 5.5;
 float distanceFalloff = 0.5;
@@ -44,7 +44,10 @@ void main() {
         other_dim = 0.0;
 
         for (int i = 1; i < u_num_players; i++) {
-            other_dim = max(other_dim, get_dim(u_cam_x[i], u_cam_y[i], u_heading[i]));
+            vec2 diff = vec2(u_cam_x[i], 1.0 - u_cam_y[i]) - mask_uv;
+            if (diff.x * diff.x + diff.y * diff.y < 4.0 * torchDistance * torchDistance) {
+                other_dim = max(other_dim, get_dim(u_cam_x[i], u_cam_y[i], u_heading[i]));
+            }
         }
 
         // make enemy torches red-ish
@@ -79,7 +82,7 @@ float get_dim(float cam_x, float cam_y, vec2 heading) {
         vec2 p = mask_uv + delta * float(i);
         vec4 c = texture2D(u_mask, p);
         if (c.w > 0.0) {
-            m -= 0.0058;
+            m -= 0.0058 * 10.0;
         }
     }
 

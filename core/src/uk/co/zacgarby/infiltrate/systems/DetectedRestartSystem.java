@@ -6,11 +6,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import uk.co.zacgarby.infiltrate.Game;
 
-public class GameOverSystem extends EntitySystem {
+public class DetectedRestartSystem extends EntitySystem {
     private final Screen screen;
     private final Game game;
 
-    public GameOverSystem(Game game, Screen returnTo) {
+    public DetectedRestartSystem(Game game, Screen returnTo) {
         this.game = game;
         screen = returnTo;
     }

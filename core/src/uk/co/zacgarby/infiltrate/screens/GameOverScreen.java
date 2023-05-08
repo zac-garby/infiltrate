@@ -3,25 +3,62 @@ package uk.co.zacgarby.infiltrate.screens;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uk.co.zacgarby.infiltrate.Game;
+import uk.co.zacgarby.infiltrate.components.ui.UITextComponent;
 import uk.co.zacgarby.infiltrate.components.ui.UITextureComponent;
+import uk.co.zacgarby.infiltrate.systems.ClockSystem;
 import uk.co.zacgarby.infiltrate.systems.FadeSystem;
 import uk.co.zacgarby.infiltrate.systems.UIRenderSystem;
 
-public class GameOverScreen implements Screen {
+public class GameOverScreen implements Screen, FadeSystem.Callback {
     private final Engine engine;
+    private final float time;
+    private final Game game;
+    private final Screen nextScreen;
 
-    public GameOverScreen(Game game, Screen nextScreen) {
+    public GameOverScreen(Game game, Screen nextScreen, float time) {
+        this.game = game;
+        this.nextScreen = nextScreen;
         engine = new Engine();
+        this.time = time;
 
         Entity background = new Entity();
         background.add(new UITextureComponent(new Texture("img/outro.png"), 0, 0));
         engine.addEntity(background);
 
+        Entity timeText = new Entity();
+        timeText.add(new UITextComponent(
+                "you destroyed the world...",
+                100, 160,
+                UITextComponent.Align.Center,
+                null,
+                new Color(1.0f, 0.7f, 0.8f, 1.0f)
+        ));
+        engine.addEntity(timeText);
+
         engine.addSystem(new UIRenderSystem(game.batch, game.viewportWidth, game.viewportHeight));
-        engine.addSystem(new FadeSystem(game, 5.0f, true));
+        engine.addSystem(new FadeSystem(game, 5.0f, true, this));
+    }
+
+    @Override
+    public void onFadeComplete(FadeSystem fade) {
+        if (fade.in) {
+            Entity timeText = new Entity();
+            timeText.add(new UITextComponent(
+                    "in just " + ClockSystem.getTimeString(time) + " - well done!",
+                    100, 150,
+                    UITextComponent.Align.Center
+            ));
+            engine.addEntity(timeText);
+
+            // fade out
+            engine.addSystem(new FadeSystem(game, 10.0f, false, this));
+        } else {
+            game.setScreen(nextScreen);
+        }
     }
 
     @Override

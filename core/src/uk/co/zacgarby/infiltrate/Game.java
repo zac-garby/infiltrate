@@ -60,8 +60,7 @@ public class Game extends com.badlogic.gdx.Game {
 
 		map = new TmxMapLoader().load("map12.tmx");
 
-		Screen firstLevel = screenForLevel(1, 0.0f);
-		this.setScreen(new IntroScreen(this, firstLevel));
+		this.setScreen(new IntroScreen(this, screenForLevel(1, 0.0f)));
 	}
 
 	@Override
@@ -100,7 +99,10 @@ public class Game extends com.badlogic.gdx.Game {
 					new GameScreen(this, level, time, previousRecordings),
 					cutscene);
 		} else {
-			return new GameOverScreen(this, null);
+			return new GameOverScreen(
+					this,
+					new IntroScreen(this, screenForLevel(1, 0.0f)),
+					time);
 		}
 	}
 }

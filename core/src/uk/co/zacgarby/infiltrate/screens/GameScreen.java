@@ -289,7 +289,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         text2.add(new UITextComponent("press [ENTER] to try again...", 52, 95));
         engine.addEntity(text2);
 
-        engine.addSystem(new GameOverSystem(game, game.screenForLevel(levelNum, getTimer())));
+        engine.addSystem(new DetectedRestartSystem(game, game.screenForLevel(levelNum, getTimer())));
         engine.getSystem(GameRenderSystem.class).gameOver = true;
     }
 
