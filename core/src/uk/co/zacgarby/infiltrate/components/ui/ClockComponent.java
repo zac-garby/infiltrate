@@ -5,4 +5,9 @@ import com.badlogic.ashley.core.ComponentMapper;
 
 public class ClockComponent implements Component {
     public static final ComponentMapper<ClockComponent> mapper = ComponentMapper.getFor(ClockComponent.class);
+    public final boolean isTotalTime;
+
+    public ClockComponent(boolean isTotalTime) {
+        this.isTotalTime = isTotalTime;
+    }
 }

@@ -97,14 +97,31 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
         locationText.add(new GPSComponent());
         engine.addEntity(locationText);
 
+        Entity totalText = new Entity();
+        totalText.add(new UITextComponent(
+                "TOTAL", 150, 190,
+                UITextComponent.Align.Right,
+                null,
+                new Color(0.5f, 0.4f, 0.4f, 1.0f)));
+        engine.addEntity(totalText);
+
+        Entity totalTimeText = new Entity();
+        totalTimeText.add(new UITextComponent("00:00", 150, 183, UITextComponent.Align.Right));
+        totalTimeText.add(new ClockComponent(true));
+        engine.addEntity(totalTimeText);
+
         Entity levelText = new Entity();
-        levelText.add(new UITextComponent("LEVEL " + levelNum, 183, 183, UITextComponent.Align.Right));
+        levelText.add(new UITextComponent(
+                "LEVEL " + levelNum, 183, 190,
+                UITextComponent.Align.Right,
+                null,
+                new Color(0.5f, 0.4f, 0.4f, 1.0f)));
         engine.addEntity(levelText);
 
-        Entity timeText = new Entity();
-        timeText.add(new UITextComponent("00:00", 183, 190, UITextComponent.Align.Right));
-        timeText.add(new ClockComponent());
-        engine.addEntity(timeText);
+        Entity levelTimeText = new Entity();
+        levelTimeText.add(new UITextComponent("00:00", 183, 183, UITextComponent.Align.Right));
+        levelTimeText.add(new ClockComponent(false));
+        engine.addEntity(levelTimeText);
 
         Entity taskText = new Entity();
         taskText.add(new UITextComponent("* .", 20, 12));
@@ -291,7 +308,7 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
 
     public float getTimer() {
         ClockSystem clock = engine.getSystem(ClockSystem.class);
-        return clock.time;
+        return clock.totalTime;
     }
 
     @Override
