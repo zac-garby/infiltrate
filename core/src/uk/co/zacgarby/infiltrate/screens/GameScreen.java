@@ -158,7 +158,6 @@ public class GameScreen implements Screen, TaskSystem.TaskCallback, TorchDetecti
                     UITextComponent.Effect.Flashing,
                     Color.RED));
             tracer.add(new TracerComponent(oldPlayer));
-//            tracer.add(new HiddenComponent());
             engine.addEntity(tracer);
         }
     }
